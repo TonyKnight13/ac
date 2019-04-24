@@ -22,7 +22,7 @@
             </el-checkbox-group>
           </div>
         </div>
-        <a-button class="" type="primary" @click="onSubmit">搜索</a-button>
+        <el-button type="primary" @click="onSubmit">搜索</el-button>
       </div>
     </div>
 
@@ -64,7 +64,7 @@ export default {
       }
     },
     onSubmit(){
-
+      
     }
   },
 }

@@ -4,11 +4,10 @@
     <headernav></headernav>
     <div class="main-content-wrap">
       <img src="../../assets/images/gone/pexels-photo-1930851.jpg" alt="">
-      <el-row style="padding: 0.2rem 1rem; background:#ebebeb;">
-        <el-col :span="6"><img src="../../assets/images/gone/new1.jpg" alt="">宠物公墓</el-col>
-        <el-col :span="6"><img src="../../assets/images/gone/new1.jpg" alt="">宠物墓地</el-col>
-        <el-col :span="6"><img src="../../assets/images/gone/new1.jpg" alt="">宠物安乐死</el-col>
-        <el-col :span="6"><img src="../../assets/images/gone/new1.jpg" alt="">宠物火化</el-col>
+      <el-row :gutter="20" style="padding: 0.2rem 1rem; background:#ebebeb;">
+        <el-col :span="8" style="padding: 0"><img src="../../assets/images/gone/公墓.jpg" alt="">宠物公墓</el-col>
+        <el-col :span="8" style="padding: 0"><img src="../../assets/images/gone/安乐死.jpg" alt="">宠物安乐死</el-col>
+        <el-col :span="8" style="padding: 0"><img src="../../assets/images/gone/玑珠.jpg" alt="">宠物玑珠</el-col>
       </el-row>
     </div>
     <!-- 底部 -->
@@ -32,6 +31,7 @@ export default {
 }
 </script>
 <style scoped>
+
 .main-content-wrap{
   width: 100%;
   background: #ffffff
@@ -39,7 +39,13 @@ export default {
 .main-content-wrap > img{
   width: 100%;
 }
+.el-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .el-col{
+<<<<<<< HEAD
   border: 1px solid #ffffff;
   background:#ffffff;
   height:3rem;
@@ -50,5 +56,22 @@ export default {
 .el-col img{
   width:100%;
   height:85%;
+=======
+  border: 1px solid #ebebeb;
+  background:#ffffff;
+  height:5.5rem;
+  width:5rem;
+  margin:0 0.3rem;
+  font-size: 0.32rem;
+  text-align: center;
+}
+.grid-content{
+  width:100%;
+  height:85%;
+}
+.el-col img{
+  width:100%;
+  height: 88%;
+>>>>>>> f53b3e49248a5de9eb586de2937fc4aa6242b2aa
 }
 </style>
