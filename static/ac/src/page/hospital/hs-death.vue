@@ -3,7 +3,8 @@
     <!-- 头部 -->
     <headernav></headernav>
     <div class="main-content-wrap">
-      <img src="../../assets/images/gone/pexels-photo-1930851.jpg" alt="">
+      <div style="padding:0 1rem;width:100%;box-sizing:border-box;"> 
+      <img style="width:100%; " src="../../assets/images/gone/pexels-photo-1930851.jpg" alt=""></div>
       <el-row :gutter="20" style="padding: 0.2rem 1rem; background:#ebebeb;">
         <el-col :span="8" style="padding: 0"><img src="../../assets/images/gone/公墓.jpg" alt="">宠物公墓</el-col>
         <el-col :span="8" style="padding: 0"><img src="../../assets/images/gone/安乐死.jpg" alt="">宠物安乐死</el-col>
@@ -45,18 +46,6 @@ export default {
     justify-content: center;
 }
 .el-col{
-<<<<<<< HEAD
-  border: 1px solid #ffffff;
-  background:#ffffff;
-  height:3rem;
-  width:3.6rem;
-  padding:0;
-  margin:0 0.1rem;
-}
-.el-col img{
-  width:100%;
-  height:85%;
-=======
   border: 1px solid #ebebeb;
   background:#ffffff;
   height:5.5rem;
@@ -72,6 +61,5 @@ export default {
 .el-col img{
   width:100%;
   height: 88%;
->>>>>>> f53b3e49248a5de9eb586de2937fc4aa6242b2aa
 }
 </style>
