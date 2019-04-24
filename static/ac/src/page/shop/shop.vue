@@ -22,7 +22,7 @@
             </el-checkbox-group>
           </div>
         </div>
-        <el-button type="primary" @click="onSubmit">搜索</el-button>
+        <el-button type="primary" @click="onSubmit" style="float:right">搜索</el-button>
       </div>
     </div>
 
@@ -73,10 +73,10 @@ export default {
 .main-content-wrap{
   display:flex;
   justify-content:center;
-  
+  margin:0.1rem 0;
 }
 .screen-content{
-  padding-left:2rem;
+  width:70%;
   border:1px solid #ebebeb 
 }
 .screen-item{

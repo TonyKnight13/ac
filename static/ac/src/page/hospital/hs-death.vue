@@ -45,18 +45,6 @@ export default {
     justify-content: center;
 }
 .el-col{
-<<<<<<< HEAD
-  border: 1px solid #ffffff;
-  background:#ffffff;
-  height:3rem;
-  width:3.6rem;
-  padding:0;
-  margin:0 0.1rem;
-}
-.el-col img{
-  width:100%;
-  height:85%;
-=======
   border: 1px solid #ebebeb;
   background:#ffffff;
   height:5.5rem;
@@ -72,6 +60,5 @@ export default {
 .el-col img{
   width:100%;
   height: 88%;
->>>>>>> f53b3e49248a5de9eb586de2937fc4aa6242b2aa
 }
 </style>
