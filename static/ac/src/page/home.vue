@@ -4,7 +4,7 @@
     <headernav></headernav>
 
     <!-- 主内容 -->
-    <div class="main-content-wrap">
+    <div class="main-content-wrap" align="center">
       <img src="../assets/images/timg.jpg" alt="">
     </div>
 
