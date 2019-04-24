@@ -22,6 +22,7 @@
             </el-checkbox-group>
           </div>
         </div>
+        <el-button type="primary" @click="onSubmit">搜索</el-button>
       </div>
     </div>
 
@@ -62,6 +63,9 @@ export default {
         }
       }
     },
+    onSubmit(){
+      
+    }
   },
 }
 </script>
