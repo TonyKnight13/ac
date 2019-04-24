@@ -19,15 +19,15 @@ type User struct {
 
 type UserProfile struct {
 	Id       int
-	Realname string
+	Realname string `orm:"null"`
 	Username string
 	Sex      bool `orm:"null"`
 	Phone    string
 	Email    string
 	Address  string
-	Hobby    string
+	Hobby    string    `orm:"null"`
 	Birth    time.Time `orm:"null;type(date)"`
-	Intro    string
+	Intro    string    `orm:"null"`
 	Province string
 	City     string
 	CoverUrl string
@@ -47,7 +47,7 @@ func (up *UserProfile) TableName() string {
 	return "user_profile"
 }
 
-func Register(Account string, Password string) error {
+func register(Account string, Password string) error {
 	o := orm.NewOrm()
 	vaild := validation.Validation{}
 
@@ -117,10 +117,10 @@ func CheckLog(Account string, Password string) (err error, user *User) {
 	return err, user
 }
 
-func GetUserByAccount(account string)(err error, user *User){
+func GetUserByAccount(account string) (err error, user *User) {
 	o := orm.NewOrm()
 	user = new(User)
 	qs := o.QueryTable(user)
-	err = qs.Filter("Account",account).One(user)
+	err = qs.Filter("Account", account).One(user)
 	return err, user
 }

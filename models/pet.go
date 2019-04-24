@@ -13,7 +13,7 @@ type Pet struct {
 	Variety     string
 	Sex         bool
 	Birth       time.Time `orm:"null;type(date)"`
-	Intro       string
+	Intro       string    `orm:"null"`
 	Partner     bool
 	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
 	Changed     time.Time    `orm:"auto_now_add;type(datetime)"`
@@ -41,19 +41,19 @@ func (pi *PetImg) TableName() string {
 }
 
 // 添加宠物信息
-func AddPetInfo(addPet Pet, addPetIMG PetImg, adduserid int) (error) {
+func AddPetInfo(addPet Pet, addPetIMG PetImg, adduserid int) error {
 	o := orm.NewOrm()
 	o.Using("default")
 	pet := new(Pet)
 	petimg := new(PetImg)
 	var userpro UserProfile
-	userpro = UserProfile{Id:adduserid}
+	userpro = UserProfile{Id: adduserid}
 
 	err := o.Read(&userpro)
-	if err != nil{
+	if err != nil {
 		return err
 	}
-	
+
 	petimg.ImgURL = addPetIMG.ImgURL
 	petimg.Cover = addPetIMG.Cover
 	petimg.Pet = pet
@@ -68,19 +68,19 @@ func AddPetInfo(addPet Pet, addPetIMG PetImg, adduserid int) (error) {
 
 	pet.Created = time.Now()
 	pet.Changed = time.Now()
-	
+
 	pet.UserProfile = &userpro
 
 	_, err1 := o.Insert(pet)
 	_, err2 := o.Insert(petimg)
 	_, err3 := o.Update(&userpro)
-	if err1 != nil{
+	if err1 != nil {
 		return err1
 	}
-	if err2 != nil{
+	if err2 != nil {
 		return err2
 	}
-	if err3 != nil{
+	if err3 != nil {
 		return err3
 	}
 	return nil
