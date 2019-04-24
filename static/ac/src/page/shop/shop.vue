@@ -22,6 +22,7 @@
             </el-checkbox-group>
           </div>
         </div>
+        <a-button class="" type="primary" @click="onSubmit">搜索</a-button>
       </div>
     </div>
 
@@ -62,10 +63,22 @@ export default {
         }
       }
     },
+    onSubmit(){
+
+    }
   },
 }
 </script>
 <style scoped>
+.main-content-wrap{
+  display:flex;
+  justify-content:center;
+  
+}
+.screen-content{
+  padding-left:2rem;
+  border:1px solid #ebebeb 
+}
 .screen-item{
   width: 100%;
   margin-bottom: 0.14rem;
@@ -75,19 +88,8 @@ export default {
   width: 1rem;
   text-align: right;
 }
-.screen-content{
-  padding-left:2rem 
-}
 .item-check{
   display: inline-block;
-}
-.result-text{
-  color:rgba(64,158,255,1);
-  margin: 0.18rem 0;
-}
-.result-select{
-  background:rgba(242,242,242,1);
-  border:1px solid rgba(230,230,230,1);
 }
 .el-checkbox-group{
   width: 100%;

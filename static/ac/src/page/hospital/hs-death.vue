@@ -4,10 +4,11 @@
     <headernav></headernav>
     <div class="main-content-wrap">
       <img src="../../assets/images/gone/pexels-photo-1930851.jpg" alt="">
-      <el-row :gutter="20" style="padding: 0.2rem 1rem; background:#ebebeb;">
-        <el-col :span="6"><div class="grid-content bg-purple"><img src="../../assets/images/gone/new1.jpg" alt="">宠物公墓</div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"><img src="../../assets/images/gone/new1.jpg" alt="">宠物安乐死</div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"><img src="../../assets/images/gone/new1.jpg" alt="">宠物火化</div></el-col>
+      <el-row style="padding: 0.2rem 1rem; background:#ebebeb;">
+        <el-col :span="6"><img src="../../assets/images/gone/new1.jpg" alt="">宠物公墓</el-col>
+        <el-col :span="6"><img src="../../assets/images/gone/new1.jpg" alt="">宠物墓地</el-col>
+        <el-col :span="6"><img src="../../assets/images/gone/new1.jpg" alt="">宠物安乐死</el-col>
+        <el-col :span="6"><img src="../../assets/images/gone/new1.jpg" alt="">宠物火化</el-col>
       </el-row>
     </div>
     <!-- 底部 -->
@@ -40,16 +41,14 @@ export default {
 }
 .el-col{
   border: 1px solid #ffffff;
-  background:#ebebeb;
-  height:2rem;
-  width:3.85rem;
-}
-.grid-content{
-  width:100%;
-  height:85%;
+  background:#ffffff;
+  height:3rem;
+  width:3.6rem;
+  padding:0;
+  margin:0 0.1rem;
 }
 .el-col img{
   width:100%;
-  height: 100%;
+  height:85%;
 }
 </style>
