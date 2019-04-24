@@ -51,8 +51,9 @@ export default {
 <style scoped>
 .wrapper{
   width: 100%;
+  min-height: 9.37rem;
   height: 100%;
-  background:url('../assets/images/2.jpg') no-repeat;
+  background:url('../assets/images/background/1.jpg') no-repeat center center fixed;
   background-size: cover;
   display: flex;
   align-items: center;

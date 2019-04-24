@@ -47,7 +47,7 @@ func (up *UserProfile) TableName() string {
 	return "user_profile"
 }
 
-func register(Account string, Password string) error {
+func Register(Account string, Password string) error {
 	o := orm.NewOrm()
 	vaild := validation.Validation{}
 

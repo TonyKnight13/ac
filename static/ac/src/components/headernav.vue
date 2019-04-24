@@ -1,7 +1,8 @@
 <template>
   <div class="headernav-wrap">
     <div class="nav-wrap">
-      <el-menu :default-active="this.$router.path" class="el-menu-demo" mode="horizontal" router style="padding-left:1rem">
+      <el-menu :default-active="this.$router.path" class="el-menu-demo" mode="horizontal" router>
+        <el-menu-item style="width:1rem"><img src="../assets/images/ac.png" alt="" style="width:100%"> </el-menu-item>
         <el-menu-item index="/">首页</el-menu-item>
         <el-menu-item index="/hunjie">宠物婚介</el-menu-item>
         <el-menu-item index="/shop">宠物商店</el-menu-item>
@@ -11,7 +12,8 @@
             <el-menu-item index="/hs_death">宠物殡葬</el-menu-item>
         </el-submenu>
         <el-menu-item index="/baike">宠物百科</el-menu-item>
-        <el-menu-item index="/login" style="float:right;">登录</el-menu-item>
+        <el-menu-item index="/baike">关于我们</el-menu-item>
+        <el-menu-item index="/login" style="float:right;right:1rem">登录/注册</el-menu-item>
       </el-menu>
       
     </div>
