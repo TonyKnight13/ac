@@ -52,7 +52,7 @@ export default {
 .wrapper{
   width: 100%;
   height: 100%;
-  background:url('../assets/images/2.jpg') no-repeat;
+  background:url('../assets/images/background/2.jpg') no-repeat;
   background-size: cover;
   display: flex;
   align-items: center;
