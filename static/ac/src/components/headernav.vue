@@ -2,7 +2,7 @@
   <div class="headernav-wrap">
     <div class="nav-wrap">
       <el-menu :default-active="this.$router.path" class="el-menu-demo" mode="horizontal" router>
-        <el-menu-item style="width:1rem"><img src="../assets/images/ac.png" alt="" style="width:100%"> </el-menu-item>
+        <el-menu-item style="width:1rem"><img src="../assets/images/ac.png" alt="" style="width:100%;margin-top:-3px"> </el-menu-item>
         <el-menu-item index="/">首页</el-menu-item>
         <el-menu-item index="/hunjie">宠物婚介</el-menu-item>
         <el-menu-item index="/shop">宠物商店</el-menu-item>

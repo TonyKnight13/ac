@@ -4,8 +4,8 @@
     <headernav></headernav>
 
     <!-- 主内容 -->
-    <div class="main-content-wrap" align="center">
-      <img src="../assets/images/timg.jpg" alt="">
+    <div class="main-content-wrap" style="text-align: center" >
+      <img src="../assets/images/timg.jpg" alt="" style="width:100%">
     </div>
 
     <!-- 底部 -->
