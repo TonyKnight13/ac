@@ -12,7 +12,7 @@
             <el-menu-item index="/hs_death">宠物殡葬</el-menu-item>
         </el-submenu>
         <el-menu-item index="/baike">宠物百科</el-menu-item>
-        <el-menu-item index="/baike">关于我们</el-menu-item>
+        <el-menu-item index="/usercenter">关于我们</el-menu-item>
         <el-menu-item index="/login" style="float:right;right:1rem">登录/注册</el-menu-item>
       </el-menu>
       

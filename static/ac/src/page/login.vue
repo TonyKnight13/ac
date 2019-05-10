@@ -5,20 +5,20 @@
         <img src="../assets/images/ac.png" style="height:82.5px;width:176px;">
         <span>爱宠社区 ，宠你所爱</span>
       </div>
-      <el-form :model='form' style="padding:0 40px">
-        <el-form-item>
-          <el-input v-model="form.phone" placeholder="请输入手机号" required autofocus value></el-input>
+      <el-form :model='form' :rules="loginRules" ref="loginForm" style="padding:0 40px">
+        <el-form-item prop="name">
+          <el-input v-model="form.name" placeholder="请输入用户名" autoComplete="on" required autofocus value></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-input v-model="form.password" placeholder="请输入密码" show-password required autofocus value></el-input>
+        <el-form-item prop="password">
+          <el-input v-model="form.password" placeholder="请输入密码" @keyup.enter.native="handleLogin" show-password required autofocus value></el-input>
         </el-form-item>
         <el-form-item style="margin-top:80px;">
-          <el-button type="primary" @click="onSubmit" style="width:100%;background: #FFB90F;border: #FFB90F;">登录</el-button>
+          <el-button type="primary" @click.native.prevent="handleLogin" :loading="loading" style="width:100%;background: #FFB90F;border: #FFB90F;">登录</el-button>
         </el-form-item>
       </el-form>
       <router-link to="" class="forget-password">忘记密码？</router-link>
       <div class="switch">
-        没有帐号?&nbsp;<router-link to="register" style="color:#175199">注册</router-link>
+        没有帐号?&nbsp;<router-link to="regist" style="color:#175199">注册</router-link>
       </div>
       <el-button class="iconfont" @click="toHome">&#xe600;</el-button>
     </div>
@@ -32,16 +32,49 @@ export default {
 
   },
   data() {
+    const validateUsername = (rule, value, callback) => {
+      if (value.trim().length<1) {
+        callback(new Error('用户名不能为空'))
+      } else {
+        callback()
+      }
+    };
+    const validatePass = (rule, value, callback) => {
+      if (value.trim().length < 1) {
+        callback(new Error('密码不能为空'))
+      } else {
+        callback()
+      }
+    };  
     return {
       form:{
-        phone:'',
+        name:'',
         password:''
-      }
+      },
+      loginRules: {
+        name: [{required: true, f: 'blur', validator: validateUsername}],
+        password: [{required: true, trigger: 'blur', validator: validatePass}]
+      },
+      loading: false,
+
     }
   },
   methods: {
-    onSubmit(){
-
+    handleLogin() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.loading = true;
+          this.$store.dispatch('Login', this.form).then(() => {
+            this.loading = false;
+            this.$router.push({path: '/'});
+          }).catch((e) => {
+            this.loading = false
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
     toHome(){
       this.$router.push({
