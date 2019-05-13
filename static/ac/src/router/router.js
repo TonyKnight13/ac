@@ -33,33 +33,33 @@ const router = new Router({
       path:'/hs_death',
       name:'hs_death',
       component:hs_death,
-      meta: {
-        requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
-      },
+      // meta: {
+      //   requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+      // },
     },
     {
       path:'/hs_inquiry',
       name:'hs_inquiry',
       component:hs_inquiry,
-      meta: {
-        requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
-      },
+      // meta: {
+      //   requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+      // },
     },
     {
       path:'/shop',
       name:'shop',
       component:shop,
-      meta: {
-        requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
-      },
+      // meta: {
+      //   requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+      // },
     },
     {
       path:'/usercenter',
       name:'usercenter',
       component:usercenter,
-      meta: {
-        requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
-      },
+      // meta: {
+      //   requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+      // },
     }
   ]
 })
