@@ -5,10 +5,10 @@
     <div class="mian-content-wrap">
       <div class="user-center-wrap">
         <div class="content-left-wrap">
-          <el-menu class="menu-style" :default-openeds="openeds" background-color="#f6f3f3">
+          <el-menu class="menu-style" :default-openeds="openeds" background-color="#f6f3f3" router>
             <el-submenu index="1" style="overflow:hidden">
                 <span slot="title">个人设置</span>
-                <el-menu-item index="1-1">个人资料</el-menu-item>
+                <el-menu-item index="/userbase">个人资料</el-menu-item>
                 <el-menu-item index="1-2">密码更改</el-menu-item>
                 <el-menu-item index="1-3">收货地址</el-menu-item>
             </el-submenu>

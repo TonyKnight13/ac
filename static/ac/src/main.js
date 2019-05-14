@@ -18,9 +18,10 @@ Vue.prototype.$http=axios;
  */
 import  "./assets/iconfont/iconfont.css";
 
-Vue.config.debug = true;//开启错误提示
+
 
 import store from './store/index'
+
 // import Vuex from 'vuex' ; //引入状态管理
 // Vue.use(Vuex) ;
 
@@ -75,7 +76,7 @@ import store from './store/index'
 // );
 
 
-
+Vue.config.debug = true;//开启错误提示
 new Vue({
   router,
   store,

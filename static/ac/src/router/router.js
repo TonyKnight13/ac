@@ -57,6 +57,17 @@ const router = new Router({
       path:'/usercenter',
       name:'usercenter',
       component:usercenter,
+      children:[
+        {
+          path:'/userbase',
+          name:'userbase',
+          component:resolve => require(['../page/user_components/userbase.vue'], resolve)
+        },
+        {
+          path:'/changepwd',
+          name:'changepwd'
+        }
+      ]
       // meta: {
       //   requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
       // },

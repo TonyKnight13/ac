@@ -26,6 +26,7 @@
 </template>
 <script>
 import { mapActions,mapState } from 'vuex'
+import { USER_SIGNIN } from '../store/user.js'
 export default {
   name:"login",
   components:{
@@ -52,7 +53,7 @@ export default {
         password:''
       },
       loginRules: {
-        name: [{required: true, f: 'blur', validator: validateUsername}],
+        name: [{required: true, trigger: 'blur', validator: validateUsername}],
         password: [{required: true, trigger: 'blur', validator: validatePass}]
       },
       loading: false,
@@ -74,7 +75,10 @@ export default {
           console.log('error submit!!')
           return false
         }
-      })
+      }),
+      
+      this.USER_SIGNIN(this.form)
+      this.$router.replace({ path: '/home' })
     },
     toHome(){
       this.$router.push({

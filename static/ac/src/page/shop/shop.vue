@@ -6,6 +6,18 @@
     <div class="main-content-wrap">
       <div class="main-content">
 
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" v-for="(slide,index) in swiperSlides" :key="index">
+                <img :src="slide" class="swiper-img">
+              </div>
+            </div>
+            <div class="swiper-pagination" slot="pagination"></div>
+            <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
+            <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
+          </div>
+        
+        <!-- 搜索 -->
         <div class="screen-content">
           <div class="screen-item">
             <span>种类：</span>
@@ -28,7 +40,7 @@
         </div>
 
         <p class="result-text">为您找到{{resultnum}}条相关结果</p>
-
+        <!-- 搜索结果 -->
         <div class="screen-result-wrap" style="width:70%">
           <ul class="result-select">
             <li>综合</li>
@@ -44,7 +56,7 @@
           </ul>
 
           <ul class="result-content-wrap" style="width:100%">
-            <li v-for="(item,index) in resultGood.slice((currentPage-1)*5,currentPage*5)" ::key="index">
+            <li v-for="(item,index) in resultGood.slice((currentPage-1)*5,currentPage*5)" :key="index">
               <div class="result-content">
                 <el-row>
                   <el-col :span="24">
@@ -65,8 +77,7 @@
                 </el-row>
               </div>
             </li>
-            <el-pagination 
-              
+            <el-pagination
               :total="total"
               @current-change="currentPageChange"  
               :page-size="5" >
@@ -83,6 +94,8 @@
   </div>
 </template>
 <script>
+import Swiper from "swiper";
+import 'swiper/dist/css/swiper.min.css'
 import headernav from "../../components/headernav.vue";
 import foot from "../../components/foot"
 
@@ -95,6 +108,10 @@ export default {
   },
   data(){
     return{
+      swiperSlides: ['src/assets/images/background/4.jpg',
+                    'src/assets/images/background/5.jpg',
+                    'src/assets/images/background/6.jpg'
+                    ],
       resultnum:30,
       specis,
       provinces,
@@ -197,6 +214,25 @@ export default {
     console.log(this.total)
     // this.total=this.resultGood.length
   },
+  mounted(){
+    var mySwiper = new Swiper('.swiper-container', {
+      direction:'horizontal',
+      loop:true,
+      autoplay : {
+        autoplay: true,  //是否自动切换
+        delay: 3000,   //切换间隔时间
+        disableOnInteraction: false,  //触碰后自动切换是否停止
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable :true, //点击分页器的指示点分页器会控制Swiper切换
+      },
+      navigation:{
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      }
+    })
+  },
   methods: {
     onChange(value){
       let len=value.length-1
@@ -226,7 +262,8 @@ export default {
   },
 }
 </script>
-<style scoped>
+<style scoped> 
+/* scoped:作用当前组件 */
 .main-content{
   display:flex;
   justify-content:center;
@@ -299,12 +336,12 @@ export default {
 }
 .good-text .price{
   float: right;
-  font-size:0.23rem;
+  font-size:0.32rem;
   font-weight:bold;
   color:rgba(245,108,108,1);
 }
 .good-text .price mark{
-  font-size:18px;
+  font-size:0.32rem;
   color:rgba(245,108,108,1);
   background: transparent;
 }
@@ -320,5 +357,26 @@ export default {
   height: 0.4rem;
   margin-bottom: 0.08rem;
 }
+
+.swiper-container{
+  width: 90%;
+  height: 9rem;
+  overflow: hidden;
+  margin-bottom: 0.2rem;
+}
+.swiper-wrapper{
+  width: 100%;
+  height: 100%;
+
+}
+.swiper-slider{
+  width: 100%;
+}
+.swiper-img{
+  width: 100%;
+  height:100%
+}
+
+  
 </style>
 

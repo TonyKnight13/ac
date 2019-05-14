@@ -16,10 +16,6 @@ module.exports = {
     publicPath: '/dist/', // 通过devServer访问路径
     filename: 'build.js' // 打包后的文件名
   },
-  devServer: {
-    historyApiFallback: true,
-    overlay: true
-  },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
