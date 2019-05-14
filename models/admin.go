@@ -33,12 +33,16 @@ type City struct {
 	Province  *Province `orm:"rel(fk)"`
 }
 
+type GoodsKind struct {
+	Id       int
+	Kindname string
+}
+
 var regStruct map[string]interface{}
 
 func init() {
-	orm.RegisterModel(new(PetSpeci), new(PetVari), new(Province), new(City))
+	orm.RegisterModel(new(PetSpeci), new(PetVari), new(Province), new(City), new(GoodsKind))
 }
-
 
 func ShowValues(tableName string) interface{} {
 	// dbname := beego.AppConfig.String("mysqldb")

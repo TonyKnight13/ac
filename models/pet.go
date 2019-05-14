@@ -104,7 +104,7 @@ func UpdatePetInfo(id int, updPI Pet, updPetIMG PetImg) error {
 	pet.Intro = updPI.Intro
 	pet.Variety = updPI.Variety
 
-	pet.Changed = updPI.Changed
+	pet.Changed = time.Now()
 
 	_, err := o.Update(&pet)
 	return err
