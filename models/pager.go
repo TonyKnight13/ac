@@ -10,7 +10,19 @@ type PageOptions struct {
 	LinkItemCount int //生成标签的个数
 }
 
-func GetPageInfo(tableName string, currentpage int, pagesize int, conditions string, optionClass []string,options []string) (int int) {
+func SetPageCond(title string, list []string, cond orm.Condition) *orm.Condition{
+	o := orm.NewOrm()
+
+	listCounts := len(list)
+	if listCounts >= 1 {
+		for i := 0; i < listCounts; i++ {
+			cond.And(title, list[i])
+		}
+	}
+	return &cond
+}
+
+func GetPageInfo(tableName string, currentpage int, pagesize int, conditions string, titles []string, list []string (int int) {
 	if currentpage <= 1 {
 		currentpage = 1
 	}
@@ -18,17 +30,11 @@ func GetPageInfo(tableName string, currentpage int, pagesize int, conditions str
 		pagesize = 10
 	}
 
-	o:= orm.NewOrm()
-	cond:=orm.NewCondition()
+	titlesCounts := len(titles)
+	o := orm.NewOrm()
+	cond := orm.NewCondition()
+	for i := 0; i < titlesCounts; i++  {
+		cond = SetPageCond(title[i], list, cond).And()
+	}
 
-	qs:=o.QueryTable(tableName)
-
-	optionClassCounts := len(itemsClass)
-
-	qs.Filter(itemClass[0],)
-
-	cond1 := cond.And(expr string, args ...interface{})
-
-
-	
 }

@@ -10,7 +10,7 @@
                 <span slot="title">个人设置</span>
                 <el-menu-item index="/userbase">个人资料</el-menu-item>
                 <el-menu-item index="1-2">密码更改</el-menu-item>
-                <el-menu-item index="1-3">收货地址</el-menu-item>
+                <el-menu-item index="/addAddress">收货地址</el-menu-item>
             </el-submenu>
             <el-submenu index="2" style="overflow:hidden">
                 <span slot="title">交易管理</span>
