@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import user from './user';
+// import * as actions from './actions';
+// import * as mutations from './mutations';
+// import * as getters from './getters';
 
 Vue.use(Vuex)
 // 初始化时用sessionStore.getItem('token'),这样子刷新页面就无需重新登录
@@ -30,8 +33,6 @@ Vue.use(Vuex)
 //  }
 // }
  
-const actions = {
-}
 export default new Vuex.Store({
 //  state,
 //  mutations,

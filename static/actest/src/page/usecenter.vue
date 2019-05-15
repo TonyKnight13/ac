@@ -10,12 +10,16 @@
                 <span slot="title">个人设置</span>
                 <el-menu-item index="/userbase">个人资料</el-menu-item>
                 <el-menu-item index="1-2">密码更改</el-menu-item>
-                <el-menu-item index="/addAddress">收货地址</el-menu-item>
             </el-submenu>
             <el-submenu index="2" style="overflow:hidden">
                 <span slot="title">交易管理</span>
                 <el-menu-item index="1-1">商城订单</el-menu-item>
                 <el-menu-item index="1-2">我的收藏</el-menu-item>
+            </el-submenu>
+            <el-submenu index="3" style="overflow:hidden">
+                <span slot="title">收货地址</span>
+                <el-menu-item index="/myAddress">我的地址</el-menu-item>
+                <el-menu-item index="/addAddress">添加地址</el-menu-item>
             </el-submenu>
 
             
@@ -40,7 +44,7 @@
     },
     data(){
       return{
-        openeds: ['1','2'],
+        openeds: ['1','2','3'],
       }
     },
     watch:{
@@ -74,7 +78,7 @@
   }
   .content-right-wrap{
     width: calc(85% - 0.4rem);
-    height: 10rem;
+    height: 12rem;
     background: #ffffff;
   }
 </style>

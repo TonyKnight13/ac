@@ -7,6 +7,9 @@ import elementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(elementUI)
 
+import Distpicker from 'v-distpicker';
+
+Vue.component('v-distpicker', Distpicker);
 /**
  *引入axios
  */

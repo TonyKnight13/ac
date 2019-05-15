@@ -4,37 +4,39 @@
       <h1>添加收货地址</h1>
     </div>
     <div class="add-box">
-      <el-form :v-model="formData" label-position="left" :label-width="100" :rules="ruleInline">
+      <el-form :v-model="formData" label-position="left" :rules="ruleInline" label-width="80px">
         <el-form-item label="收件人" prop="name">
           <el-input v-model="formData.name" size="large"></el-input>
         </el-form-item>
         <el-form-item label="收件地区" prop="address">
-          <Distpicker :province="formData.province" :city="formData.city" :area="formData.area" @province="getProvince" @city="getCity" @area="getArea"></Distpicker>
+          <v-distpicker :province="formData.province" :city="formData.city" :area="formData.area" @province="getProvince" @city="getCity" @area="getArea"></v-distpicker>
         </el-form-item>
-        <el-from-item label="收件地址" prop="address">
-          <el-input v-model="formData.address" size="large"></el-input>
-        </el-from-item>
-        <el-from-item label="手机号码" prop="phone">
-          <el-input v-model="formData.phone" size="large"></el-input>
-        </el-from-item>      
-        <el-from-item label="邮政编码" prop="postalcode">
-          <el-input v-model="formData.postalcode" size="large"></el-input>
-        </el-from-item>    
+        <el-form-item label="收件地址" prop="address">
+          <el-input v-model="formData.address"></el-input>
+        </el-form-item>
+        <el-form-item label="手机号码" prop="phone">
+          <el-input v-model="formData.phone"></el-input>
+        </el-form-item>      
+        <el-form-item label="邮政编码" prop="postalcode">
+          <el-input v-model="formData.postalcode"></el-input>
+        </el-form-item>    
       </el-form>
     </div>
     <div class="add-submit">
-      <el-button type="primary">添加地址</el-button>
+      <el-button type="primary" @click="handleSubmit('formInline')">添加地址</el-button>
     </div>
   </div>
 </template>
 <script>
-import Distpicker from  'v-distpicker';
-import store from 
+// import Distpicker from  'v-distpicker';
+import store from '../../store/index.js';
+import { mapActions } from 'vuex';
 export default {
   name:'addAddress',
-    components:{
-    Distpicker
-  },
+  // components:{
+  //   Distpicker
+  // },
+  store,
   data() {
     return {
       formData:{
@@ -64,6 +66,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['addAddress']),
+    
     getProvince (data) {
       this.formData.province = data.value;
     },
@@ -72,22 +76,58 @@ export default {
     },
     getArea (data) {
       this.formData.area = data.value;
+    },
+     handleSubmit (name) {
+      // const father = this;
+      console.log(this.formData.name);
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          this.addAddress(this.formData).then(data => {
+            if (data) {
+              this.$Message.success('添加成功');
+              this.$router.push('/home/myAddress');
+            } else {
+              this.$Message.error('添加失败，请重新尝试');
+            }
+          });
+        } else {
+          this.$Message.error('请填写正确的地址信息');
+        }
+      });
     }
   },
 }
 </script>
 <style scoped>
 .add-container {
-  margin: 15px auto;
+  margin: 0.15rem auto;
   width: 60%;
-  min-width: 600px;
+  min-width: 6rem;
 }
 .add-title {
-  margin-bottom: 15px;
+  margin-bottom: 0.15rem;
   text-align: center;
 }
 .add-submit {
   display: flex;
   justify-content: center;
 }
+.el-input{
+  width: 60%;
+}
+.distpicker-address-wrapper{
+  width: 100%;
+  font-size: 0.16rem;
+}
+.distpicker-address-wrapper select:nth-child(1){
+  width: 50%;
+}
+.distpicker-address-wrapper select:nth-child(2){
+  margin-left: 2rem !important;
+}
+.distpicker-address-wrapper select:nth-child(2), .distpicker-address-wrapper select:nth-child(3){
+  width: 25%;
+}
+
+
 </style>

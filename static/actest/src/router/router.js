@@ -68,6 +68,11 @@ const router = new Router({
           name:'changepwd'
         },
         {
+          path:'/myAddress',
+          name:'myAddress',
+          component:resolve => require(['../page/user_components/myAddress.vue'],resolve)
+        },
+        {
           path:'/addAddress',
           name:'addAddress',
           component:resolve => require(['../page/user_components/addAddress.vue'],resolve)
