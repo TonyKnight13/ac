@@ -101,82 +101,81 @@ export default {
         this.dialogFormVisible = false;
         this.$refs[form].resetFields();//将form表单重置
     },
-    message (m) {
-      this.$message.error({
-        message: m
-      })
-    },
-    _addressList () {
-      addressList({userId: this.userId}).then(res => {
-        let data = res.result
-        if (data.length) {
-          this.addList = res.result
-          this.addressId = res.result[0].addressId || '1'
-        } else {
-          this.addList = []
-        }
-      })
-    },
-    _addressUpdate (params) {
-      addressUpdate(params).then(res => {
-        this._addressList()
-      })
-    },
-    _addressAdd (params) {
-      addressAdd(params).then(res => {
-        if (res.success === true) {
-          this._addressList()
-        } else {
-          this.message(res.message)
-        }
-      })
-    },
+  //   message (m) {
+  //     this.$message.error({
+  //       message: m
+  //     })
+  //   },
+  //   _addressList () {
+  //     addressList({userId: this.userId}).then(res => {
+  //       let data = res.result
+  //       if (data.length) {
+  //         this.addList = res.result
+  //         this.addressId = res.result[0].addressId || '1'
+  //       } else {
+  //         this.addList = []
+  //       }
+  //     })
+  //   },
+  //   _addressUpdate (params) {
+  //     addressUpdate(params).then(res => {
+  //       this._addressList()
+  //     })
+  //   },
+  //   _addressAdd (params) {
+  //     addressAdd(params).then(res => {
+  //       if (res.success === true) {
+  //         this._addressList()
+  //       } else {
+  //         this.message(res.message)
+  //       }
+  //     })
+  //   },
 
-    // 保存
-    save (obj) {
-      this.popupOpen = false
-      if (obj.addressId) {
-        this._addressUpdate(obj)
-      } else {
-        delete obj.addressId
-        this._addressAdd(obj)
-      }
-    },
+  //   // 保存
+  //   save (obj) {
+  //     this.popupOpen = false
+  //     if (obj.addressId) {
+  //       this._addressUpdate(obj)
+  //     } else {
+  //       delete obj.addressId
+  //       this._addressAdd(obj)
+  //     }
+  //   },
 
-    // 删除
-    del (addressId, i) {
-      addressDel({addressId: addressId}).then(res => {
-        if (res.success === true) {
-          this.addressList.splice(i, 1)
-        } else {
-          this.message('删除失败')
-        }
-      })
-    },
+  //   // 删除
+  //   del (addressId, i) {
+  //     addressDel({addressId: addressId}).then(res => {
+  //       if (res.success === true) {
+  //         this.addressList.splice(i, 1)
+  //       } else {
+  //         this.message('删除失败')
+  //       }
+  //     })
+  //   },
 
-    // 修改
-    update(item){
-      this.dialogVisible=true;
-      if(item){
-        this.dialogTitle = '修改收货地址'
-        this.msg.name = item.name
-        this.msg.phone = item.phone
-        this.msg.address = item.address
-        this.msg.addressId = item.addressId
-      }else {
-        this.popupTitle = '新增收货地址'
-        this.msg.name = ''
-        this.msg.phone = ''
-        this.msg.address = ''
-        this.msg.addressId = ''
-      }
-    }
+  //   // 修改
+  //   update(item){
+  //     this.dialogVisible=true;
+  //     if(item){
+  //       this.dialogTitle = '修改收货地址'
+  //       this.msg.name = item.name
+  //       this.msg.phone = item.phone
+  //       this.msg.address = item.address
+  //       this.msg.addressId = item.addressId
+  //     }else {
+  //       this.popupTitle = '新增收货地址'
+  //       this.msg.name = ''
+  //       this.msg.phone = ''
+  //       this.msg.address = ''
+  //       this.msg.addressId = ''
+  //     }
+  //   }
+  // },
+  // created () {
+  //   this.userId = getStore('userId')
+  //   this._addressList()
   },
-  created () {
-    this.userId = getStore('userId')
-    this._addressList()
-  },
-  // store
 };
 </script>
 
