@@ -9,7 +9,7 @@
             <el-submenu index="1" style="overflow:hidden">
                 <span slot="title">个人设置</span>
                 <el-menu-item index="/userbase">个人资料</el-menu-item>
-                <el-menu-item index="1-2">密码更改</el-menu-item>
+                <el-menu-item index="/changepwd">密码更改</el-menu-item>
                 <el-menu-item index="/myAddress">我的地址</el-menu-item>
             </el-submenu>
             <el-submenu index="2" style="overflow:hidden">
