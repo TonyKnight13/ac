@@ -2,20 +2,23 @@
   <!-- <div class="main-wrap" > -->
     <YShelf title="个人资料">
       <div slot="content" class="content">
-        <el-form :v-model="formData" label-position="left" :rules="ruleInline" label-width="80px">
+        <el-form :v-model="formData" :rules="rules" label-width="100px">
           <el-form-item label="用户名" prop="username">
             <el-input v-model="formData.phone"></el-input>
           </el-form-item>      
           <el-form-item label="性别" prop="sex" >
-              <el-radio v-model="formData.radio" label="1">男</el-radio>
-              <el-radio v-model="formData.radio" label="2">女</el-radio>
+              <el-radio v-model="formData.radio" label="man">男</el-radio>
+              <el-radio v-model="formData.radio" label="woman">女</el-radio>
           </el-form-item>     
           <el-form-item label="手机号码" prop="phone">
             <el-input v-model="formData.phone"></el-input>
-          </el-form-item>      
+          </el-form-item> 
+          <el-form-item>
+            <el-button
+            @click="save('formData')">
+            保存</el-button>
+          </el-form-item>     
         </el-form>
-        <el-button
-        @click="save({userId:userId,userName:formData.username,})"></el-button>
       </div>
     </YShelf>
   <!-- </div> -->
@@ -31,11 +34,11 @@ export default {
     return {
       formData:{
         username:'',
-        radio: '1',
+        radio: 'man',
         phone:'',
       },
       userId:'',
-      ruleInline: {
+      rules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
@@ -49,6 +52,11 @@ export default {
       }
 
     };
+  },
+  methods:{
+    save(formName){
+            console.log('error submit!!');
+    }
   }
 }
 </script>

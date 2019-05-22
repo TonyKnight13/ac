@@ -14,7 +14,7 @@
             </el-submenu>
             <el-submenu index="2" style="overflow:hidden">
                 <span slot="title">交易管理</span>
-                <el-menu-item index="1-1">商城订单</el-menu-item>
+                <el-menu-item index="/order">商城订单</el-menu-item>
                 <el-menu-item index="1-2">我的收藏</el-menu-item>
             </el-submenu>
             <!-- <el-submenu index="3" style="overflow:hidden">
