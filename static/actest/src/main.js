@@ -7,7 +7,7 @@ import { userInfo } from './api'
 /* 引入element */
 import elementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import mock from './mock/mock'
+// import mock from './mock/mock'
 /**
  *引入iconfont
  */

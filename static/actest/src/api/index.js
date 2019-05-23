@@ -1,6 +1,6 @@
 import http from './public'
 const baseUrl = '/api'  //接口以api开头
-// 登陆
+登陆
 export const userLogin = (params) => {
   return http.fetchPost('${baseUrl}/member/login', params)
 }
