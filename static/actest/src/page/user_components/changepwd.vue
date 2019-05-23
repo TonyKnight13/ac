@@ -3,7 +3,7 @@
       <div slot="content">
         <el-form ref="psdForm" :model="psdForm" label-width="100px" :rules="rules" status-icon >
             <el-form-item label="密码" prop="pass"><!-- prop 属性为需校验的字段名 -->
-              <el-input placeholder="确认密码" v-model="psdForm.pass" auto-complete="off"></el-input>
+              <el-input placeholder="请输入密码" v-model="psdForm.pass" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="确认密码" prop="checkPass">
               <el-input placeholder="请再输入密码" v-model="psdForm.checkPass" auto-complete="off"></el-input>

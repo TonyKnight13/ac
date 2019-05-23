@@ -35,10 +35,10 @@ export const productHome = (params) => {
 export const navList = (params) => {
   return http.fetchGet('/goods/navList', params)
 }
-// 推荐板块
-export const recommend = (params) => {
-  return http.fetchGet('/goods/recommend', params)
-}
+// // 推荐板块
+// export const recommend = (params) => {
+//   return http.fetchGet('/goods/recommend', params)
+// }
 // // 捐赠板块
 // export const thank = (params) => {
 //   return http.fetchGet('/goods/thank', params)
