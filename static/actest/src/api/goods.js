@@ -1,8 +1,8 @@
 import http from './public'
-
+const baseUrl = '/api'
 // 商品列表
 export const getAllGoods = (params) => {
-  return http.fetchGet('/goods/allGoods', params)
+  return http.fetchGet('${baseUrl}/goods/allGoods', params)
 }
 // 获取购物车列表
 export const getCartList = (params) => {

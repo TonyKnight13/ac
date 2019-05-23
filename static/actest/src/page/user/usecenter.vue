@@ -36,8 +36,8 @@
   </div>
 </template>
 <script>
-  import headernav from "../components/headernav.vue";
-  import foot from "../components/foot"
+  import headernav from "@/components/headernav.vue";
+  import foot from "@/components/foot"
   export default {
     name:"home",
     components:{

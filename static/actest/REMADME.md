@@ -1,8 +1,9 @@
 ├── dist  项目输出文件
 └── src
     ├── api  AJAX请求
-    └── assets  项目静态资源
+    ├── assets  项目静态资源
     ├── components  组件
+    ├── mock 模拟后台接受返回数据
     ├── page 页面
     ├── router 路由配置
     ├── store  状态管理文件

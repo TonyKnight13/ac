@@ -2,15 +2,15 @@
   <div class="wrapper">
     <div class="main">
       <div class="signHeader">
-        <img src="../assets/images/ac.png" style="height:82.5px;width:176px;">
-        <span>爱宠社区 ，宠你所爱</span>
+        <!-- <img src="../assets/images/ac.png" style="height:82.5px;width:176px;">
+        <span>爱宠社区 ，宠你所爱</span> -->
       </div>
-      <el-form :model='form' style="padding:0 40px">
-        <el-form-item>
+      <el-form :model='form' style="padding:0 40px" status-icon :rules="rules" ref="form">
+        <el-form-item prop="username">
           <el-input v-model="form.username" placeholder="请输入用户名" required autofocus value></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-input v-model="form.password" placeholder="请输入密码" show-password required autofocus value></el-input>
+        <el-form-item prop="pass">
+          <el-input v-model="form.pass" placeholder="请输入密码" show-password required autofocus value></el-input>
         </el-form-item>
         <el-form-item >
           <el-input v-model="form.checkPss" placeholder="请确认密码" show-password required autofocus value></el-input>
@@ -20,7 +20,13 @@
           <el-radio v-model="form.radio" label="2">专业用户</el-radio>
         </el-form-item>
         <el-form-item >
-          <el-button type="primary" @click="onSubmit" style="width:100%;background: #FFB90F;border: #FFB90F;">注册</el-button>
+          <el-button 
+          :class="this.disabled=='true'?'disabled-btn':'main-btn'"
+          type="primary" 
+          @click="regist('form')" 
+          style="width:100%;border: #FFB90F;"
+          :disabled="disabled"
+          >{{registxt}}</el-button>
         </el-form-item>
       </el-form>
       <!-- <router-link to="" class="forget-password">忘记密码？</router-link> -->
@@ -32,24 +38,97 @@
 </template>
 <script>
 import { mapActions,mapState } from 'vuex'
+import { register, geetest } from '@/api/index.js'
 export default {
-  name:"login",
+  name:"regist",
   components:{
 
   },
   data() {
+    // <!--验证用户是否为空-->
+    let checkName = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入用户名'))
+      } else {
+        callback()
+      }
+    }
+    // <!--验证密码-->
+    let validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error("请输入密码"))
+      } else {
+        if (this.form.checkPass !== "") {
+          this.$refs.form.validateField("checkPass");
+        }
+        callback()
+      }
+    }
+    // <!--二次验证密码-->
+    let validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error("请输入密码"));
+      } else if (value !== this.form.pass) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
     return {
       form:{
         username:'',
-        password:'',
-        checkPss:'',
-        radio:"1",
-      }
+        pass:'',
+        checkPass:'',
+      },
+      statusKey:'',
+      disabled:false,
+      registxt:'注册',
+      rules: {
+        pass: [{ validator: validatePass, trigger: 'blur' }],
+        checkPass: [{ validator: validatePass2, trigger: 'blur' }],
+        username: [{ validator: checkName, trigger: 'blur' }],
+      },
     }
   },
   methods: {
-    onSubmit(){
-
+    successMsg(){
+      this.$message({
+        message:"恭喜您，注册成功!",
+        type:'success'
+      })
+    },
+    errorMsg (m) {  //注册失败
+      this.$message.error({
+        message: m
+      })
+    },
+    regist(formName){
+      this.$refs[formName].validate(valid=>{
+        if(valid){
+          this.disabled=true;
+          this.registxt='注册中...'
+          register({
+            username:this.username,
+            userPwd:this.userPwd,
+            statusKey:this.statusKey
+          }).then(res=>{
+            if(res.success === true){  //后台返回信息中success：true
+              this.successMsg()
+              this.$router.replace({path:'/login'})
+            }else{
+              this.errorMsg(res.message)
+              this.registxt  = '注册';
+              this.disabled=false;
+              return false;
+            }
+          })
+        }else{
+          this.registxt  = '注册';
+          this.disabled=false;
+          return false;
+        }
+      })
+       
     }
   },
 }
@@ -59,7 +138,7 @@ export default {
   width: 100%;
   min-height: 9.37rem;
   height: 100%;
-  background:url('../assets/images/background/1.jpg') no-repeat center center fixed;
+  /* background:url('../assets/images/background/1.jpg') no-repeat center center fixed; */
   background-size: cover;
   display: flex;
   align-items: center;
@@ -104,8 +183,9 @@ export default {
   justify-content: center;
   font-size: 16px;
 }
-.el-form-item {
-  margin-bottom: 15px;
-}
-
+.el-button,
+.main-btn,
+.el-button--primary:hover,
+.el-button--primary:focus
+{background: #FFB90F;}
 </style>

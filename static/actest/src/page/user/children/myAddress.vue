@@ -57,7 +57,7 @@
 <script>
 // import { addressList, addressUpdate, addressAdd, addressDel } from '/api/goods'
 // import { getStore } from '/utils/storage'
-import YShelf from '../../components/shelf';
+import YShelf from '@/components/shelf';
 export default {
   name: 'MyAddress',
   components:{
