@@ -6,17 +6,11 @@
     <div class="main-content-wrap">
       <div class="main-content">
 
-          <div class="swiper-container">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide" v-for="(slide,index) in swiperSlides" :key="index">
-                <img :src="slide" class="swiper-img">
-              </div>
-            </div>
-            <div class="swiper-pagination" slot="pagination"></div>
-            <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
-            <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
-          </div>
-        
+        <el-carousel indicator-position="outside" :interval="3000" type="card" >
+          <el-carousel-item v-for="(item,index) in imgs" :key="index">
+            <el-image :src="item" fit="contain"></el-image>
+          </el-carousel-item>
+        </el-carousel>
         <!-- 搜索 -->
         <div class="screen-content">
           <div class="screen-item">
@@ -96,8 +90,8 @@
 <script>
 import Swiper from "swiper";
 import 'swiper/dist/css/swiper.min.css'
-import headernav from "../../components/headernav.vue";
-import foot from "../../components/foot"
+import headernav from "@/components/headernav.vue";
+import foot from "@/components/foot"
 
 const specis=['不限','狗','猫','兔子','鱼']
 const provinces=['不限','浙江','上海','江苏','北京']
@@ -108,7 +102,7 @@ export default {
   },
   data(){
     return{
-      swiperSlides: ['src/assets/images/background/4.jpg',
+      imgs: ['src/assets/images/background/4.jpg',
                     'src/assets/images/background/5.jpg',
                     'src/assets/images/background/6.jpg'
                     ],
@@ -121,82 +115,82 @@ export default {
       total:50,
       resultGood:[
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '100.00',
         },
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '100.00',
         },
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '100.00',
         },
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '100.00',
         },
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '100.00',
         },
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '200.00',
         },
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '200.00',
         },
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '200.00',
         },
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '200.00',
         },
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '200.00',
         },
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '300.00',
         },
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '300.00',
         },
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '300.00',
         },
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '300.00',
         },
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '300.00',
         },
         {
-          goodImg:require("../../assets/images/shop/1.jpg"),
+          goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '300.00',
         },
@@ -358,24 +352,13 @@ export default {
   margin-bottom: 0.08rem;
 }
 
-.swiper-container{
-  width: 90%;
-  height: 9rem;
+.el-carousel{
+  width: 80%;
+  height: 5rem;
   overflow: hidden;
   margin-bottom: 0.2rem;
 }
-.swiper-wrapper{
-  width: 100%;
-  height: 100%;
 
-}
-.swiper-slider{
-  width: 100%;
-}
-.swiper-img{
-  width: 100%;
-  height:100%
-}
 
   
 </style>

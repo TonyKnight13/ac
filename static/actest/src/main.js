@@ -1,33 +1,39 @@
 import Vue from 'vue';
 import App from './App';
-import router from './router/router';
-
+import router from './router/router';  //路由
+import store from './store/';  //状态管理
+import VueCookie from 'vue-cookie'
+import { userInfo } from './api'
 /* 引入element */
 import elementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(elementUI)
+import mock from './mock/mock'
+/**
+ *引入iconfont
+ */
+import  "./assets/iconfont/iconfont.css";
+import { getStore } from './utils/storage';
 
-import Distpicker from 'v-distpicker';
-
-Vue.component('v-distpicker', Distpicker);
 /**
  *引入axios
  */
 import axios from 'axios';
 Vue.prototype.$http=axios;
-
-/**
- *引入iconfont
- */
-import  "./assets/iconfont/iconfont.css";
-
+Vue.use(elementUI)
+Vue.use(VueCookie)
+// import Distpicker from 'v-distpicker';
+// Vue.component('v-distpicker', Distpicker);
 
 
-import store from './store/index'
+
+
+
+
+
+
 
 // import Vuex from 'vuex' ; //引入状态管理
 // Vue.use(Vuex) ;
-
 // const ADD_COUNT = 'ADD_COUNT'; // 用常量代替事件类型，使得代码更清晰
 // const REMOVE_COUNT = 'REMOVE_COUNT';
 
@@ -78,7 +84,29 @@ import store from './store/index'
 //   }
 // );
 
-
+const whiteList = ['/home'] // 不需要登陆的页面
+router.beforeEach(function (to, from, next) {
+  let params = {
+    params: {
+      token: getStore('token')
+    }
+  }
+  userInfo(params).then(res => {
+    if (res.result.state !== 1) { // 没登录
+      if (whiteList.indexOf(to.path) !== -1) { // 白名单
+        next()
+      } else {
+        next('/login')
+      }
+    } else {
+      store.commit('RECORD_USERINFO', {info: res.result})
+      if (to.path === '/login') { //  跳转到
+        next({path: '/'})
+      }
+      next()
+    }
+  })
+})
 Vue.config.debug = true;//开启错误提示
 new Vue({
   router,
@@ -87,4 +115,4 @@ new Vue({
   render:h=>h(App),
   // components: { App },
   // template: '<App/>'
-});
+}).$mount('#app');

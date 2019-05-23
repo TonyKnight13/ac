@@ -1,19 +1,20 @@
 import http from './public'
+const baseUrl = '/api'  //接口以api开头
 // 登陆
 export const userLogin = (params) => {
-  return http.fetchPost('/member/login', params)
+  return http.fetchPost('${baseUrl}/member/login', params)
 }
 // 退出登陆
 export const loginOut = (params) => {
-  return http.fetchGet('/member/loginOut', params)
+  return http.fetchGet('${baseUrl}/member/loginOut', params)
 }
 // 用户信息
 export const userInfo = (params) => {
-  return http.fetchGet('/member/checkLogin', params)
+  return http.fetchGet('${baseUrl}/member/checkLogin', params)
 }
 // 注册账号
 export const register = (params) => {
-  return http.fetchPost('/member/register', params)
+  return http.fetchPost('${baseUrl}/member/register', params)
 }
 // 上传图片
 export const upload = (params) => {
@@ -23,10 +24,7 @@ export const upload = (params) => {
 export const updateheadimage = (params) => {
   return http.fetchPost('/member/updateheadimage', params)
 }
-// 捐赠列表
-export const thanksList = (params) => {
-  return http.fetchGet('/member/thanks', params)
-}
+
 // 首页接口
 export const productHome = (params) => {
   return http.fetchGet('/goods/home', params)

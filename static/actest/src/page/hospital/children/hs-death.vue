@@ -4,11 +4,11 @@
     <headernav></headernav>
     <div class="main-content-wrap">
       <div style="padding:0 1rem;width:100%;box-sizing:border-box;"> 
-      <img style="width:100%; " src="../../assets/images/gone/pexels-photo-1930851.jpg" alt=""></div>
+      <img style="width:100%; " src="@/assets/images/gone/pexels-photo-1930851.jpg" alt=""></div>
       <el-row :gutter="20" style="padding: 0.2rem 1rem; background:#ebebeb;">
-        <el-col :span="8" style="padding: 0"><img src="../../assets/images/gone/公墓.jpg" alt="">宠物公墓</el-col>
-        <el-col :span="8" style="padding: 0"><img src="../../assets/images/gone/安乐死.jpg" alt="">宠物安乐死</el-col>
-        <el-col :span="8" style="padding: 0"><img src="../../assets/images/gone/玑珠.jpg" alt="">宠物玑珠</el-col>
+        <el-col :span="8" style="padding: 0"><img src="@/assets/images/gone/公墓.jpg" alt="">宠物公墓</el-col>
+        <el-col :span="8" style="padding: 0"><img src="@/assets/images/gone/安乐死.jpg" alt="">宠物安乐死</el-col>
+        <el-col :span="8" style="padding: 0"><img src="@/assets/images/gone/玑珠.jpg" alt="">宠物玑珠</el-col>
       </el-row>
     </div>
     <!-- 底部 -->
@@ -16,8 +16,8 @@
   </div>
 </template>
 <script>
-import headernav from "../../components/headernav.vue";
-import foot from "../../components/foot"
+import headernav from "@/components/headernav";
+import foot from "@/components/foot"
 export default {
   name:"hs_death",
   components:{

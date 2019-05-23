@@ -24,7 +24,7 @@
   <!-- </div> -->
 </template>
 <script>
-import YShelf from '../../components/shelf';
+import YShelf from '@/components/shelf';
 export default {
   name: 'userbase',
   components:{

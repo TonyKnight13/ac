@@ -3,10 +3,10 @@ import Router from 'vue-router';
 import home from '../page/home.vue';
 import login from '../page/login.vue';
 import regist from '../page/regist.vue';
-import hs_death from '../page/hospital/hs-death.vue';
-import hs_inquiry from '../page/hospital/hs-inquiry.vue';
+import hs_death from '../page/hospital/children/hs-death.vue';
+import hs_inquiry from '../page/hospital/children/hs-inquiry.vue';
 import shop from '../page/shop/shop.vue';
-import usercenter from '../page/usecenter.vue';
+import usercenter from '../page/user/usecenter.vue';
 import store from '../store/index'
 
 Vue.use(Router);
@@ -61,22 +61,22 @@ const router = new Router({
         {
           path:'/userbase',
           name:'userbase',
-          component:resolve => require(['../page/user_components/userbase.vue'], resolve)
+          component:resolve => require(['../page/user/children/userbase.vue'], resolve)
         },
         {
           path:'/changepwd',
           name:'changepwd',
-          component:resolve => require(['../page/user_components/changepwd.vue'],resolve)
+          component:resolve => require(['../page/user/children/changepwd.vue'],resolve)
         },
         {
           path:'/myAddress',
           name:'myAddress',
-          component:resolve => require(['../page/user_components/myAddress.vue'],resolve)
+          component:resolve => require(['../page/user/children/myAddress.vue'],resolve)
         },
         {
           path:'/order',
           name:'oeder',
-          component:resolve => require(['../page/user_components/order.vue'],resolve)
+          component:resolve => require(['../page/user/children/order.vue'],resolve)
         },
       ]
       // meta: {

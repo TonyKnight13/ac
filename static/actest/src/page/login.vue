@@ -27,8 +27,8 @@
 <script>
 import { mapActions,mapState } from 'vuex';
 // import { USER_SIGNIN } from '../store/user.js'
-import { userLogin } from '../api/index.js';
-import { addCart } from '../api/goods';
+import { userLogin } from '@/api/index.js';
+import { addCart } from '@/api/goods';
 import { setStore, getStore, removeStore } from '../utils/storage';
 var captcha;
 export default {
@@ -52,6 +52,7 @@ export default {
       }
     };  
     return {
+      loading:'false',
       form:{
         username:'',
         password:''
@@ -62,6 +63,11 @@ export default {
       },
       loading: false,
 
+    }
+  },
+  computed:{
+    count(){
+      return this.$store.state.login
     }
   },
   methods: {
@@ -82,7 +88,7 @@ export default {
       }),
       
       this.USER_SIGNIN(this.form)
-      this.$router.replace({ path: '/home' })
+      this.$router.replace({ path: '/home' })//replace是不会在history中添加新的记录的
     },
     toHome(){
       this.$router.push({
@@ -90,6 +96,7 @@ export default {
       })
     }
   },
+
 }
 </script>
 <style scoped>
