@@ -7,13 +7,17 @@
       </div>
       <el-form :model='form' style="padding:0 40px">
         <el-form-item>
-          <el-input v-model="form.phone" placeholder="请输入手机号" required autofocus value></el-input>
+          <el-input v-model="form.username" placeholder="请输入用户名" required autofocus value></el-input>
         </el-form-item>
         <el-form-item>
           <el-input v-model="form.password" placeholder="请输入密码" show-password required autofocus value></el-input>
         </el-form-item>
+        <el-form-item >
+          <el-input v-model="form.checkPss" placeholder="请确认密码" show-password required autofocus value></el-input>
+        </el-form-item>
         <el-form-item>
-          <el-input v-model="form.password" placeholder="请确认密码" show-password required autofocus value></el-input>
+          <el-radio v-model="form.radio" label="1">宠物用户</el-radio>
+          <el-radio v-model="form.radio" label="2">专业用户</el-radio>
         </el-form-item>
         <el-form-item >
           <el-button type="primary" @click="onSubmit" style="width:100%;background: #FFB90F;border: #FFB90F;">注册</el-button>
@@ -36,8 +40,10 @@ export default {
   data() {
     return {
       form:{
-        phone:'',
-        password:''
+        username:'',
+        password:'',
+        checkPss:'',
+        radio:"1",
       }
     }
   },
@@ -98,4 +104,8 @@ export default {
   justify-content: center;
   font-size: 16px;
 }
+.el-form-item {
+  margin-bottom: 15px;
+}
+
 </style>

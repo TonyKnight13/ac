@@ -53,7 +53,7 @@ export default {
       },
       rules: {
         pass: [
-          { validator: validatePass, trigger: 'blur' }
+          { validator: validatePass, trigger: 'blur', }
         ],
         checkPass: [
           { validator: validatePass2, trigger: 'blur' }

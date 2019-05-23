@@ -69,6 +69,7 @@
                               <div class="good-discribe">{{item.goodDiscribe}}</div>
                               <div class="good-price">
                                 <el-button type="danger">查看详情</el-button>
+                                <el-button type="danger">加入购物车</el-button>
                               </div>
                           </figcaption>
                           </figure>
