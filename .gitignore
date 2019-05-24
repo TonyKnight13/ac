@@ -17,7 +17,6 @@ ml-latest
 
 # Distribution / packaging
 .Python
-build/
 develop-eggs/
 dist/
 downloads/
