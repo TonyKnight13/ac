@@ -89,8 +89,6 @@
   </div>
 </template>
 <script>
-import Swiper from "swiper";
-import 'swiper/dist/css/swiper.min.css'
 import headernav from "@/components/headernav.vue";
 import foot from "@/components/foot"
 

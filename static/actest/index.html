@@ -3,9 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ac</title>
-    <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
     <style>
       *{
         margin: 0;padding: 0;
@@ -17,9 +15,6 @@
         width: 100%;
         height: 100%;
       }
-      html{
-        
-      }
       li{
         list-style-type: none;
       }
@@ -27,22 +22,22 @@
         text-decoration: none;
         /* color:rgba(144,147,153,1); */
       }
-    </style>
-</head>
-<body>
-    <div id="app">
-       
-    </div>
-    <script src="/dist/build.js"></script>
-
-</body> 
+      </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
 <script>
   function init() {
     var whdef = 100 / 1920;// 表示1920的设计图,使用100PX的默认值
     var wH = document.documentElement.clientHeight;// 当前窗口的高度
    
     var wW = document.documentElement.clientWidth;// 当前窗口的宽度
+<<<<<<< HEAD:static/actest/index.html
+=======
     // console.log(wH,wW)
+>>>>>>> 7b80e791012debc163d97046e75ee2e484cdcefb:static/actest/index.html
     var rem = wW * whdef;// 以默认比例值乘以当前窗口宽度,得到该宽度下的相应FONT-SIZE值
     document.documentElement.style.fontSize = rem + "px";
   };
