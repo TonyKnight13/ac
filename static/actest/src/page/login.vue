@@ -5,15 +5,19 @@
         <!-- <img src="../assets/images/ac.png" style="height:82.5px;width:176px;"> -->
         <!-- <span>爱宠社区 ，宠你所爱</span> -->
       </div>
-      <el-form :model='form' :rules="loginRules" ref="loginForm" style="padding:0 40px">
-        <el-form-item prop="name">
-          <el-input v-model="form.username" placeholder="请输入用户名" autoComplete="on" required autofocus value></el-input>
+      <el-form :model='loginForm' :rules="loginRules" ref="loginForm" style="padding:0 40px" status-icon>
+        <el-form-item prop="username">
+          <el-input v-model="loginForm.username" placeholder="请输入用户名" required autofocus value></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="form.password" placeholder="请输入密码" @keyup.enter.native="handleLogin" show-password required autofocus value></el-input>
+          <el-input v-model="loginForm.password" placeholder="请输入密码" show-password required autofocus value></el-input>
         </el-form-item>
         <el-form-item style="margin-top:80px;">
-          <el-button type="primary" @click.native.prevent="handleLogin" :loading="loading" style="width:100%;background: #FFB90F;border: #FFB90F;">登录</el-button>
+          <el-button 
+          type="primary" 
+          @click.native.prevent="handleLogin" 
+          :loading="loading" 
+          style="width:100%;background: #FFB90F;border: #FFB90F;">登录</el-button>
         </el-form-item>
       </el-form>
       <!-- <router-link to="" class="forget-password">忘记密码？</router-link> -->
@@ -28,8 +32,8 @@
 import { mapActions,mapState } from 'vuex';
 // import { USER_SIGNIN } from '../store/user.js'
 import { userLogin } from '@/api/index.js';
-import { addCart } from '@/api/goods';
-import { setStore, getStore, removeStore } from '../utils/storage';
+// import { addCart } from '@/api/goods';
+// import { setStore, getStore, removeStore } from '../utils/storage';
 var captcha;
 export default {
   name:"login",
@@ -37,58 +41,89 @@ export default {
 
   },
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (value.trim().length<1) {
-        callback(new Error('用户名不能为空'))
+    // <!--验证用户是否为空-->
+    let checkName = (rule, value, callback) => {
+      if (value ==="") {
+        callback(new Error('请输入用户名'))
       } else {
         callback()
       }
-    };
-    const validatePass = (rule, value, callback) => {
-      if (value.trim().length < 1) {
-        callback(new Error('密码不能为空'))
+    }
+    // <!--验证密码-->
+    let validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error("请输入密码"))
       } else {
         callback()
       }
-    };  
+    } 
     return {
       loading:'false',
-      form:{
+      loginForm:{
         username:'',
         password:''
       },
       loginRules: {
-        name: [{required: true, trigger: 'blur', validator: validateUsername}],
-        password: [{required: true, trigger: 'blur', validator: validatePass}]
+        username: [
+          { validator: checkName, trigger: 'blur'},
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+         password: [{ validator: validatePass, trigger: 'blur',}]
       },
       loading: false,
 
     }
   },
   computed:{
-    count(){
-      return this.$store.state.login
-    }
+    // count(){
+    //   return this.$store.state.login
+    // }
   },
   methods: {
-    handleLogin() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          this.loading = true;
-          this.$store.dispatch('Login', this.form).then(() => {
-            this.loading = false;
-            this.$router.push({path: '/'});
-          }).catch((e) => {
-            this.loading = false
+    // handleLogin() {
+    //   this.$refs.loginForm.validate(valid => {
+    //     if (valid) {
+    //       this.loading = true;
+    //       this.$store.dispatch('Login', this.loginForm).then(() => {
+    //         this.loading = false;
+    //         this.$router.push({path: '/'});
+    //       }).catch((e) => {
+    //         this.loading = false
+    //       })
+    //     } else {
+    //       console.log('error submit!!')
+    //       return false
+    //     }
+    //   }),
+    //   this.USER_SIGNIN(this.loginForm)
+    //   this.$router.replace({ path: '/home' })//replace是不会在history中添加新的记录的
+    // },
+    handleLogin(){
+      this.$refs.loginForm.validate(valid=>{
+        if(valid){
+          // this.disabled=true;
+          this.loading=true;
+          userLogin({
+            username:this.username,
+            password:this.userPwd,
+          }).then(res=>{
+            console.log(res.data)
+            // if(res.success === true){  //后台返回信息中success：true
+            //   this.successMsg()
+            //   this.$router.replace({path:'/login'})
+            // }else{
+            //   this.errorMsg(res.message)
+            //   this.loading  = false;
+            //   this.disabled=false;
+            //   return false;
+            // }
           })
-        } else {
-          console.log('error submit!!')
-          return false
+        }else{
+          // this.registxt  = '注册';
+          // this.disabled=false;
+          return false;
         }
-      }),
-      
-      this.USER_SIGNIN(this.form)
-      this.$router.replace({ path: '/home' })//replace是不会在history中添加新的记录的
+      })
     },
     toHome(){
       this.$router.push({

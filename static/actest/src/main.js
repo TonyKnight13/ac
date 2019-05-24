@@ -28,7 +28,7 @@ Vue.use(VueCookie)
 
 
 
-
+require('./mock/mock')
 
 
 
@@ -84,29 +84,29 @@ Vue.use(VueCookie)
 //   }
 // );
 
-const whiteList = ['/home'] // 不需要登陆的页面
-router.beforeEach(function (to, from, next) {
-  let params = {
-    params: {
-      token: getStore('token')
-    }
-  }
-  userInfo(params).then(res => {
-    if (res.result.state !== 1) { // 没登录
-      if (whiteList.indexOf(to.path) !== -1) { // 白名单
-        next()
-      } else {
-        next('/login')
-      }
-    } else {
-      store.commit('RECORD_USERINFO', {info: res.result})
-      if (to.path === '/login') { //  跳转到
-        next({path: '/'})
-      }
-      next()
-    }
-  })
-})
+// const whiteList = ['/home'] // 不需要登陆的页面
+// router.beforeEach(function (to, from, next) {
+//   let params = {
+//     params: {
+//       token: getStore('token')
+//     }
+//   }
+//   userInfo(params).then(res => {
+//     if (res.result.state !== 1) { // 没登录
+//       if (whiteList.indexOf(to.path) !== -1) { // 白名单
+//         next()
+//       } else {
+//         next('/login')
+//       }
+//     } else {
+//       store.commit('RECORD_USERINFO', {info: res.result})
+//       if (to.path === '/login') { //  跳转到
+//         next({path: '/'})
+//       }
+//       next()
+//     }
+//   })
+// })
 Vue.config.debug = true;//开启错误提示
 new Vue({
   router,
@@ -115,4 +115,4 @@ new Vue({
   render:h=>h(App),
   // components: { App },
   // template: '<App/>'
-}).$mount('#app');
+});
