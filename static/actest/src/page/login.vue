@@ -32,8 +32,7 @@
 import { mapActions,mapState } from 'vuex';
 // import { USER_SIGNIN } from '../store/user.js'
 import { userLogin } from '@/api/index.js';
-// import { addCart } from '@/api/goods';
-// import { setStore, getStore, removeStore } from '../utils/storage';
+import { setStore, getStore, removeStore } from '../utils/storage';
 var captcha;
 export default {
   name:"login",
@@ -75,39 +74,23 @@ export default {
     }
   },
   computed:{
-    // count(){
-    //   return this.$store.state.login
-    // }
+    count(){
+      return this.$store.state.login
+    }
   },
   methods: {
-    // handleLogin() {
-    //   this.$refs.loginForm.validate(valid => {
-    //     if (valid) {
-    //       this.loading = true;
-    //       this.$store.dispatch('Login', this.loginForm).then(() => {
-    //         this.loading = false;
-    //         this.$router.push({path: '/'});
-    //       }).catch((e) => {
-    //         this.loading = false
-    //       })
-    //     } else {
-    //       console.log('error submit!!')
-    //       return false
-    //     }
-    //   }),
-    //   this.USER_SIGNIN(this.loginForm)
-    //   this.$router.replace({ path: '/home' })//replace是不会在history中添加新的记录的
-    // },
+
     handleLogin(){
       this.$refs.loginForm.validate(valid=>{
         if(valid){
           // this.disabled=true;
           this.loading=true;
           userLogin({
-            username:this.username,
-            password:this.userPwd,
+            username:this.loginForm.username,
+            password:this.loginForm.password,
           }).then(res=>{
             console.log(res.data)
+           
             // if(res.success === true){  //后台返回信息中success：true
             //   this.successMsg()
             //   this.$router.replace({path:'/login'})

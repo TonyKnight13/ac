@@ -6,6 +6,10 @@ Mock.setup({
 })
 
 // Mock.mock( url, post/get , 返回的数据)；返回前端传来的数据
-Mock.mock('http://101.71.41.226:8081/users/register', 'post', function(msg){
-  return msg;
+Mock.mock('http://localhost:8080/users/login', 'post', function(msg){
+  return  {
+            result:{
+              state:1
+            }
+          };
 })

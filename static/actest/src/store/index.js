@@ -1,9 +1,8 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import user from './user';
-import action from './action';
-import mutations from './mutations';
-// import * as getters from './getters';
+import Vue from 'vue'
+import Vuex from 'vuex'
+import * as getters from './getters'
+import * as mutations from './mutations'
+import * as action from './action'
 
 Vue.use(Vuex)
 // 初始化时用sessionStore.getItem('token'),这样子刷新页面就无需重新登录
@@ -33,13 +32,12 @@ Vue.use(Vuex)
 //  }
 // }
 const state = {
-  login: false,   // 是否登录
+  token:"",
+  currentUser:null, //当前用户
+  isLogin: false,   // 是否登录
   userInfo: null, // 用户信息
   cartList: [],   // 加入购物车列表
   showMoveImg: false, // 显示飞入图片
-  elLeft: 0,
-  elTop: 0,
-  moveImgUrl: null,
   cartPositionT: 0, // 购物车位置
   cartPositionL: 0,
   receiveInCart: false, // 是否进入购物车

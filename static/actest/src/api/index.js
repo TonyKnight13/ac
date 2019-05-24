@@ -1,7 +1,7 @@
 import axios from 'axios'
 // axios.defaults.timeout = 10000
 axios.defaults.headers.post['Content-Type'] = 'application/x-www=form-urlencoded'
-const baseUrl = 'http://101.71.41.226:8081'  //服务器地址
+const baseUrl = 'http://localhost:8080'  //服务器地址
 
 // // 请求拦截器
 // axios.interceptors.request.use(function(config) {
