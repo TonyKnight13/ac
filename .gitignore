@@ -696,6 +696,4 @@ MigrationBackup/
 
 
 
-/static/ac/node_modules/
-/package.json
-/webpack.config.js
+**/node_modules/
