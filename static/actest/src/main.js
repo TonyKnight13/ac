@@ -3,7 +3,11 @@ import App from './App';
 import router from './router/router';  //路由
 import store from './store/';  //状态管理
 import VueCookie from 'vue-cookie'
+<<<<<<< HEAD:static/actest/src/main.js
 // import { userInfo } from './api'
+=======
+import { userInfo } from './api'
+>>>>>>> 7b80e791012debc163d97046e75ee2e484cdcefb:static/actest/src/main.js
 /* 引入element */
 import elementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
