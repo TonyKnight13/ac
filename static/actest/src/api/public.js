@@ -1,4 +1,5 @@
 import axios from 'axios'
+// import Qs from 'querystring'
 axios.defaults.timeout = 10000
 axios.defaults.headers.post['Content-Type'] = 'application/x-www=form-urlencoded'
 export default {

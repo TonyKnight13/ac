@@ -16,16 +16,14 @@
           <el-input v-model="form.checkPss" placeholder="请确认密码" show-password required autofocus value></el-input>
         </el-form-item>
         <el-form-item>
-          <el-radio v-model="form.radio" label="1">宠物用户</el-radio>
-          <el-radio v-model="form.radio" label="2">专业用户</el-radio>
+          <el-radio v-model="form.statusKey" label="1">宠物用户</el-radio>
+          <el-radio v-model="form.statusKey" label="2">专业用户</el-radio>
         </el-form-item>
         <el-form-item >
           <el-button 
-          :class="this.disabled=='true'?'disabled-btn':'main-btn'"
           type="primary" 
           @click="regist('form')" 
-          style="width:100%;border: #FFB90F;"
-          :disabled="disabled"
+          style="width:100%;border: #FFB90F;background: #FFB90F;"
           >{{registxt}}</el-button>
         </el-form-item>
       </el-form>
@@ -38,7 +36,7 @@
 </template>
 <script>
 import { mapActions,mapState } from 'vuex'
-import { register, geetest } from '@/api/index.js'
+import { register} from '@/api/index.js'
 export default {
   name:"regist",
   components:{
@@ -79,9 +77,9 @@ export default {
         username:'',
         pass:'',
         checkPass:'',
+        statusKey:'1', //身份标签
       },
-      statusKey:'',
-      disabled:false,
+      loading:false,
       registxt:'注册',
       rules: {
         pass: [{ validator: validatePass, trigger: 'blur' }],
@@ -105,26 +103,24 @@ export default {
     regist(formName){
       this.$refs[formName].validate(valid=>{
         if(valid){
-          this.disabled=true;
-          this.registxt='注册中...'
+          this.loading=true;
           register({
-            username:this.username,
-            userPwd:this.userPwd,
-            statusKey:this.statusKey
+            "username":this.form.username,
+            "userPwd":this.form.userPwd,
+            "statusKey":this.form.statusKey
           }).then(res=>{
-            if(res.success === true){  //后台返回信息中success：true
-              this.successMsg()
-              this.$router.replace({path:'/login'})
-            }else{
-              this.errorMsg(res.message)
-              this.registxt  = '注册';
-              this.disabled=false;
-              return false;
-            }
+            console.log(res)
+            // if(res.success === true){  //后台返回信息中success：true
+            //   this.successMsg()
+            //   this.$router.replace({path:'/login'})
+            // }else{
+            //   this.errorMsg(res.message)
+            //   this.loading  = false;
+            //   return false;
+            // }
           })
         }else{
-          this.registxt  = '注册';
-          this.disabled=false;
+          this.loading=false;
           return false;
         }
       })
@@ -183,9 +179,5 @@ export default {
   justify-content: center;
   font-size: 16px;
 }
-.el-button,
-.main-btn,
-.el-button--primary:hover,
-.el-button--primary:focus
-{background: #FFB90F;}
+
 </style>

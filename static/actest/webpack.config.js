@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+
 
 // const ExtractTextPlugin = require("extract-text-webpack-plugin");
 // const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -76,11 +77,16 @@ module.exports = {
         ]
     },
     devServer: {//webpack-dev-server配置
+        // contentBase:'/',   //目录文件所在的位置
         historyApiFallback: true,//不跳转
         noInfo: true,
         inline: true,//实时刷新
-        port:8080,
-        host:'localhost'
+        // proxy:{
+        //     '/api/':{    
+        //         target:'http://localhost:8080',//目标服务器 host
+        //         changeOrigin: true, 
+        //     }
+        // }
     },
     performance: {
         hints: false
