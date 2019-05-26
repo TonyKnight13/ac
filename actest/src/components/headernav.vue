@@ -2,6 +2,7 @@
   <div class="headernav-wrap">
     <div class="nav-wrap">
       <el-menu :default-active="this.$router.path" class="el-menu-demo" mode="horizontal" router>
+
         <el-menu-item style="width:1rem"><img src="../assets/images/ac.png" alt="" style="width:100%;margin-top:-3px"> </el-menu-item>
         <el-menu-item index="/">首页</el-menu-item>
         <el-menu-item index="/hunjie">宠物婚介</el-menu-item>
@@ -13,13 +14,28 @@
         </el-submenu>
         <el-menu-item index="/baike">宠物百科</el-menu-item>
         <el-menu-item index="/usercenter">关于我们</el-menu-item>
-        <el-menu-item index="/login" style="float:right;right:1rem">登录/注册</el-menu-item>
+        <el-menu-item style="float:right;">
+          <i class="el-icon-shopping-cart-2" @click="toCart"></i>
+        </el-menu-item> 
+
+        <el-menu-item style="float:right;">
+            <i class="el-icon-user-solid" @click="toLogin" v-if="!isLogin"></i>
+            <el-dropdown v-if="isLogin">
+              <i class="el-icon-user-solid"></i>
+              <el-dropdown-menu slot="dropdown" split-button><!-- split-button 为 true 时，点击左侧按钮的回调 -->
+                <el-dropdown-item @click.native="toUser">个人中心</el-dropdown-item>
+                <el-dropdown-item @click.native="loginout">登出</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+        </el-menu-item>     
+
       </el-menu>
       
     </div>
   </div>
 </template>
 <script>
+
 export default {
   name:'headernav',
   data(){
@@ -27,11 +43,33 @@ export default {
       
     }
   },
+  computed: {
+    isLogin(){
+      if(sessionStorage.getItem("user")){
+        return true
+      }
+    }
+  },
   methods: {
-
+    toLogin(){
+      this.$router.push({path:'/login'})
+    },
+    toUser(){
+      this.$router.push({path:'/userbase'})
+    },
+    loginout(){
+      this.$store.dispatch("logout");
+      this.$router.replace({path:'/login'})
+    },
+    toCart(){
+      this.$router.push({path:'/cart'})
+    }
   }
 }
 </script>
 <style scoped>
 
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
 </style>

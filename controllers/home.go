@@ -5,7 +5,7 @@ type HomeController struct {
 }
 
 func (h *HomeController) Get() {
-	h.Data["IsHome"] = true
+	// h.Data["IsHome"] = true
 	// h.Data["isLogin"] = h.isLogin
 	h.TplName = "index.html"
 }

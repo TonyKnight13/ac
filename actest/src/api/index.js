@@ -1,6 +1,7 @@
 import axios from 'axios'
+// import qs from 'querystring'
 // axios.defaults.timeout = 10000
-axios.defaults.headers.post['Content-Type'] = 'application/x-www=form-urlencoded'
+axios.defaults.headers.post['Content-Type'] = 'application/json'
 const baseUrl = 'http://localhost:8080'  //服务器地址
 
 // // 请求拦截器
@@ -19,7 +20,7 @@ const baseUrl = 'http://localhost:8080'  //服务器地址
 // 登陆
 export const userLogin = (params) => {
   // return axios.post(`${base}/yyzt-web/auth/login.do`,  query.stringify(params));
-  return axios.post(baseUrl+'/users/login', params)
+  return axios.post(baseUrl+'/users/login', JSON.stringify(params))
 }
 // 退出登陆
 export const loginOut = (params) => {
@@ -30,13 +31,26 @@ export const userInfo = (params) => {
   return axios.get(baseUrl+'/users/checkLogin', params)
 }
 // 注册账号
-export const register = (params) => {
+export const register = (params={}) => {
   return axios.post(baseUrl+'/users/register', params)
 }
-// // 上传图片
-// export const upload = (params) => {
-//   return axios.post('/member/imgaeUpload', params)
-// }
+// 上传图片
+export const upload = (params) => {
+  return axios.post('/goods/imgaeUpload', params)
+}
+
+// 商品列表接口
+export const navList = (params) => {
+  return axios.get('/goods/navList', params)
+}
+// 商品详情
+export const productDet = (params) => {
+  return http.fetchGet('/goods/productDet', params)
+}
+// 加入购物车
+export const addCart = (params) => {
+  return http.fetchPost('/goods/addCart', params)
+}
 // // 修改头像
 // export const updateheadimage = (params) => {
 //   return axios.post('/member/updateheadimage', params)

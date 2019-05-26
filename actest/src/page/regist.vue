@@ -6,14 +6,14 @@
         <span>爱宠社区 ，宠你所爱</span> -->
       </div>
       <el-form :model='form' style="padding:0 40px" status-icon :rules="rules" ref="form">
-        <el-form-item prop="username">
-          <el-input v-model="form.username" placeholder="请输入用户名" required autofocus value></el-input>
+        <el-form-item prop="account">
+          <el-input v-model="form.account" placeholder="请输入用户名" required autofocus value></el-input>
         </el-form-item>
         <el-form-item prop="pass">
           <el-input v-model="form.pass" placeholder="请输入密码" show-password required autofocus value></el-input>
         </el-form-item>
         <el-form-item >
-          <el-input v-model="form.checkPss" placeholder="请确认密码" show-password required autofocus value></el-input>
+          <el-input v-model="form.checkPass" placeholder="请确认密码" show-password required autofocus value></el-input>
         </el-form-item>
         <el-form-item>
           <el-radio v-model="form.statusKey" label="1">宠物用户</el-radio>
@@ -74,9 +74,9 @@ export default {
     };
     return {
       form:{
-        username:'',
-        pass:'',
-        checkPass:'',
+        account:'111',
+        pass:'111',
+        checkPass:'111',
         statusKey:'1', //身份标签
       },
       loading:false,
@@ -84,7 +84,7 @@ export default {
       rules: {
         pass: [{ validator: validatePass, trigger: 'blur' }],
         checkPass: [{ validator: validatePass2, trigger: 'blur' }],
-        username: [{ validator: checkName, trigger: 'blur' }],
+        account: [{ validator: checkName, trigger: 'blur' }],
       },
     }
   },
@@ -105,11 +105,12 @@ export default {
         if(valid){
           this.loading=true;
           register({
-            "username":this.form.username,
-            "userPwd":this.form.userPwd,
-            "statusKey":this.form.statusKey
+            "account":this.form.account,
+            "password1":this.form.pass,
+            "password2":this.form.checkPass,
+            "identity":this.form.statusKey
           }).then(res=>{
-            console.log(res)
+            console.log(typeof res)
             // if(res.success === true){  //后台返回信息中success：true
             //   this.successMsg()
             //   this.$router.replace({path:'/login'})

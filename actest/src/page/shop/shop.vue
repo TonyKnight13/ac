@@ -11,6 +11,7 @@
             <el-image :src="item" fit="contain"></el-image>
           </el-carousel-item>
         </el-carousel>
+
         <!-- 搜索 -->
         <div class="screen-content">
           <div class="screen-item">
@@ -62,7 +63,7 @@
                               <span class="price">¥{{item.goodPrice.split(".")[0]}}.<mark>{{item.goodPrice.split(".")[1]}}</mark></span>
                               <div class="good-discribe">{{item.goodDiscribe}}</div>
                               <div class="good-price">
-                                <el-button type="danger">查看详情</el-button>
+                                <el-button type="danger" @click.native="toDescript">查看详情</el-button>
                                 <el-button type="danger">加入购物车</el-button>
                               </div>
                           </figcaption>
@@ -101,10 +102,11 @@ export default {
   },
   data(){
     return{
-      imgs: ['src/assets/images/background/4.jpg',
-                    'src/assets/images/background/5.jpg',
-                    'src/assets/images/background/6.jpg'
-                    ],
+      imgs: [
+              require('@/assets/images/background/4.jpg'),
+              require('@/assets/images/background/5.jpg'),
+              require('@/assets/images/background/6.jpg'),
+            ],
       resultnum:30,
       specis,
       provinces,
@@ -208,23 +210,7 @@ export default {
     // this.total=this.resultGood.length
   },
   mounted(){
-    var mySwiper = new Swiper('.swiper-container', {
-      direction:'horizontal',
-      loop:true,
-      autoplay : {
-        autoplay: true,  //是否自动切换
-        delay: 3000,   //切换间隔时间
-        disableOnInteraction: false,  //触碰后自动切换是否停止
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable :true, //点击分页器的指示点分页器会控制Swiper切换
-      },
-      navigation:{
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      }
-    })
+    
   },
   methods: {
     onChange(value){
@@ -246,7 +232,10 @@ export default {
     currentPageChange(val){
       this.currentPage=val;
     },
-    // priceMenuChange(visible){
+    toDescript(){
+      this.$router.push("/goodsDetails")
+    }
+    // priceMenuChange(visible){  
     //   this.rateMenuArrow=!visible;
     // },
     // rangeMenuChange(visible){

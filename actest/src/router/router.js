@@ -34,7 +34,7 @@ const router = new Router({
       name:'hs_death',
       component:hs_death,
       // meta: {
-      //   requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+      //   isLogin: true,  // 添加该字段，表示进入这个路由是需要登录的
       // },
     },
     {
@@ -42,20 +42,34 @@ const router = new Router({
       name:'hs_inquiry',
       component:hs_inquiry,
       // meta: {
-      //   requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+      //   isLogin: true,  // 添加该字段，表示进入这个路由是需要登录的
       // },
     },
     {
       path:'/shop',
       name:'shop',
       component:shop,
+      children:[
+
+
+      ]
       // meta: {
-      //   requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+      //   isLogin: true,  // 添加该字段，表示进入这个路由是需要登录的
       // },
     },
     {
+      path:'/goodsDetails',
+      name:'goodsDetails',
+      component:resolve => require(['../page/shop/children/goodsDetails.vue'], resolve)
+    },
+    {
+      path:'/cart',
+      name:'cart',
+      component:resolve => require(['../page/shop/children/cart.vue'], resolve)
+    },
+    {
       path:'/usercenter',
-      name:'usercenter',
+      name:'usercenter',  
       component:usercenter,
       children:[
         {
@@ -80,7 +94,7 @@ const router = new Router({
         },
       ]
       // meta: {
-      //   requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+      //   isLogin: true,  // 添加该字段，表示进入这个路由是需要登录的
       // },
     }
   ]
@@ -89,7 +103,7 @@ const router = new Router({
 // 注册全局钩子用来拦截导航
 router.beforeEach((to, from, next) => {
   const token = store.state.token
-  if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
+  if (to.meta.isLogin) { // 判断该路由是否需要登录权限
     if (token) { // 通过vuex state获取当前的token是否存在
       next()
     } else {

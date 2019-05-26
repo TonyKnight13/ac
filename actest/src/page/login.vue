@@ -29,8 +29,7 @@
   </div>
 </template>
 <script>
-import { mapActions,mapState } from 'vuex';
-// import { USER_SIGNIN } from '../store/user.js'
+import { mapMutations,mapState } from 'vuex';// 将 `this.add_cart()` 映射为 `this.$store.commit('add_cart')`  `this.add_cart()` 映射为 `this.$store.dispatch('add_cart')`
 import { userLogin } from '@/api/index.js';
 import { setStore, getStore, removeStore } from '../utils/storage';
 var captcha;
@@ -67,43 +66,46 @@ export default {
           { validator: checkName, trigger: 'blur'},
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
-         password: [{ validator: validatePass, trigger: 'blur',}]
+        password: [{ validator: validatePass, trigger: 'blur',}]
       },
       loading: false,
 
     }
   },
   computed:{
-    count(){
-      return this.$store.state.login
-    }
+    // count(){
+    //   return this.$store.state.isLogin
+    // }
   },
   methods: {
-
+    ...mapMutations(['SET_TOKEN','GET_USERNAME']),
     handleLogin(){
       this.$refs.loginForm.validate(valid=>{
         if(valid){
           // this.disabled=true;
           this.loading=true;
           userLogin({
-            username:this.loginForm.username,
+            account:this.loginForm.username,
             password:this.loginForm.password,
           }).then(res=>{
-            console.log(res.data)
-           
-            // if(res.success === true){  //后台返回信息中success：true
-            //   this.successMsg()
-            //   this.$router.replace({path:'/login'})
-            // }else{
-            //   this.errorMsg(res.message)
-            //   this.loading  = false;
-            //   this.disabled=false;
-            //   return false;
-            // }
+            console.log(res)
+            //登录失败,先不讨论
+            if (res.data.status != 200) {
+              //element的友好提示
+              this.$message.error("error");
+            //登录成功
+            } else {
+              //设置Vuex登录标志为true，默认isLogin为false
+              this.GET_USERNAME(res.data.data.account);
+              this.SET_TOKEN(res.data.token);
+              //iViewUi的友好提示
+              this.$message.success(res.data.result);
+              //登录成功后跳转到指定页面
+              this.$router.replace("/");
+            }
           })
         }else{
-          // this.registxt  = '注册';
-          // this.disabled=false;
+          this.disabled=false;
           return false;
         }
       })

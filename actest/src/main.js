@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router/router';  //路由
-import store from './store/';  //状态管理
+import store from './store/index';  //状态管理
 import VueCookie from 'vue-cookie'
-// import { userInfo } from './api'
+import { userInfo } from './api'
 /* 引入element */
 import elementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -17,8 +17,7 @@ import { getStore } from './utils/storage';
 /**
  *引入axios
  */
-import axios from 'axios';
-Vue.prototype.$http=axios;
+
 Vue.use(elementUI)
 Vue.use(VueCookie)
 // import Distpicker from 'v-distpicker';
@@ -28,7 +27,7 @@ Vue.use(VueCookie)
 
 
 
-// require('./mock/mock')
+require('./mock/mock')
 
 
 
