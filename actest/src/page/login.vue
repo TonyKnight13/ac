@@ -96,7 +96,7 @@ export default {
             //登录成功
             } else {
               //设置Vuex登录标志为true，默认isLogin为false
-              this.GET_USERNAME(res.data.data.account);
+              this.GET_USERNAME(res.data.data.userId);
               this.SET_TOKEN(res.data.token);
               //iViewUi的友好提示
               this.$message.success(res.data.result);

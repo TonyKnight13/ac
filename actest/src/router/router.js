@@ -49,10 +49,7 @@ const router = new Router({
       path:'/shop',
       name:'shop',
       component:shop,
-      children:[
-
-
-      ]
+      children:[]
       // meta: {
       //   isLogin: true,  // 添加该字段，表示进入这个路由是需要登录的
       // },
@@ -61,6 +58,16 @@ const router = new Router({
       path:'/goodsDetails',
       name:'goodsDetails',
       component:resolve => require(['../page/shop/children/goodsDetails.vue'], resolve)
+    },
+    {
+      path:'/payCheck',
+      name:'payCheck',
+      component:resolve => require(['../page/shop/payCheck.vue'], resolve)
+    },
+    {
+      path: '/orderPay',
+      name: 'orderPay',
+      component:resolve => require(['../page/shop/orderPay.vue'], resolve)
     },
     {
       path:'/cart',

@@ -4,13 +4,13 @@
 
     <div class="content">
       <div class="img-content">
-        <el-image :src="good.goodImg" fit="contain"></el-image>
+        <el-image :src="goodImg" fit="contain"></el-image>
       </div>
       <div class="text-content">
-        <p style="font-size:0.4rem;font-weight:bold">{{good.goodName}}</p>
+        <p style="font-size:0.4rem;font-weight:bold">{{goodName}}</p>
         <p style="margin-top:0.2rem;">
-          <span style="margin-right:0.3rem;font-size:0.16rem">{{good.descript}}</span>
-          <span style="color:rgba(245,108,108,1);font-weight:bold;font-size:0.24rem">¥{{good.goodPrice.split(".")[0]}}.{{good.goodPrice.split(".")[1]}}</span>
+          <span style="margin-right:0.3rem;font-size:0.16rem">{{detail}}</span>
+          <span style="color:rgba(245,108,108,1);font-weight:bold;font-size:0.24rem">¥{{goodPrice.split(".")[0]}}.{{goodPrice.split(".")[1]}}</span>
         </p>
         <el-divider></el-divider>
         <p>
@@ -19,10 +19,10 @@
         </p>
         <el-divider></el-divider>
         <el-button
-        @click="addCart">加入购物车</el-button>
+        @click="_addCart(goodId,goodImg, goodName, goodPrice)">加入购物车</el-button>
         <el-button
         style="background:#ffffff"
-        @click="">现在购买</el-button>
+        @click="payCheck(goodId,num)">现在购买</el-button>
       </div>
     </div>
 
@@ -30,9 +30,11 @@
   </div>
 </template>
 <script>
+import { mapMutations, mapState } from 'vuex'
 import headernav from "@/components/headernav";
-// import {}
+import {productDet, addCart} from "@/api/index"
 import foot from "@/components/foot"
+import { getStore } from '@/utils/storage'
 export default {
   components:{
     headernav,
@@ -40,16 +42,55 @@ export default {
   },
   data() {
     return {
-      good:{
-        goodImg:require("@/assets/images/shop/1.jpg"),
-        descript:"这是适合小型犬的食物，营养丰富...",
-        goodName:'宠物狗食品',
-        goodPrice: '100.00',
-        goodId:'10000'
-      },
-      num:1
-      
+      // good:{
+      goodImg:'',
+      detail:'',
+      goodName:'',
+      goodPrice: '',
+      goodId:'',
+      // },
+      num:1,
+      userId:''
     }
+  },
+  computed:{
+    
+  },
+  methods: {
+    ...mapMutations(['ADD_CART']),
+    _productDet (goodId) { //决定url后参数的字段
+      productDet({params: {goodId}}).then(res => {  
+        console.log(res.data.goodName)
+        let result = res.data
+        this.goodName = result.goodName
+        this.detail = result.detail || ''
+        this.goodId = result.goodId
+        this.goodPrice = result.goodPrice
+        this.goodImg = result.goodImg
+      })
+    },
+    _addCart(id,img, name,price){
+      if(this.userId){
+        addCart({userId: this.userId, goodId: id, goodNum: this.num}).then(res => {
+          // 并不重新请求数据
+          this.ADD_CART({
+            goodId: id,
+            goodPrice: price,
+            goodImg: name,
+            goodImg: img,
+            goodNum: this.num
+          })
+        })
+      }
+    },
+    payCheck(goodId,goodNum){
+      this.$router.push({path: '/payCheck', query: {goodId, goodNum}})
+    }
+  },
+  created() {
+    let id=this.$route.query.goodId
+    this._productDet(id)
+    this.userId = getStore('user')
   },
 }
 </script>

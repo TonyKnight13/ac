@@ -63,7 +63,7 @@
                               <span class="price">¥{{item.goodPrice.split(".")[0]}}.<mark>{{item.goodPrice.split(".")[1]}}</mark></span>
                               <div class="good-discribe">{{item.goodDiscribe}}</div>
                               <div class="good-price">
-                                <el-button type="danger" @click.native="toDescript">查看详情</el-button>
+                                <el-button type="danger" @click.native="toDescript(item.goodId)">查看详情</el-button>
                                 <el-button type="danger">加入购物车</el-button>
                               </div>
                           </figcaption>
@@ -119,21 +119,26 @@ export default {
           goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '100.00',
+          goodId:'100000'
         },
         {
           goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '100.00',
+          goodId:'100001'
         },
         {
           goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '100.00',
+          goodId:'100002'
         },
         {
           goodImg:require("@/assets/images/shop/1.jpg"),
           goodName:'宠物狗食品',
           goodPrice: '100.00',
+          goodId:'100003'
+
         },
         {
           goodImg:require("@/assets/images/shop/1.jpg"),
@@ -232,8 +237,8 @@ export default {
     currentPageChange(val){
       this.currentPage=val;
     },
-    toDescript(){
-      this.$router.push("/goodsDetails")
+    toDescript(id){
+      this.$router.push({path: "/goodsDetails",query:{goodId:id}})
     }
     // priceMenuChange(visible){  
     //   this.rateMenuArrow=!visible;

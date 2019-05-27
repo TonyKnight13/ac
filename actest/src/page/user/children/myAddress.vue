@@ -10,7 +10,7 @@
       </div>
       <div v-if="addressList.length">
         <div class="address-item" v-for="(addItem,index) in addressList" :key="index">
-          <div class="name">{{addItem.name}}</div>
+          <div class="name">{{addItem.realName}}</div>
           <div class="address">{{addItem.address}}</div>
           <div class="phone">{{addItem.phone}}</div>
           <div class="operation">
@@ -32,20 +32,20 @@
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" center @close="closeDilog('msg')">
       <!-- <div slot="content" class="md" :data-id="msg.addressId"> -->
         <el-form :model="msg" ref="msg" :rules="rules" :data-id="msg.addressId">
-          <el-form-item>
-            <el-input placeholder="收货人姓名" v-model="msg.name"></el-input>
+          <el-form-item prop="realName">
+            <el-input placeholder="收货人姓名" v-model="msg.realName"></el-input>
           </el-form-item>
-          <el-form-item>
+          <el-form-item prop="phone">
             <el-input placeholder="手机号码" v-model="msg.phone"></el-input>
           </el-form-item>
-          <el-form-item>
+          <el-form-item prop="address">
             <el-input placeholder="收货地址" v-model="msg.address"></el-input>
           </el-form-item>
         </el-form>
         <el-button 
         class="btn"
         :disabled=trueORfalse
-        @click="save({userId:userId,addressId:msg.addressId,userName:msg.name,phone:msg.phone,address:msg.address})">
+        @click="save({userId:userId,addressId:msg.addressId,realName:msg.realName,phone:msg.phone,address:msg.address})">
         保存</el-button>
 
       <!-- </div> -->
@@ -69,14 +69,14 @@ export default {
       dialogTitle:"修改收货地址",
       dialogVisible:true,
       msg: {
-        address_id: '',
-        name: '',
+        addressId: '',
+        realName: '',
         address: '',
         phone: '',
       },
       userId: '',
       rules: {
-        name: [
+        realName: [
           { required: true, message: '请输入姓名', trigger: 'blur' }
         ],
         address: [
@@ -93,7 +93,7 @@ export default {
     trueORfalse () {
       let msg = this.msg
       
-      return  !Boolean(msg.name && msg.phone && msg.address)
+      return  !Boolean(msg.addressId && msg.phone && msg.address)
     }
   },
   methods: {
