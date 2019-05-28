@@ -27,7 +27,7 @@
               </el-table-column>
               <el-table-column prop="goodNum" label="商品数量" width="200" align="center" >
                   <template slot-scope="scope">
-                      <el-input-number v-model="scope.row.goodNum" size="small" @change="EditNum"></el-input-number>
+                      <el-input-number v-model="scope.row.goodNum" size="small" @change="EditNum(scope.row.goodNum,scope.row.goodId)"></el-input-number>
                   </template>
               </el-table-column>
               <el-table-column label="商品总价" align="center">
@@ -76,7 +76,7 @@ import foot from "@/components/foot"
 import YShelf from '@/components/shelf'
 import { getCartList, cartEdit, editCheckAll, cartDel } from '@/api/index'
 import { mapMutations, mapState } from 'vuex'
-import { getStore } from '@/utils/storage';
+import { getStore, setStore} from '@/utils/storage';
 export default {
   components:{
     headernav,foot,YShelf
@@ -148,17 +148,15 @@ export default {
       for(let k=0; k<this.cartList.length; k++){
         this.cartList[k].checked='0'
       }
-      for(let i=0;i<val.length;i++){
+      for(let i=0;i<val.length;i++){  //只需修改本实例中的数据  （选中）
         val[i].checked='1'
+        
       }  
-      console.log(this.cartList,val.length)
+      // console.log(this.cartList)
 
     },
     goodsDetails (goodId) {
       this.$router.push({path:'/goodsDetails', query:{goodId}})
-    },
-    EditNum (goodNum, goodId) { // 修改商品数量
-      this._cartEdit(this.userId, goodId, goodNum)
     },
     // 修改购物车
     _cartEdit (userId, goodId, goodNum) {
@@ -167,30 +165,63 @@ export default {
           goodId,
           goodNum,  
       }).then(res => {
-        if (res.success === true) {
-          this.EDIT_CART({
+        if (res.data.msg === 'success') {
+          this.EDIT_CART({  //修改本地存储中的数据
               goodId,
               goodNum
-            })
+          })
+          // console.log(getStore('buyCart'))  //检查每次vuex执行后sessionStorage中的buyCart是否更新了
         }
       })
     },
-     // 删除整条购物车
+    // 修改商品数量
+    EditNum (goodNum, goodId) { 
+      this._cartEdit(this.userId, goodId, goodNum)
+      // console.log(this.cartList)  //检查每次数量改变，本实例中的cartList的数据是否改变
+    },
+    // 删除整条购物车
     cartdel (goodId) {
-      cartDel({userId: this.userId, goodId}).then(res => {
-        this.EDIT_CART({goodId})
+      cartDel({userId: this.userId, goodId}).then(res => {  //修改数据库中的购物车数据
+        this.EDIT_CART({goodId})  //修改sessionStorage中的购物车数据
       })
+      if (goodId) {  //修改本实例中的购物车数据
+        this.cartList.forEach((item, i) => {
+          if (item.goodId === goodId) {
+            this.cartList.splice(i, 1)
+          }
+        })
+      }
+      // console.log(this.cartList) //检查删除购物车记录后，本实例中的cartList的数据是否改变
+      
     },
 
     checkout(){
       this.loading = true
+      let cart=[]
+      for(let i=0; i<this.cartList.length; i++){
+        
+        if(this.cartList[i].checked == '1'){
+          cart.push(this.cartList[i])
+        }
+      }
+      // console.log(cart)
+      setStore('payCart', cart) //将选中的商品存入要支付的购物车商品
       this.$router.push({path: 'payCheck'})
-    }
+    },
+
+    //获取购物车列表
+    _getCartList () { 
+      getCartList({userId: this.userId}).then(res => {
+        let cartList = res.data.goods;
+        this.INIT_BUYCART(cartList)
+      })
+    },
 
   },
   created() {
     this.userId=getStore('user')
     this.cartList=JSON.parse(getStore('buyCart'))//seesionStorage中的是字符串
+    this._getCartList()
   },
 }
 </script>

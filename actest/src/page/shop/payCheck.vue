@@ -120,11 +120,11 @@ export default {
         }
       })
     },
-    _getCartList () { //获取购物车列表
-      getCartList({userId: this.userId}).then(res => {
-        this.cartList = res.result
-      })
-    },
+    // _getCartList () { //获取购物车列表
+    //   getCartList({userId: this.userId}).then(res => {
+    //     this.cartList = res.result
+    //   })
+    // },
     _productDet (goodId,num) {
       productDet({params: {goodId}}).then(res => {
         let item = res.data
@@ -213,7 +213,9 @@ export default {
       this.goodNum = query.goodNum
       this._productDet(this.goodId, this.goodNum)
     } else {
-      this._getCartList()
+      // this._getCartList()
+      this.cartList = JSON.parse(getStore('payCart'))  //获取选中的购物车商品
+      console.log(JSON.parse(getStore('payCart')), '')
     }
     this._addressList()
   }

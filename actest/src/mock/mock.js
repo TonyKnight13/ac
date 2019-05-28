@@ -84,3 +84,19 @@ Mock.mock(RegExp('http://localhost:8080/goods/cartList'), 'post', function (msg)
     ]
   }
 })
+//编辑购物车
+Mock.mock(RegExp('http://localhost:8080/goods/cartEdit'), 'post', function (msg) {
+  console.log(msg)
+  return {
+    msg: 'success',
+    orderId: '300000'
+  }
+})
+//删除一条购物车记录
+Mock.mock(RegExp('http://localhost:8080/goods/cartDel'), 'post', function (msg) {
+  console.log(msg)
+  return {
+    msg: 'success',
+    orderId: '300000'
+  }
+})

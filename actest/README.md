@@ -39,3 +39,5 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
   goodImg,
   goodPrice
 }
+
+购物车=》提交订单页面  ok

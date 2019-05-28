@@ -66,7 +66,7 @@ export default new Vuex.Store({
     },
     // 加入购物车
     ADD_CART: (state, {goodId, goodPrice, goodName, goodImg, goodNum = 1}) => {
-      let cart = state.cartList // 购物车
+      let cart = JSON.parse(getStore('buyCart')) // 购物车
       let falg = true // 购物车是否由商品
       let goods = {
         goodId,
@@ -86,7 +86,7 @@ export default new Vuex.Store({
       }
       if (!cart.length || falg) {
         goods.goodNum = goodNum
-        goods.checked = '1'
+        goods.checked = '0' //购物车中默认商品不选中
         cart.push(goods)
       }
       state.cartList = cart
@@ -95,7 +95,7 @@ export default new Vuex.Store({
     },
     // 移除商品
     REDUCE_CART: (state, {goodId}) => {
-      let cart = state.cartList
+      let cart = JSON.parse(getStore('buyCart'))
       cart.forEach((item, i) => {
         if (item.goodId === goodId) {
           if (item.goodNum > 1) {
@@ -105,9 +105,9 @@ export default new Vuex.Store({
           }
         }
       })
-      state.cartList = cart
+      state.cartList=cart
       // 存入localStorage
-      setStore('buyCart', state.cartList)
+      setStore('buyCart', cart)
     },
     // 商店网页初始化时获取购物车数据
     INIT_BUYCART: (state, data) => {
@@ -116,16 +116,16 @@ export default new Vuex.Store({
       if (initCart) {
         state.cartList = initCart
       }
-      console.log(state.cartList)
+      // console.log(state.cartList)
     },
     // 修改购物车
-    EDIT_CART: (state, {goodId, goodNum, checked}) => {
-      let cart = state.cartList
+    EDIT_CART: (state, {goodId, goodNum}) => {
+      let cart = JSON.parse(getStore('buyCart'))
       if (goodNum) {
         cart.forEach((item, i) => {
           if (item.goodId === goodId) {
             item.goodNum = goodNum
-            item.checked = checked
+            // item.checked = checked
           }
         })
       } else if (goodId) {
@@ -134,14 +134,14 @@ export default new Vuex.Store({
             cart.splice(i, 1)
           }
         })
-      } else {
+      } /* else {
         cart.forEach((item) => {
           item.checked = checked ? '1' : '0'
         })
-      }
+      } */
       state.cartList = cart
       // 存入localStorage
-      setStore('buyCart', state.cartList)
+      setStore('buyCart', cart)
     },
     // 记录用户信息
     RECORD_USERINFO: (state, info) => {
