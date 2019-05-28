@@ -92,7 +92,9 @@
 <script>
 import headernav from "@/components/headernav.vue";
 import foot from "@/components/foot"
-
+import {getCartList} from "@/api/index"
+import {getStore} from "@/utils/storage"
+import { mapMutations } from 'vuex'
 const specis=['不限','狗','猫','兔子','鱼']
 const provinces=['不限','浙江','上海','江苏','北京']
 export default {
@@ -114,6 +116,7 @@ export default {
       checkedprovince:["不限"],
       currentPage:1,
       total:50,
+      userId:'',
       resultGood:[
         {
           goodImg:require("@/assets/images/shop/1.jpg"),
@@ -218,6 +221,7 @@ export default {
     
   },
   methods: {
+    ...mapMutations(['INIT_BUYCART']),
     onChange(value){
       let len=value.length-1
       // 当前不限未选中，选中不限后的结果
@@ -239,13 +243,24 @@ export default {
     },
     toDescript(id){
       this.$router.push({path: "/goodsDetails",query:{goodId:id}})
-    }
+    },
+    //获取购物车列表
+    _getCartList () { 
+      getCartList({userId: this.userId}).then(res => {
+        let cartList = res.data.goods;
+        this.INIT_BUYCART(cartList)
+      })
+    },
     // priceMenuChange(visible){  
     //   this.rateMenuArrow=!visible;
     // },
     // rangeMenuChange(visible){
     //   this.rangeMenuArrow=!visible;
     // }
+  },
+  created() {
+    this.userId= getStore('user')
+    this._getCartList()
   },
 }
 </script>

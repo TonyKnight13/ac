@@ -230,6 +230,7 @@ export default {
     margin-bottom: 0.2rem;
     line-height: 0.5rem
   }
+/*   <!-- 购物清单 --> */
   .cart-table-title{
     position: relative;
     z-index: 1;

@@ -32,7 +32,7 @@ Mock.mock(RegExp('http://localhost:8080/goods/productDet' + '.*'), 'get', functi
     goodId: '200000'
   }
 })
-
+// 获取地址列表
 Mock.mock(RegExp('http://localhost:8080/users/addressList'), 'post', function (msg) {
   console.log(msg)
   return {
@@ -42,10 +42,45 @@ Mock.mock(RegExp('http://localhost:8080/users/addressList'), 'post', function (m
     address: '浙江省杭州市天台县'
   }
 })
+// 生成订单
 Mock.mock(RegExp('http://localhost:8080/goods/addOrder'), 'post', function (msg) {
   console.log(msg)
   return {
     msg: 'success',
     orderId: '300000'
+  }
+})
+// 获取购物车列表对应api中的getCartList()
+Mock.mock(RegExp('http://localhost:8080/goods/cartList'), 'post', function (msg) {
+  console.log(msg)
+  return {
+    msg: 'success',
+    goods: [
+      {
+        goodImg: require('@/assets/images/shop/1.jpg'),
+        goodName: '宠物狗食品',
+        goodPrice: '100.00',
+        goodId: '200000',
+        goodNum: 3,
+        checked: '0'
+      },
+      {
+        goodImg: require('@/assets/images/shop/1.jpg'),
+        goodName: '宠物狗食品',
+        goodPrice: '150.00',
+        goodId: '200001',
+        goodNum: 2,
+        checked: '0'
+
+      },
+      {
+        goodImg: require('@/assets/images/shop/1.jpg'),
+        goodName: '宠物狗食品',
+        goodPrice: '200.00',
+        goodId: '200002',
+        goodNum: 2,
+        checked: '0'
+      }
+    ]
   }
 })

@@ -65,27 +65,27 @@ export default new Vuex.Store({
       removeStore('user')
     },
     // 加入购物车
-    ADD_CART: (state, {productId, productPrice, productName, productImg, productNum = 1}) => {
+    ADD_CART: (state, {goodId, goodPrice, goodName, goodImg, goodNum = 1}) => {
       let cart = state.cartList // 购物车
       let falg = true // 购物车是否由商品
       let goods = {
-        productId,
-        productPrice,
-        productName,
-        productImg
+        goodId,
+        goodPrice,
+        goodName,
+        goodImg
       }
       if (cart.length) { // 有内容
         cart.forEach(item => {
-          if (item.productId === productId) {
-            if (item.productNum >= 0) {
+          if (item.goodId === goodId) {
+            if (item.goodNum >= 0) {
               falg = false
-              item.productNum += productNum
+              item.goodNum += goodNum
             }
           }
         })
       }
       if (!cart.length || falg) {
-        goods.productNum = productNum
+        goods.goodNum = goodNum
         goods.checked = '1'
         cart.push(goods)
       }
@@ -94,12 +94,12 @@ export default new Vuex.Store({
       setStore('buyCart', cart)
     },
     // 移除商品
-    REDUCE_CART: (state, {productId}) => {
+    REDUCE_CART: (state, {goodId}) => {
       let cart = state.cartList
       cart.forEach((item, i) => {
-        if (item.productId === productId) {
-          if (item.productNum > 1) {
-            item.productNum--
+        if (item.goodId === goodId) {
+          if (item.goodNum > 1) {
+            item.goodNum--
           } else {
             cart.splice(i, 1)
           }
@@ -109,19 +109,28 @@ export default new Vuex.Store({
       // 存入localStorage
       setStore('buyCart', state.cartList)
     },
+    // 商店网页初始化时获取购物车数据
+    INIT_BUYCART: (state, data) => {
+      setStore('buyCart', data)
+      let initCart = data
+      if (initCart) {
+        state.cartList = initCart
+      }
+      console.log(state.cartList)
+    },
     // 修改购物车
-    EDIT_CART: (state, {productId, productNum, checked}) => {
+    EDIT_CART: (state, {goodId, goodNum, checked}) => {
       let cart = state.cartList
-      if (productNum) {
+      if (goodNum) {
         cart.forEach((item, i) => {
-          if (item.productId === productId) {
-            item.productNum = productNum
+          if (item.goodId === goodId) {
+            item.goodNum = goodNum
             item.checked = checked
           }
         })
-      } else if (productId) {
+      } else if (goodId) {
         cart.forEach((item, i) => {
-          if (item.productId === productId) {
+          if (item.goodId === goodId) {
             cart.splice(i, 1)
           }
         })

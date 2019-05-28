@@ -59,6 +59,23 @@ export const addCart = (params) => {
 export const getCartList = (params) => {
   return axios.post(baseUrl + '/goods/cartList', params)
 }
+// 编辑购物车
+export const cartEdit = (params) => {
+  return axios.post(baseUrl + '/goods/cartEdit', params)
+}
+// 全选
+export const editCheckAll = (params) => {
+  return axios.post(baseUrl + '/goods/editCheckAll', params)
+}
+// 删除一条购物车商品
+export const cartDel = (params) => {
+  return axios.post(baseUrl + '/goods/cartDel', params)
+}
+// // 删除购物车所有商品
+// export const delCartChecked = (params) => {
+//   return axios.post(baseUrl + '/goods/delCartChecked', params)
+// }
+
 // 生成订单
 export const submitOrder = (params) => {
   return axios.post(baseUrl + '/goods/addOrder', params)

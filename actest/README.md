@@ -28,3 +28,14 @@ npm test
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+
+购物车：{
+  goodId,
+  userId,
+  check, //是否被选中
+  goodNum,
+  goodName,
+  goodImg,
+  goodPrice
+}

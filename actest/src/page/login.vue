@@ -114,9 +114,10 @@ export default {
       this.$router.push({
         path:'/'
       })
-    }
+    },
   },
-
+  mounted(){  //在html渲染完后加载
+  }
 }
 </script>
 <style scoped>
