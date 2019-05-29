@@ -7,13 +7,14 @@
           <el-row :gutter="0">
             <el-col :span="7" v-for="(item,i) in addList" :key="i" 
                     style="padding: 0;margin-right:0.5rem;cursor:pointer;"
-                    @click="chooseAddress(item.addressId, item.realName, item.phone, item.address)">
+                    :class="{checked:addressId === item.addressId}"
+                    @click.native="chooseAddress(item.addressId, item.realName, item.phone, item.address)">
               <el-card>
-               <div class="text item">
-                <p><span>收货人: </span><span>{{item.realName}}</span></p>
-                <p><span>收货地址:</span> <span>{{item.address}}</span></p>
-                <p><span>手机号码:</span> <span>{{item.phone}}</span></p>
-               </div>
+                <div class="text item">
+                  <p><span>收货人: </span><span>{{item.realName}}</span></p>
+                  <p><span>收货地址:</span> <span>{{item.address}}</span></p>
+                  <p><span>手机号码:</span> <span>{{item.phone}}</span></p>
+                </div>
              </el-card>
              </el-col>
           </el-row>
@@ -67,7 +68,7 @@
 <script>
 import { getCartList, addressList, productDet, submitOrder } from '@/api/index'
 import YShelf from '@/components/shelf'
-import { getStore } from '@/utils/storage'
+import { getStore, setStore } from '@/utils/storage'
 import headernav from "@/components/headernav";
 import foot from "@/components/foot"
 
@@ -84,7 +85,7 @@ export default {
       addList:[],
       goodNum:'',
       goodId:'',
-      addressId:'',
+      addressId:null,
       realName:'',
       phone:'',
       address:'',
@@ -137,23 +138,35 @@ export default {
     },
     _addressList () {//获取地址列表
       addressList({userId: this.userId}).then(res => {
+        // console.log(res.data, '')
         let data = res.data
         if (data) {
-          this.addList.push(data)   
-          // this.addressId = data[0].addressId
-          // this.realName = data[0].realName
-          // this.phone = data[0].phone
-          // this.address = data[0].address
+          this.addList=data
+          this.addressId = data[0].addressId
+          this.realName = data[0].realName
+          this.phone = data[0].phone
+          this.address = data[0].address
+          console.log(this.addressId,  this.realName,this.phone,this.address)
         } else {
           this.addList = []
         }
       })
     },
+    // 选择地址
+    chooseAddress (addressId, realName, phone, address) {
+      this.addressId = addressId
+      this.realName = realName
+      this.phone = phone
+      this.address = address
+    },
+    goodsDetails (goodId) {
+      this.$router.push({path:'/goodsDetails', query:{goodId}})
+    },
     // 提交订单后跳转付款页面
     _submitOrder () {
       this.isLoad = true
       var array = []
-      if (this.addressId) {
+      if (this.addressId===null) {
         this.message('请选择收货地址')
         this.isLoad = false
         return
@@ -174,10 +187,23 @@ export default {
         goodsList: array,
         orderTotal: this.orderTotal
       }
+      setStore('order', params)
+      // console.log(JSON.parse(getStore('order')))
       submitOrder(params).then(res => {
         console.log(res, '')
         if (res.data.msg == 'success') {
           this.payment(res.data.orderId)
+          //生成订单后更新购物车
+          let newCartList=JSON.parse(getStore())
+          let delCarList=this.cartList
+          delCartList.forEach((item,i)=>{
+            newCartList.forEach((option,j)=>{
+              if(option.goodId==item.good){
+                newCartList.splice(j, 1)
+              }
+            })
+          })
+          setStore('buyCart',newCartList)
         } else {
           this.message(res.data.msg)
           this.isLoad = false
@@ -185,25 +211,16 @@ export default {
       })
     },
     // 付款
-      payment (orderId) {
-        // 需要拿到地址id
-        this.$router.push({
-          path: '/orderPay',
-          query: {
-            'orderId': orderId
-          }
-        })
-      },
-    // 选择地址
-    chooseAddress (addressId, realName, phone, address) {
-      this.addressId = addressId
-      this.realName = realName
-      this.phone = phone
-      this.address = address
+    payment (orderId) {
+      // 需要拿到订单id
+      this.$router.push({
+        path: '/orderPay',
+        query: {
+          'orderId': orderId
+        }
+      })
     },
-    goodsDetails (goodId) {
-      this.$router.push({path:'/goodsDetails', query:{goodId}})
-    },
+
   },
   created(){
     this.userId = getStore('user')
@@ -215,7 +232,7 @@ export default {
     } else {
       // this._getCartList()
       this.cartList = JSON.parse(getStore('payCart'))  //获取选中的购物车商品
-      console.log(JSON.parse(getStore('payCart')), '')
+      // console.log(JSON.parse(getStore('payCart')), '')
     }
     this._addressList()
   }
@@ -226,8 +243,9 @@ export default {
     border: 1px solid #E5E5E5;
   }
   div.checked{
-    border-color: #6A8FE5;
+    border-color: #fa0a1e
   }
+
   .item p{
     margin-bottom: 0.2rem;
     line-height: 0.5rem

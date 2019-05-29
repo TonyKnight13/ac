@@ -32,15 +32,15 @@ export const userInfo = (params) => {
 }
 // 注册账号
 export const register = (params) => {
-  return axios.post(baseUrl + '/users/register', params)
+  return axios.post(baseUrl + '/users/register', JSON.stringify(params))
 }
 // 获取用户地址
 export const addressList = (params) => {
-  return axios.post(baseUrl + '/users/addressList', params)
+  return axios.post(baseUrl + '/users/addressList', JSON.stringify(params))
 }
 // 上传图片
 export const upload = (params) => {
-  return axios.post(baseUrl + '/goods/imgaeUpload', params)
+  return axios.post(baseUrl + '/goods/imgaeUpload', JSON.stringify(params))
 }
 
 // 商品列表接口
@@ -53,23 +53,33 @@ export const productDet = (params) => {
 }
 // 加入购物车
 export const addCart = (params) => {
-  return axios.post(baseUrl + '/goods/addCart', params)
+  return axios.post(baseUrl + '/goods/addCart', JSON.stringify(params))
 }
 // 获取购物车列表
 export const getCartList = (params) => {
-  return axios.post(baseUrl + '/goods/cartList', params)
+  return axios.post(baseUrl + '/goods/cartList', JSON.stringify(params))
 }
 // 编辑购物车
 export const cartEdit = (params) => {
-  return axios.post(baseUrl + '/goods/cartEdit', params)
+  return axios.post(baseUrl + '/goods/cartEdit', JSON.stringify(params))
 }
 // 全选
 export const editCheckAll = (params) => {
-  return axios.post(baseUrl + '/goods/editCheckAll', params)
+  return axios.post(baseUrl + '/goods/editCheckAll', JSON.stringify(params))
 }
 // 删除一条购物车商品
 export const cartDel = (params) => {
-  return axios.post(baseUrl + '/goods/cartDel', params)
+  return axios.post(baseUrl + '/goods/cartDel', JSON.stringify(params))
+}
+
+// 订单
+// 获取用户订单
+export const orderList = (params) => {
+  return axios.get(baseUrl + '/goods/orderList', params)
+}
+// 删除订单
+export const delOrder = (params) => {
+  return axios.get(baseUrl + '/goods/delOrder', params)
 }
 // // 删除购物车所有商品
 // export const delCartChecked = (params) => {

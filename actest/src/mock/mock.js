@@ -8,7 +8,7 @@ Mock.setup({
 // Mock.mock( url, post/get , 返回的数据)；返回前端传来的数据
 // 登录
 Mock.mock('http://localhost:8080/users/login', 'post', function (msg) {
-  console.log(JSON.parse(msg.body).account, msg)
+  // console.log(JSON.parse(msg.body).account, msg)
   return {
     'result': 'success',
     'data': {
@@ -22,8 +22,8 @@ Mock.mock('http://localhost:8080/users/login', 'post', function (msg) {
 
 // 商品详情页
 Mock.mock(RegExp('http://localhost:8080/goods/productDet' + '.*'), 'get', function (msg) {
-  let option = msg.url.split('?')[1]
-  console.log(msg, option)
+  // let option = msg.url.split('?')[1]
+  // console.log(msg, option)
   return {
     goodImg: require('@/assets/images/shop/1.jpg'),
     goodName: '宠物狗食品',
@@ -34,17 +34,25 @@ Mock.mock(RegExp('http://localhost:8080/goods/productDet' + '.*'), 'get', functi
 })
 // 获取地址列表
 Mock.mock(RegExp('http://localhost:8080/users/addressList'), 'post', function (msg) {
-  console.log(msg)
-  return {
-    addressId: '0',
-    realName: 'chenwei',
-    phone: '18100171881',
-    address: '浙江省杭州市天台县'
-  }
+  // console.log(msg)
+  return [
+    {
+      addressId: '0',
+      realName: 'chenwei',
+      phone: '18100171881',
+      address: '浙江省杭州市天台县'
+    },
+    {
+      addressId: '1',
+      realName: 'chen',
+      phone: '18100171666',
+      address: '浙江省杭州市天台县'
+    }
+  ]
 })
 // 生成订单
 Mock.mock(RegExp('http://localhost:8080/goods/addOrder'), 'post', function (msg) {
-  console.log(msg)
+  // console.log(msg)
   return {
     msg: 'success',
     orderId: '300000'
@@ -52,7 +60,7 @@ Mock.mock(RegExp('http://localhost:8080/goods/addOrder'), 'post', function (msg)
 })
 // 获取购物车列表对应api中的getCartList()
 Mock.mock(RegExp('http://localhost:8080/goods/cartList'), 'post', function (msg) {
-  console.log(msg)
+  // console.log(msg)
   return {
     msg: 'success',
     goods: [
@@ -84,19 +92,89 @@ Mock.mock(RegExp('http://localhost:8080/goods/cartList'), 'post', function (msg)
     ]
   }
 })
-//编辑购物车
+// 编辑购物车
 Mock.mock(RegExp('http://localhost:8080/goods/cartEdit'), 'post', function (msg) {
-  console.log(msg)
+  // console.log(msg)
   return {
     msg: 'success',
     orderId: '300000'
   }
 })
-//删除一条购物车记录
+// 删除一条购物车记录
 Mock.mock(RegExp('http://localhost:8080/goods/cartDel'), 'post', function (msg) {
-  console.log(msg)
+  // console.log(msg)
   return {
     msg: 'success',
     orderId: '300000'
+  }
+})
+// 获取订单列表
+Mock.mock(RegExp('http://localhost:8080/goods/orderList' + '.*'), 'get', function (msg) {
+  // let option = msg.url.split('?')[1]
+  // console.log(msg.url, option)
+  return {
+    msg: 'success',
+    data: [
+      {
+        orderId: 30000,
+        goodsList: [{
+          goodImg: require('@/assets/images/shop/1.jpg'),
+          goodName: '宠物狗初级食品',
+          goodPrice: '100.00',
+          goodId: '200000',
+          goodNum: 3
+        },
+        {
+          goodImg: require('@/assets/images/shop/1.jpg'),
+          goodName: '宠物狗中级食品',
+          goodPrice: '150.00',
+          goodId: '200001',
+          goodNum: 3
+        }],
+        addressId: '1',
+        realName: 'chen',
+        phone: '18100171666',
+        address: '浙江省杭州市天台县',
+        orderTotal: '750.00'
+      },
+      {
+        orderId: 30001,
+        goodsList: [{
+          goodImg: require('@/assets/images/shop/1.jpg'),
+          goodName: '宠物狗中级食品',
+          goodPrice: '150.00',
+          goodId: '200000',
+          goodNum: 3
+        }],
+        addressId: '1',
+        realName: 'chen',
+        phone: '18100171666',
+        address: '浙江省杭州市天台县',
+        orderTotal: '450.00'
+      },
+      {
+        orderId: 30002,
+        goodsList: [{
+          goodImg: require('@/assets/images/shop/1.jpg'),
+          goodName: '宠物狗高级食品',
+          goodPrice: '200.00',
+          goodId: '200000',
+          goodNum: 3
+        }],
+        addressId: '1',
+        realName: 'chen',
+        phone: '18100171666',
+        address: '浙江省杭州市天台县',
+        orderTotal: '600.00'
+      }
+    ]
+  }
+})
+// 删除订单
+Mock.mock(RegExp('http://localhost:8080/goods/delOrder' + '.*'), 'get', function (msg) {
+  // let option = msg.url.split('?')[1]
+  // console.log(msg.url, option)
+  return {
+    msg: 'success'
   }
 })

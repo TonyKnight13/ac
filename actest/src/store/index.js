@@ -86,7 +86,7 @@ export default new Vuex.Store({
       }
       if (!cart.length || falg) {
         goods.goodNum = goodNum
-        goods.checked = '0' //购物车中默认商品不选中
+        goods.checked = '0' // 购物车中默认商品不选中
         cart.push(goods)
       }
       state.cartList = cart

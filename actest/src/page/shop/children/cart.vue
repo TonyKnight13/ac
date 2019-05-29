@@ -6,9 +6,10 @@
       <y-shelf title="购物车">
         <!-- 内容 -->
         <div slot="content">
-          <div v-if="cartList.length">
+          <div v-if="cartList.length" v-loading="isloading">
 
-            <el-table :data="cartList" style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
+            <el-table :data="cartList" style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange"
+            :header-cell-style="{background:'#F3F4F7',color:'#555'}">
               <el-table-column  width="100" style="color:red" align="center"  type="selection">
               </el-table-column>
 
@@ -44,9 +45,16 @@
             
             <!-- 合计 -->
             <div class="pay"> 
-              <div style="margin-right:0.5rem;font-size:0.32rem;">
-                <span>应付总额：</span>
-                <span style="font-size:0.36rem;color:red;font-weight:bold">￥{{checkPrice}}</span>
+              <div style="text-align:center;color:#959595;font-size:0.20rem;">
+                <span style="color:black">已选择<span style="font-size:0.36rem;color:#F56C6C;font-weight:bold">{{checkNum}}</span>商品</span> <br />
+                <span>共计<span style="font-size:0.30rem;font-weight:bold">{{totalNum}}</span>商品</span>
+              </div>
+              <div style="margin-right:0.5rem;font-size:0.24rem;">
+                <el-divider direction="vertical" style="height:100%"></el-divider>
+                <div style="display:inline-block">
+                  <span style="">应付总额：<span style="font-size:0.30rem;color:#F56C6C;font-weight:bold">￥{{checkPrice}}</span></span>
+  
+                </div>
               </div>
               <el-button type="primary" :loading="loading" @click="checkout">现在结算</el-button>
             </div>
@@ -90,21 +98,22 @@ export default {
       checked:false,
       multipleSelection: [],
       checkedList:[],
+      isloading:true
     }
   },
   computed: {
     // 是否全选
-    checkAllFlag () {
-      return this.checkedCount === this.cartList.length
-    },
+    // checkAllFlag () {
+    //   return this.checkedCount === this.cartList.length
+    // },
     // 勾选的数量
-    checkedCount () {
-      var i = 0
-      this.cartList && this.cartList.forEach((item) => {
-        if (item.checked === '1') i++
-      })
-      return Number(i)
-    },
+    // checkedCount () {
+    //   var i = 0
+    //   this.cartList && this.cartList.forEach((item) => {
+    //     if (item.checked === '1') i++
+    //   })
+    //   return Number(i)
+    // },
     // 计算总数量
     totalNum () {
       var totalNum = 0
@@ -213,14 +222,15 @@ export default {
     _getCartList () { 
       getCartList({userId: this.userId}).then(res => {
         let cartList = res.data.goods;
-        this.INIT_BUYCART(cartList)
+        this.INIT_BUYCART(cartList)  //将其存入state.carList和session中
+        this.isloading=false
+        this.cartList=JSON.parse(getStore('buyCart'))//seesionStorage中的是字符串
       })
     },
 
   },
   created() {
     this.userId=getStore('user')
-    this.cartList=JSON.parse(getStore('buyCart'))//seesionStorage中的是字符串
     this._getCartList()
   },
 }
@@ -275,8 +285,10 @@ export default {
   .pay{
     display: flex;
     align-items: center;
+    justify-content: center;
     justify-content:flex-end;
-    margin: 0 0.2rem 0.2rem 0;
+    margin: 0.2rem 0.2rem 0.2rem 0;
+    height: 1rem;
   }
 
    .cart-e {
