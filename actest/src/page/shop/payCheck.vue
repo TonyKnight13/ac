@@ -139,7 +139,7 @@ export default {
     _addressList () {//获取地址列表
       addressList({userId: this.userId}).then(res => {
         // console.log(res.data, '')
-        let data = res.data
+        let data = res.data.data
         if (data) {
           this.addList=data
           this.addressId = data[0].addressId

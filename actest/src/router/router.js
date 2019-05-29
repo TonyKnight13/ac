@@ -95,6 +95,11 @@ const router = new Router({
           component:resolve => require(['../page/user/children/myAddress.vue'],resolve)
         },
         {
+          path:'/goodsManage',
+          name:'goodsManage',
+          component:resolve => require(['../page/user/children/goodsManage.vue'],resolve)
+        },
+        {
           path:'/order',
           name:'oeder',
           component:resolve => require(['../page/user/children/order.vue'],resolve)

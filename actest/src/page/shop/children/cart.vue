@@ -61,7 +61,7 @@
           
           </div>
 
-          <div v-else style="padding:50px">
+          <div v-else style="padding:50px" v-loading="isloading">
             <div class="cart-e"><el-image :src="require('@/assets/images/shop/cart-empty_@2x.png')"></el-image></div>
             <p style="text-align: center;padding: 20px;color: #8d8d8d">你的购物车空空如也</p>
             <div style="text-align: center">
@@ -125,6 +125,7 @@ export default {
     // 选中的总价格
     checkPrice () {
       var totalPrice = 0
+      console.log(this.cartList, '')
       for(let i=0;i<this.cartList.length;i++){
         if(this.cartList[i].checked==true){
           totalPrice += this.cartList[i].goodPrice * this.cartList[i].goodNum
@@ -136,7 +137,7 @@ export default {
     checkNum () {
       var checkNum = 0
       this.cartList && this.cartList.forEach(item => {
-        if (item.checked === '1') {
+        if (item.checked === true) {
           checkNum += (item.goodNum)
         }
       })
@@ -155,10 +156,11 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
       for(let k=0; k<this.cartList.length; k++){
-        this.cartList[k].checked='0'
+        this.cartList[k].checked=false
       }
+      // console.log(this.cartList)
       for(let i=0;i<val.length;i++){  //只需修改本实例中的数据  （选中）
-        val[i].checked='1'
+        val[i].checked=true
         
       }  
       // console.log(this.cartList)
@@ -209,7 +211,7 @@ export default {
       let cart=[]
       for(let i=0; i<this.cartList.length; i++){
         
-        if(this.cartList[i].checked == '1'){
+        if(this.cartList[i].checked == true){
           cart.push(this.cartList[i])
         }
       }
@@ -222,6 +224,9 @@ export default {
     _getCartList () { 
       getCartList({userId: this.userId}).then(res => {
         let cartList = res.data.goods;
+        cartList.forEach(item=>{ //为每一项增加一个checked属性
+          item.checked=false;
+        })
         this.INIT_BUYCART(cartList)  //将其存入state.carList和session中
         this.isloading=false
         this.cartList=JSON.parse(getStore('buyCart'))//seesionStorage中的是字符串

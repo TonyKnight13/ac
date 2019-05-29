@@ -38,6 +38,18 @@ export const register = (params) => {
 export const addressList = (params) => {
   return axios.post(baseUrl + '/users/addressList', JSON.stringify(params))
 }
+// 修改收货地址
+export const addressUpdate = (params) => {
+  return axios.post(baseUrl + '/users/updateAddress', JSON.stringify(params))
+}
+// 添加收货地址
+export const addressAdd = (params) => {
+  return axios.post(baseUrl + '/users/addAddress', JSON.stringify(params))
+}
+// 删除收货地址
+export const addressDel = (params) => {
+  return axios.post(baseUrl + '/users/delAddress', JSON.stringify(params))
+}
 // 上传图片
 export const upload = (params) => {
   return axios.post(baseUrl + '/goods/imgaeUpload', JSON.stringify(params))

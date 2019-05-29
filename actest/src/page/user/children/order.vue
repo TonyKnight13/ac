@@ -38,10 +38,11 @@
             </el-table>
       </div>
      </y-shelf>
+
   </div>
 </template>
 <script>
- import { orderList, delOrder } from '@/api/index'
+import { orderList, delOrder } from '@/api/index'
 import { getStore, setStore } from '@/utils/storage'
 import YShelf from '@/components/shelf';
 export default{
@@ -62,6 +63,7 @@ export default{
     
   },
   methods: {
+    //获取订单列表
     _orderList () {
       let options = {
           userId: this.userId,
@@ -69,8 +71,9 @@ export default{
           // page: this.currentPage
       }
       orderList({params:{options}}).then(res => {
-        console.log(res, '')
-        this.orderList = res.data.data
+        if(res.data.data){
+          this.orderList = res.data.data
+        }
         console.log(this.orderList, '')
         this.loading = false
       })
