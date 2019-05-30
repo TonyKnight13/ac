@@ -98,6 +98,8 @@ export default {
               //设置Vuex登录标志为true，默认isLogin为false
               this.GET_USERNAME(res.data.data.userId);
               this.SET_TOKEN(res.data.token);
+              console.log(res.data)
+              setStore('statusKey',res.data.data.identity)
               //iViewUi的友好提示
               this.$message.success(res.data.result);
               //登录成功后跳转到指定页面

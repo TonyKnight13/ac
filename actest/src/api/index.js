@@ -50,11 +50,29 @@ export const addressAdd = (params) => {
 export const addressDel = (params) => {
   return axios.post(baseUrl + '/users/delAddress', JSON.stringify(params))
 }
+
+// 获取商品管理页面的商品列表
+export const goodsList = (params) => {
+  return axios.post(baseUrl + '/users/goodsList', JSON.stringify(params))
+}
+// 修改商品管理页面的商品列表
+export const goodsUpdate = (params) => {
+  return axios.post(baseUrl + '/users/goodsUpdate', JSON.stringify(params))
+}
+// 添加商品管理页面的商品列表
+export const goodsAdd = (params) => {
+  return axios.post(baseUrl + '/users/goodsAdd', JSON.stringify(params))
+}
+// 上、下架商品管理页面的商品列表
+export const goodsPut = (params) => {
+  return axios.post(baseUrl + '/users/goodsPut', JSON.stringify(params))
+}
 // 上传图片
 export const upload = (params) => {
-  return axios.post(baseUrl + '/goods/imgaeUpload', JSON.stringify(params))
+  return axios.post(baseUrl + '/users/imgaeUpload', JSON.stringify(params))
 }
 
+/* 商品 */
 // 商品列表接口
 export const navList = (params) => {
   return axios.get(baseUrl + '/goods/navList', params)
@@ -63,6 +81,12 @@ export const navList = (params) => {
 export const productDet = (params) => {
   return axios.get(baseUrl + '/goods/productDet', params)
 }
+// 商品筛选
+export const goodsListSelect = (params) => {
+  return axios.post(baseUrl + '/goods/goodsListSelect', params)
+}
+
+/* 购物车 */
 // 加入购物车
 export const addCart = (params) => {
   return axios.post(baseUrl + '/goods/addCart', JSON.stringify(params))
@@ -93,15 +117,23 @@ export const orderList = (params) => {
 export const delOrder = (params) => {
   return axios.get(baseUrl + '/goods/delOrder', params)
 }
+// 生成订单
+export const submitOrder = (params) => {
+  return axios.post(baseUrl + '/goods/addOrder', params)
+}
+
+
+
+
+
+
+
 // // 删除购物车所有商品
 // export const delCartChecked = (params) => {
 //   return axios.post(baseUrl + '/goods/delCartChecked', params)
 // }
 
-// 生成订单
-export const submitOrder = (params) => {
-  return axios.post(baseUrl + '/goods/addOrder', params)
-}
+
 // // 修改头像
 // export const updateheadimage = (params) => {
 //   return axios.post('/member/updateheadimage', params)

@@ -12,7 +12,7 @@
         </el-table-column>
         <el-table-column prop="address" label="地址" width="200" align="center">
         </el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column label="操作" align="center" >
             <template slot-scope="scope">
               <el-button type="primary" icon="el-icon-edit" size="small"  circle @click="update(scope.row)"></el-button>
               <el-button type="danger" icon="el-icon-delete" size="small" circle @click="del(scope.row.addressId)"></el-button>
@@ -47,7 +47,7 @@
         <el-button 
         class="btn"
         :disabled=trueORfalse
-        @click="save({userId:userId,addressId:msg.addressId,realName:msg.realName,phone:msg.phone,address:msg.address})">
+        @click="save()">
         保存</el-button>
 
       <!-- </div> -->
@@ -125,7 +125,7 @@ export default {
         this._addressList() //修改完成后重新获取地址列表
       })
     },
-    
+    //添加地址
     _addressAdd (params) {
       addressAdd(params).then(res => {
         if (res.data.msg == 'success') {
@@ -137,8 +137,15 @@ export default {
     },
 
     // 保存
-    save (obj) {
+    save () {
       this.popupOpen = false
+      let obj = {
+        userId:this.userId,
+        addressId:this.msg.addressId,
+        realName:this.msg.realName,
+        phone:this.msg.phone,
+        address:this.msg.address
+      }
       if (obj.addressId) {
         this._addressUpdate(obj)
       } else {
@@ -148,10 +155,14 @@ export default {
     },
 
     // 删除
-    del (addressId, i) {
+    del (addressId,i) {
       addressDel({addressId: addressId}).then(res => {
-        if (res.success === true) {
-          this.addressList.splice(i, 1)
+        if (res.data.success === true) {
+          this.addressList.forEach((item,i) => {
+            if(item.addressId == addressId){
+              this.addressList.splice(i, 1)
+            }
+          });
         } else {
           this.message('删除失败')
         }
@@ -185,31 +196,5 @@ export default {
 </script>
 
 <style scoped>
-.content-title{
-  position: relative;
-  z-index: 1;
-  line-height: 0.8rem;
-  height: 0.8rem;
-  padding: 0 0 0 0rem;
-  font-size: 12px;
-  background: #eee;
-  border-bottom: 1px solid #dbdbdb;
-  border-bottom-color: rgba(0, 0, 0, .08);
-}
-.content-title span {
-  text-align: center;
-  color: #838383;
-  width: 3rem;
-  display: inline-block;
-}
-.content-title .address {
-  width: 5rem
-}
-.content-title .tel {
 
-}
-
-.operation{
-  width: 1rem;
-}
 </style>

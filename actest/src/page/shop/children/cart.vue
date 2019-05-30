@@ -15,7 +15,7 @@
 
               <el-table-column prop="goodImg" label="商品图片" width="120" align="center">
                 <template slot-scope="scope">            
-                  <el-image :src="scope.row.goodImg" fit="contain" @click="goodsDetails(scope.row.goodId)"></el-image>
+                  <el-image :src="scope.row.goodImg" fit="contain"></el-image>
                 </template>
               </el-table-column>
 

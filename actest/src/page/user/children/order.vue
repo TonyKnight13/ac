@@ -85,7 +85,7 @@ export default{
     //跳转到订单详情页面
     orderDetail(id){
       // let arr = []
-      orderList.forEach((item,i) => { //将选中的订单信息存入session中
+      this.orderList.forEach((item,i) => { //将选中的订单信息存入session中
         if(item.orderId == id){
           // arr.push(item)
           setStore('orderDetail', item)
@@ -93,7 +93,7 @@ export default{
       });
       
       this.$router.push({
-        path: 'orderDetail',
+        path: '/orderDetail',
         query: {
           orderId: id
         }

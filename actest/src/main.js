@@ -87,7 +87,7 @@ require('./mock/mock')
 // router.beforeEach(function (to, from, next) {
 //   let params = {
 //     params: {
-//       token: getStore('token')
+//       token: getStore('user')
 //     }
 //   }
 //   userInfo(params).then(res => {
