@@ -95,7 +95,6 @@ export default {
               this.$message.error("error");
             //登录成功
             } else {
-              //设置Vuex登录标志为true，默认isLogin为false
               this.GET_USERNAME(res.data.data.userId);
               this.SET_TOKEN(res.data.token);
               console.log(res.data)

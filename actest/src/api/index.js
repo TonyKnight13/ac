@@ -17,6 +17,11 @@ const baseUrl = 'http://localhost:8080' // 服务器地址
 // return Promise.reject(error);
 // })
 
+
+// 注册账号
+export const register = (params) => {
+  return axios.post(baseUrl + '/users/register', JSON.stringify(params))
+}
 // 登陆
 export const userLogin = (params) => {
   // return axios.post(`${base}/yyzt-web/auth/login.do`,  query.stringify(params));
@@ -28,11 +33,11 @@ export const loginOut = (params) => {
 }
 // 用户信息
 export const userInfo = (params) => {
-  return axios.get(baseUrl + '/users/checkLogin', params)
+  return axios.get(baseUrl + '/users/userInfo', params)
 }
-// 注册账号
-export const register = (params) => {
-  return axios.post(baseUrl + '/users/register', JSON.stringify(params))
+// 修改密码
+export const changePass = (params) => {
+  return axios.post(baseUrl + '/users/changePass', JSON.stringify(params))
 }
 // 获取用户地址
 export const addressList = (params) => {
@@ -63,14 +68,11 @@ export const goodsUpdate = (params) => {
 export const goodsAdd = (params) => {
   return axios.post(baseUrl + '/users/goodsAdd', JSON.stringify(params))
 }
-// 上、下架商品管理页面的商品列表
+// 删除商品管理页面的商品列表
 export const goodsPut = (params) => {
   return axios.post(baseUrl + '/users/goodsPut', JSON.stringify(params))
 }
-// 上传图片
-export const upload = (params) => {
-  return axios.post(baseUrl + '/users/imgaeUpload', JSON.stringify(params))
-}
+
 
 /* 商品 */
 // 商品列表接口
@@ -99,10 +101,10 @@ export const getCartList = (params) => {
 export const cartEdit = (params) => {
   return axios.post(baseUrl + '/goods/cartEdit', JSON.stringify(params))
 }
-// 全选
-export const editCheckAll = (params) => {
-  return axios.post(baseUrl + '/goods/editCheckAll', JSON.stringify(params))
-}
+// // 全选
+// export const editCheckAll = (params) => {
+//   return axios.post(baseUrl + '/goods/editCheckAll', JSON.stringify(params))
+// }
 // 删除一条购物车商品
 export const cartDel = (params) => {
   return axios.post(baseUrl + '/goods/cartDel', JSON.stringify(params))
@@ -127,7 +129,10 @@ export const submitOrder = (params) => {
 
 
 
-
+// 上传图片
+// export const upload = (params) => {
+//   return axios.post(baseUrl + '/users/imgaeUpload', JSON.stringify(params))
+// }
 // // 删除购物车所有商品
 // export const delCartChecked = (params) => {
 //   return axios.post(baseUrl + '/goods/delCartChecked', params)

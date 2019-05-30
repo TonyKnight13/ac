@@ -156,7 +156,7 @@ export default {
 
     // 删除
     del (addressId,i) {
-      addressDel({addressId: addressId}).then(res => {
+      addressDel({userId: this.userId,addressId: addressId}).then(res => {
         if (res.data.success === true) {
           this.addressList.forEach((item,i) => {
             if(item.addressId == addressId){

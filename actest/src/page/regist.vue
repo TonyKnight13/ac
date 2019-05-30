@@ -105,10 +105,10 @@ export default {
         if(valid){
           this.loading=true;
           register({
-            "account":this.form.account,
-            "password1":this.form.pass,
-            "password2":this.form.checkPass,
-            "identity":this.form.statusKey
+            account:this.form.account,
+            password1:this.form.pass,
+            password2:this.form.checkPass,
+            identity:this.form.statusKey
           }).then(res=>{
             console.log(typeof res)
             if(res.data.success === true){  //后台返回信息中success：true

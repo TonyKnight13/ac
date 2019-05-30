@@ -100,11 +100,10 @@ export default{
       })
     },
     //删除订单
-    _delOrder (orderId, i) {
+    _delOrder (orderId) {
       let params = {
-        params: {
-          orderId: orderId
-        }
+        userId:this.userId,
+        orderId: orderId
       }
       delOrder(params).then(res => {  //后台删除订单
         if (res.data.msg == "success") {

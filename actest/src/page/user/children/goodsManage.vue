@@ -253,7 +253,7 @@ export default {
     save () {
       this.popupOpen = false
       let obj = {
-        owner:this.userId,
+        userId:this.userId,
         goodId:this.msg.goodId,
         goodImg:this.msg.goodImg,
         goodName:this.msg.goodName,

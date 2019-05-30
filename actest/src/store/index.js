@@ -163,20 +163,20 @@ export default new Vuex.Store({
         state.userInfo = null
       }
     }
-  }
+  },
   // // 应用mutations
-  // actions: { // vue运用他来执行mutations
-  //   setToken ({commit}, data) {
-  //     commit('SET_TOKEN', data)
-  //   },
-  //   // 获取用户名
-  //   setUsername ({commit}, data) {
-  //     commit('GET_USERNAME', data)
-  //   },
-  //   // 登出
-  //   logout ({commit}) {
-  //     commit('LOGOUT')
-  //   }
+  actions: { // vue运用他来执行mutations
+    setToken ({commit}, data) {
+      commit('SET_TOKEN', data)
+    },
+    // 获取用户名
+    setUsername ({commit}, data) {
+      commit('GET_USERNAME', data)
+    },
+    // 登出
+    logout ({commit}) {
+      commit('LOGOUT')
+    }
 
-  // }
+  }
 })

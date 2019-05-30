@@ -65,7 +65,7 @@
                               <div class="good-discribe">{{item.goodDiscribe}}</div>
                               <div class="good-price">
                                 <el-button type="danger" @click.native="toDescript(item.goodId)">查看详情</el-button>
-                                <el-button type="danger">加入购物车</el-button>
+                                <el-button type="danger" @click.native="_addCart()">加入购物车</el-button>
                               </div>
                           </figcaption>
                           </figure>
@@ -93,7 +93,7 @@
 <script>
 import headernav from "@/components/headernav.vue";
 import foot from "@/components/foot"
-import {getCartList, goodsListSelect, navList} from "@/api/index"
+import {getCartList, goodsListSelect, navList, addCart} from "@/api/index"
 import {getStore} from "@/utils/storage"
 import { mapMutations } from 'vuex'
 
@@ -120,13 +120,13 @@ export default {
       }],
       selectObj:{},
       value:'',
-      resultnum:30,
+      resultnum:0,
       goodKind,
       goodUserKind,
       goodKindcheked:[],
       goodUserKindchecked:[],
       currentPage:1,
-      total:50,
+      total:0,
       userId:'',
       resultGood:[],
 
@@ -168,7 +168,8 @@ export default {
     },
     //排序
     sort(value){
-      console.log(value)
+      this.selectObj.select=value
+      console.log(this.selectObj)
     },
     //搜索
     onSubmit(){
@@ -180,13 +181,24 @@ export default {
     toDescript(id){
       this.$router.push({path: "/goodsDetails",query:{goodId:id}})
     },
-    //获取购物车列表
-    _getCartList () { 
-      getCartList({userId: this.userId}).then(res => {
-        let cartList = res.data.goods;
-        this.INIT_BUYCART(cartList)
+    //获取商品列表
+    _navList(){
+      navList().then(res => {
+        if(res.data.success == true){
+          this.resultGood = res.data.data
+          this.resultnum = this.total =res.data.data.length
+        }else{
+          this.$message.error('获取商品列表失败')
+        }
       })
-    },
+    }
+    //获取购物车列表
+    // _getCartList () { 
+    //   getCartList({userId: this.userId}).then(res => {
+    //     let cartList = res.data.goods;
+    //     this.INIT_BUYCART(cartList)
+    //   })
+    // },
     // priceMenuChange(visible){  
     //   this.rateMenuArrow=!visible;
     // },
@@ -196,7 +208,8 @@ export default {
   },
   created() {
     this.userId= getStore('user')
-    this._getCartList()
+    // this._getCartList()
+    this._navList()
   },
 }
 </script>
