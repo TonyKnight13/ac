@@ -32,7 +32,7 @@ func (c *UserController) Login() {
 func (c *UserController) Regist() {
 	var regist Regist
 	json.Unmarshal(c.Ctx.Input.RequestBody, &regist)
-	beego.Info(string(regist.Identity))
+	beego.Info(string(c.Ctx.Input.RequestBody))
 
 	err1 := Register(regist.Account, regist.password1, regist.Identity)
 	if err1 != nil {

@@ -54,7 +54,7 @@ func Register(Account string, Password string, Identity string) error {
 
 	pwdmd5 := com.Md5(Password)
 	var id byte
-	if Identity == "1" {
+	if Identity == "0" {
 		id = 0
 	} else {
 		id = 1

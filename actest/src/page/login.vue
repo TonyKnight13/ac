@@ -95,10 +95,6 @@ export default {
               this.$message.error("error");
             //登录成功
             } else {
-<<<<<<< HEAD:actest/src/page/login.vue
-              //设置Vuex登录标志为true，默认isLogin为false
-=======
->>>>>>> d2e9b0c9a2b97c7a9bfbd36394dbfe959c02d022:actest/src/page/login.vue
               this.GET_USERNAME(res.data.data.userId);
               this.SET_TOKEN(res.data.token);
               console.log(res.data)

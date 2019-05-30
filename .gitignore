@@ -698,9 +698,7 @@ MigrationBackup/
 **/node_modules/
 **/static/
 **/views/
+**/session/
 
-<<<<<<< HEAD
 .conf
 .exe
-=======
->>>>>>> d2e9b0c9a2b97c7a9bfbd36394dbfe959c02d022
