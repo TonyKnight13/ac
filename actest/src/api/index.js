@@ -85,7 +85,7 @@ export const productDet = (params) => {
 }
 // 商品筛选
 export const goodsListSelect = (params) => {
-  return axios.post(baseUrl + '/goods/goodsListSelect', params)
+  return axios.post(baseUrl + '/goods/goodsListSelect', JSON.stringify(params))
 }
 
 /* 购物车 */
@@ -121,7 +121,7 @@ export const delOrder = (params) => {
 }
 // 生成订单
 export const submitOrder = (params) => {
-  return axios.post(baseUrl + '/goods/addOrder', params)
+  return axios.post(baseUrl + '/goods/addOrder', JSON.stringify(params))
 }
 
 

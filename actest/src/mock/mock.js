@@ -111,7 +111,7 @@ let accountArry = [] // 存放已有的用户名
 // Mock.mock( url, post/get , 返回的数据)；返回前端传来的数据
 // 注册
 Mock.mock('http://localhost:8080/users/register', 'post', function (msg) {
-  console.log(JSON.parse(msg.body), msg)
+  console.log(JSON.parse(msg.body), msg.body)
   let user = JSON.parse(msg.body)
   let id = randomNum
   let flag = false
