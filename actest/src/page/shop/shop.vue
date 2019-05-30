@@ -65,7 +65,11 @@
                               <div class="good-discribe">{{item.goodDiscribe}}</div>
                               <div class="good-price">
                                 <el-button type="danger" @click.native="toDescript(item.goodId)">查看详情</el-button>
+<<<<<<< HEAD:actest/src/page/shop/shop.vue
                                 <el-button type="danger">加入购物车</el-button>
+=======
+                                <el-button type="danger" @click.native="_addCart()">加入购物车</el-button>
+>>>>>>> d2e9b0c9a2b97c7a9bfbd36394dbfe959c02d022:actest/src/page/shop/shop.vue
                               </div>
                           </figcaption>
                           </figure>
@@ -93,7 +97,11 @@
 <script>
 import headernav from "@/components/headernav.vue";
 import foot from "@/components/foot"
+<<<<<<< HEAD:actest/src/page/shop/shop.vue
 import {getCartList, goodsListSelect, navList} from "@/api/index"
+=======
+import {getCartList, goodsListSelect, navList, addCart} from "@/api/index"
+>>>>>>> d2e9b0c9a2b97c7a9bfbd36394dbfe959c02d022:actest/src/page/shop/shop.vue
 import {getStore} from "@/utils/storage"
 import { mapMutations } from 'vuex'
 
@@ -120,13 +128,21 @@ export default {
       }],
       selectObj:{},
       value:'',
+<<<<<<< HEAD:actest/src/page/shop/shop.vue
       resultnum:30,
+=======
+      resultnum:0,
+>>>>>>> d2e9b0c9a2b97c7a9bfbd36394dbfe959c02d022:actest/src/page/shop/shop.vue
       goodKind,
       goodUserKind,
       goodKindcheked:[],
       goodUserKindchecked:[],
       currentPage:1,
+<<<<<<< HEAD:actest/src/page/shop/shop.vue
       total:50,
+=======
+      total:0,
+>>>>>>> d2e9b0c9a2b97c7a9bfbd36394dbfe959c02d022:actest/src/page/shop/shop.vue
       userId:'',
       resultGood:[],
 
@@ -168,7 +184,12 @@ export default {
     },
     //排序
     sort(value){
+<<<<<<< HEAD:actest/src/page/shop/shop.vue
       console.log(value)
+=======
+      this.selectObj.select=value
+      console.log(this.selectObj)
+>>>>>>> d2e9b0c9a2b97c7a9bfbd36394dbfe959c02d022:actest/src/page/shop/shop.vue
     },
     //搜索
     onSubmit(){
@@ -180,6 +201,7 @@ export default {
     toDescript(id){
       this.$router.push({path: "/goodsDetails",query:{goodId:id}})
     },
+<<<<<<< HEAD:actest/src/page/shop/shop.vue
     //获取购物车列表
     _getCartList () { 
       getCartList({userId: this.userId}).then(res => {
@@ -187,6 +209,26 @@ export default {
         this.INIT_BUYCART(cartList)
       })
     },
+=======
+    //获取商品列表
+    _navList(){
+      navList().then(res => {
+        if(res.data.success == true){
+          this.resultGood = res.data.data
+          this.resultnum = this.total =res.data.data.length
+        }else{
+          this.$message.error('获取商品列表失败')
+        }
+      })
+    }
+    //获取购物车列表
+    // _getCartList () { 
+    //   getCartList({userId: this.userId}).then(res => {
+    //     let cartList = res.data.goods;
+    //     this.INIT_BUYCART(cartList)
+    //   })
+    // },
+>>>>>>> d2e9b0c9a2b97c7a9bfbd36394dbfe959c02d022:actest/src/page/shop/shop.vue
     // priceMenuChange(visible){  
     //   this.rateMenuArrow=!visible;
     // },
@@ -196,7 +238,12 @@ export default {
   },
   created() {
     this.userId= getStore('user')
+<<<<<<< HEAD:actest/src/page/shop/shop.vue
     this._getCartList()
+=======
+    // this._getCartList()
+    this._navList()
+>>>>>>> d2e9b0c9a2b97c7a9bfbd36394dbfe959c02d022:actest/src/page/shop/shop.vue
   },
 }
 </script>

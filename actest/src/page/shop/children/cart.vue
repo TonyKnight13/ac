@@ -172,9 +172,15 @@ export default {
     // 修改购物车
     _cartEdit (userId, goodId, goodNum) {
       cartEdit({  //修改后台数据
+<<<<<<< HEAD
           userId,
           goodId,
           goodNum,  
+=======
+            userId,
+            goodId,
+            goodNum,  
+>>>>>>> d2e9b0c9a2b97c7a9bfbd36394dbfe959c02d022
       }).then(res => {
         if (res.data.msg === 'success') {
           this.EDIT_CART({  //修改本地存储中的数据

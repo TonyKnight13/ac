@@ -105,10 +105,17 @@ export default {
         if(valid){
           this.loading=true;
           register({
+<<<<<<< HEAD:actest/src/page/regist.vue
             "account":this.form.account,
             "password1":this.form.pass,
             "password2":this.form.checkPass,
             "identity":this.form.statusKey
+=======
+            account:this.form.account,
+            password1:this.form.pass,
+            password2:this.form.checkPass,
+            identity:this.form.statusKey
+>>>>>>> d2e9b0c9a2b97c7a9bfbd36394dbfe959c02d022:actest/src/page/regist.vue
           }).then(res=>{
             console.log(typeof res)
             if(res.data.success === true){  //后台返回信息中success：true
