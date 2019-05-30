@@ -4,10 +4,7 @@ const baseUrl = '/api'
 export const getAllGoods = (params) => {
   return http.fetchGet('${baseUrl}/goods/allGoods', params)
 }
-// 获取购物车列表
-export const getCartList = (params) => {
-  return http.fetchPost('/member/cartList', params)
-}
+
 // 加入购物车
 export const addCart = (params) => {
   return http.fetchPost('/member/addCart', params)
@@ -32,10 +29,7 @@ export const editCheckAll = (params) => {
 export const cartDel = (params) => {
   return http.fetchPost('/member/cartDel', params)
 }
-// 获取用户地址
-export const addressList = (params) => {
-  return http.fetchPost('/member/addressList', params)
-}
+
 // 通过id获取地址
 export const getAddress = (params) => {
   return http.fetchPost('/member/address', params)

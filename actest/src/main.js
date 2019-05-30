@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router/router';  //路由
-import store from './store/';  //状态管理
+import store from './store/index';  //状态管理
 import VueCookie from 'vue-cookie'
 import { userInfo } from './api'
 /* 引入element */
@@ -87,7 +87,7 @@ Vue.use(VueCookie)
 // router.beforeEach(function (to, from, next) {
 //   let params = {
 //     params: {
-//       token: getStore('token')
+//       token: getStore('user')
 //     }
 //   }
 //   userInfo(params).then(res => {

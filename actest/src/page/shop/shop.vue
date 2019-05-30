@@ -11,22 +11,23 @@
             <el-image :src="item" fit="contain"></el-image>
           </el-carousel-item>
         </el-carousel>
+
         <!-- 搜索 -->
         <div class="screen-content">
           <div class="screen-item">
-            <span>种类：</span>
+            <span>商品种类：</span>
             <div class="item-check">
-              <el-checkbox-group  @change="onChange" v-model="checkedspeci" text-color="#ffb90f" fill="#ffb90f">
-                <el-checkbox v-for="speci in specis" :label="speci" :key="speci" >{{speci}}</el-checkbox>
+              <el-checkbox-group  @change="onChange1" v-model="goodKindcheked" :max='1'>
+                <el-checkbox v-for="speci in goodKind" :label="speci" :key="speci" >{{speci}}</el-checkbox>
               </el-checkbox-group>
             </div>
           </div>
 
           <div class="screen-item">
-            <span>地区：</span>
+            <span>适用商品的宠物种类：</span>
             <div class="item-check">
-              <el-checkbox-group @change="onChange" v-model="checkedprovince">
-                <el-checkbox v-for="province in provinces" :label="province" :key="province">{{province}}</el-checkbox>
+              <el-checkbox-group @change="onChange2" v-model="goodUserKindchecked">
+                <el-checkbox v-for="province in goodUserKind" :label="province" :key="province">{{province}}</el-checkbox>
               </el-checkbox-group>
             </div>
           </div>
@@ -39,13 +40,14 @@
           <ul class="result-select">
             <li>综合</li>
             <li>
-              <el-dropdown trigger="click" :hide-on-click="false">
-                <span class="el-dropdown-link">价格<i class="el-icon-arrow-down el-icon--right"></i></span>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item> 升序</el-dropdown-item>
-                    <el-dropdown-item> 降序</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
+              <el-select v-model="value" placeholder="请选择" @change="sort(value)">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
             </li>
           </ul>
 
@@ -62,7 +64,7 @@
                               <span class="price">¥{{item.goodPrice.split(".")[0]}}.<mark>{{item.goodPrice.split(".")[1]}}</mark></span>
                               <div class="good-discribe">{{item.goodDiscribe}}</div>
                               <div class="good-price">
-                                <el-button type="danger">查看详情</el-button>
+                                <el-button type="danger" @click.native="toDescript(item.goodId)">查看详情</el-button>
                                 <el-button type="danger">加入购物车</el-button>
                               </div>
                           </figcaption>
@@ -91,9 +93,12 @@
 <script>
 import headernav from "@/components/headernav.vue";
 import foot from "@/components/foot"
+import {getCartList, goodsListSelect, navList} from "@/api/index"
+import {getStore} from "@/utils/storage"
+import { mapMutations } from 'vuex'
 
-const specis=['不限','狗','猫','兔子','鱼']
-const provinces=['不限','浙江','上海','江苏','北京']
+const goodKind=['宠物牌', '牵引线', '宠物窝', '宠物食品', '宠物食具', '宠物服装', '宠物玩具', '宠物清洁用品', '其他宠物用品']
+const goodUserKind=['狗', '猫咪', '水族', '兔子', '仓鼠', '乌龟', '鸟', '其他宠物']
 export default {
   name:"shop",
   components:{
@@ -101,104 +106,37 @@ export default {
   },
   data(){
     return{
-      imgs: ['src/assets/images/background/4.jpg',
-                    'src/assets/images/background/5.jpg',
-                    'src/assets/images/background/6.jpg'
-                    ],
+      imgs: [
+              require('@/assets/images/background/4.jpg'),
+              require('@/assets/images/background/5.jpg'),
+              require('@/assets/images/background/6.jpg'),
+            ],
+      options:[{
+        value:'ASCE',
+        label:'升序'
+      },{
+        value:'DESC',
+        label:'降序'
+      }],
+      selectObj:{},
+      value:'',
       resultnum:30,
-      specis,
-      provinces,
-      checkedspeci:["不限"],
-      checkedprovince:["不限"],
+      goodKind,
+      goodUserKind,
+      goodKindcheked:[],
+      goodUserKindchecked:[],
       currentPage:1,
       total:50,
-      resultGood:[
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '100.00',
-        },
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '100.00',
-        },
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '100.00',
-        },
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '100.00',
-        },
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '100.00',
-        },
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '200.00',
-        },
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '200.00',
-        },
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '200.00',
-        },
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '200.00',
-        },
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '200.00',
-        },
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '300.00',
-        },
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '300.00',
-        },
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '300.00',
-        },
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '300.00',
-        },
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '300.00',
-        },
-        {
-          goodImg:require("@/assets/images/shop/1.jpg"),
-          goodName:'宠物狗食品',
-          goodPrice: '300.00',
-        },
-      ],
+      userId:'',
+      resultGood:[],
 
       //  筛选按钮
       // rateMenuArrow:true,
       // rangeMenuArrow:true
     }
+  },
+  computed:{
+    
   },
   created:function() {
     console.log(this.resultGood.length)
@@ -207,51 +145,58 @@ export default {
     console.log(this.total)
     // this.total=this.resultGood.length
   },
-  mounted(){
-    var mySwiper = new Swiper('.swiper-container', {
-      direction:'horizontal',
-      loop:true,
-      autoplay : {
-        autoplay: true,  //是否自动切换
-        delay: 3000,   //切换间隔时间
-        disableOnInteraction: false,  //触碰后自动切换是否停止
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable :true, //点击分页器的指示点分页器会控制Swiper切换
-      },
-      navigation:{
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      }
-    })
-  },
   methods: {
-    onChange(value){
-      let len=value.length-1
-      // 当前不限未选中，选中不限后的结果
-      if(value[len]=="不限"){
-        value.splice(0,len);
-        value.push("不限")
-      }//当前不限选中
-      if(value[len]!="不限"){
-        if(value[0]=="不限"){
-          value.splice(0,1);
-        }
-      }
+    ...mapMutations(['INIT_BUYCART']),
+    onChange1(value){
+      console.log(value)
+      this.selectObj.goodKindcheked=value
+      // let len=value.length-1
+      // // 当前不限未选中，选中不限后的结果
+      // if(value[len]=="不限"){
+      //   value.splice(0,len);
+      //   value.push("不限")
+      // }//当前不限选中
+      // if(value[len]!="不限"){
+      //   if(value[0]=="不限"){
+      //     value.splice(0,1);
+      //   }
+      // }
     },
+    onChange2(value){
+       console.log(value)
+       this.selectObj.goodUserKindchecked=value
+    },
+    //排序
+    sort(value){
+      console.log(value)
+    },
+    //搜索
     onSubmit(){
-      console.log("xxx")
+      console.log(this.selectObj)
     },
     currentPageChange(val){
       this.currentPage=val;
     },
-    // priceMenuChange(visible){
+    toDescript(id){
+      this.$router.push({path: "/goodsDetails",query:{goodId:id}})
+    },
+    //获取购物车列表
+    _getCartList () { 
+      getCartList({userId: this.userId}).then(res => {
+        let cartList = res.data.goods;
+        this.INIT_BUYCART(cartList)
+      })
+    },
+    // priceMenuChange(visible){  
     //   this.rateMenuArrow=!visible;
     // },
     // rangeMenuChange(visible){
     //   this.rangeMenuArrow=!visible;
     // }
+  },
+  created() {
+    this.userId= getStore('user')
+    this._getCartList()
   },
 }
 </script>

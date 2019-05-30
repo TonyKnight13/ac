@@ -16,8 +16,8 @@
           <el-input v-model="form.checkPass" placeholder="请确认密码" show-password required autofocus value></el-input>
         </el-form-item>
         <el-form-item>
-          <el-radio v-model="form.statusKey" label="1">宠物用户</el-radio>
-          <el-radio v-model="form.statusKey" label="2">专业用户</el-radio>
+          <el-radio v-model="form.statusKey" label="0">宠物用户</el-radio>
+          <el-radio v-model="form.statusKey" label="1">专业用户</el-radio>
         </el-form-item>
         <el-form-item >
           <el-button 
@@ -77,7 +77,7 @@ export default {
         account:'',
         pass:'',
         checkPass:'',
-        statusKey:'1', //身份标签
+        statusKey:'0', //身份标签
       },
       loading:false,
       registxt:'注册',
@@ -110,15 +110,15 @@ export default {
             "password2":this.form.checkPass,
             "identity":this.form.statusKey
           }).then(res=>{
-            console.log(res)
-            // if(res.success === true){  //后台返回信息中success：true
-            //   this.successMsg()
-            //   this.$router.replace({path:'/login'})
-            // }else{
-            //   this.errorMsg(res.message)
-            //   this.loading  = false;
-            //   return false;
-            // }
+            console.log(typeof res)
+            if(res.data.success === true){  //后台返回信息中success：true
+              this.successMsg()
+              this.$router.replace({path:'/login'})
+            }else{
+              this.errorMsg(res.data.msg)
+              this.loading  = false;
+              return false;
+            }
           })
         }else{
           this.loading=false;
