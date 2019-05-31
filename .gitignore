@@ -700,5 +700,5 @@ MigrationBackup/
 **/views/
 **/session/
 
-.conf
-.exe
+*.conf
+*.exe

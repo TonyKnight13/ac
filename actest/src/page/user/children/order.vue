@@ -11,6 +11,6 @@ export default{
         orderList:[0],
         userId: '',
       }
-    },
+    }, 
 }
 </script>

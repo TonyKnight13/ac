@@ -32,7 +32,7 @@ export const userInfo = (params) => {
 }
 // 注册账号
 export const register = (params) => {
-  return axios.post(baseUrl+'/users/register', qs.stringify(params))
+  return axios.post(baseUrl+'/users/register', JSON.stringify(params))
 }
 // // 上传图片
 // export const upload = (params) => {

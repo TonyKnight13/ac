@@ -11,13 +11,6 @@ type UserController struct {
 	BaseController
 }
 
-type Regist struct {
-	Account   string
-	password1 string
-	password2 string
-	Identity  string
-}
-
 func (c *UserController) URLMapping() {
 	c.Mapping("Login", c.Login)
 	c.Mapping("Regist", c.Regist)
@@ -25,16 +18,31 @@ func (c *UserController) URLMapping() {
 
 // @router /users/login [post]
 func (c *UserController) Login() {
-
+	var loginRecv LoginRecv
+	json.Unmarshal(c.Ctx.Input.RequestBody, &loginRecv)
+	beego.Info(string(c.Ctx.Input.RequestBody))
+	err, _ := CheckLog(loginRecv.Account, loginRecv.Password)
+	if err == nil {
+		c.SetSession("userLogin", "1")
+		c.SetSession("Account", loginRecv.Account)
+		_, user := GetUserByAccount(loginRecv.Account)
+		c.Data["json"] = map[string]interface{}{"code": 1, "message": "贺喜你，登录成功", "Id": user.Id, "Account": user.Account, "Identity": user.Identity, "user": user}
+		beego.Info(c.Data["json"])
+		beego.Info("成功")
+	} else {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "登录失败"}
+	}
+	c.ServeJSON()
 }
 
 // @router /users/register [post]
 func (c *UserController) Regist() {
-	var regist Regist
-	json.Unmarshal(c.Ctx.Input.RequestBody, &regist)
+	var registRecv RegistRecv
+	json.Unmarshal(c.Ctx.Input.RequestBody, &registRecv)
 	beego.Info(string(c.Ctx.Input.RequestBody))
 
-	err1 := Register(regist.Account, regist.password1, regist.Identity)
+	err1 := Register(registRecv.Account, registRecv.Password1, registRecv.Identity)
+
 	if err1 != nil {
 		beego.Info(err1)
 	}
