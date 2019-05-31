@@ -27,10 +27,12 @@ export const userLogin = (params) => {
   // return axios.post(`${base}/yyzt-web/auth/login.do`,  query.stringify(params));
   return axios.post(baseUrl + '/users/login', JSON.stringify(params))
 }
-// 退出登陆
-export const loginOut = (params) => {
-  return axios.get(baseUrl + '/users/loginOut', params)
-}
+// // 退出登陆
+// export const loginOut = (params) => {
+//   return axios.get(baseUrl + '/users/loginOut', params)
+// }
+
+/* 个人中心 */
 // 用户信息
 export const userInfo = (params) => {
   return axios.get(baseUrl + '/users/userInfo', params)
@@ -39,6 +41,7 @@ export const userInfo = (params) => {
 export const changePass = (params) => {
   return axios.post(baseUrl + '/users/changePass', JSON.stringify(params))
 }
+/* 我的地址 */
 // 获取用户地址
 export const addressList = (params) => {
   return axios.post(baseUrl + '/users/addressList', JSON.stringify(params))
@@ -55,7 +58,7 @@ export const addressAdd = (params) => {
 export const addressDel = (params) => {
   return axios.post(baseUrl + '/users/delAddress', JSON.stringify(params))
 }
-
+/* 商品管理 */
 // 获取商品管理页面的商品列表
 export const goodsList = (params) => {
   return axios.post(baseUrl + '/users/goodsList', JSON.stringify(params))
@@ -73,7 +76,6 @@ export const goodsPut = (params) => {
   return axios.post(baseUrl + '/users/goodsPut', JSON.stringify(params))
 }
 
-
 /* 商店 */
 // 商品列表接口
 export const navList = (params) => {
@@ -85,9 +87,18 @@ export const productDet = (params) => {
 }
 // 商品筛选
 export const goodsListSelect = (params) => {
-  return axios.post(baseUrl + '/goods/goodsListSelect', params)
+  return axios.post(baseUrl + '/goods/goodsListSelect', JSON.stringify(params))
 }
 
+/* 医院 */
+// 医院商品列表接口
+export const hospitalNavList = (params) => {
+  return axios.get(baseUrl + '/hospital/hospitalNavList', params)
+}
+// 医院、医生筛选
+export const hospitalSelect = (params) => {
+  return axios.post(baseUrl + '/hospital/hospitalSelect', JSON.stringify(params))
+}
 /* 购物车 */
 // 加入购物车
 export const addCart = (params) => {

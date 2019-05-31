@@ -27,7 +27,7 @@ Vue.use(VueCookie)
 
 
 
-// require('./mock/mock')
+require('./mock/mock')
 
 
 

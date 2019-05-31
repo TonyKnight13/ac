@@ -161,8 +161,8 @@ Mock.mock('http://localhost:8080/users/login', 'post', function (msg) {
   }
 })
 
-// 获取商品列表
-Mock.mock(RegExp('http://localhost:8080/goods/goodsListSelect' + '.*'), 'get', function (msg) {
+// 商品列表
+Mock.mock(RegExp('http://localhost:8080/goods/navList' + '.*'), 'get', function (msg) {
   // let option = msg.url.split('?')[1]
   // console.log(msg, option)
   return {
@@ -171,27 +171,76 @@ Mock.mock(RegExp('http://localhost:8080/goods/goodsListSelect' + '.*'), 'get', f
       {
         goodImg: require('@/assets/images/shop/1.jpg'),
         goodName: '宠物狗食品',
-        goodPrice: 100.00,
+        goodPrice: '100.00',
         goodId: 100000
       },
       {
         goodImg: require('@/assets/images/shop/1.jpg'),
         goodName: '宠物狗食品',
-        goodPrice: 100.00,
+        goodPrice: '100.00',
         goodId: 100001
       },
       {
         goodImg: require('@/assets/images/shop/1.jpg'),
         goodName: '宠物狗食品',
-        goodPrice: 100.00,
+        goodPrice: '100.00',
         goodId: 100002
       },
       {
         goodImg: require('@/assets/images/shop/1.jpg'),
         goodName: '宠物狗食品',
-        goodPrice: 100.00,
+        goodPrice: '100.00',
+        goodId: 100003
+      },
+      {
+        goodImg: require('@/assets/images/shop/1.jpg'),
+        goodName: '宠物狗食品',
+        goodPrice: '100.00',
+        goodId: 100000
+      },
+      {
+        goodImg: require('@/assets/images/shop/1.jpg'),
+        goodName: '宠物狗食品',
+        goodPrice: '100.00',
+        goodId: 100001
+      },
+      {
+        goodImg: require('@/assets/images/shop/1.jpg'),
+        goodName: '宠物狗食品',
+        goodPrice: '100.00',
+        goodId: 100002
+      },
+      {
+        goodImg: require('@/assets/images/shop/1.jpg'),
+        goodName: '宠物狗食品',
+        goodPrice: '100.00',
+        goodId: 100003
+      },
+      {
+        goodImg: require('@/assets/images/shop/1.jpg'),
+        goodName: '宠物狗食品',
+        goodPrice: '100.00',
+        goodId: 100000
+      },
+      {
+        goodImg: require('@/assets/images/shop/1.jpg'),
+        goodName: '宠物狗食品',
+        goodPrice: '100.00',
+        goodId: 100001
+      },
+      {
+        goodImg: require('@/assets/images/shop/1.jpg'),
+        goodName: '宠物狗食品',
+        goodPrice: '100.00',
+        goodId: 100002
+      },
+      {
+        goodImg: require('@/assets/images/shop/1.jpg'),
+        goodName: '宠物狗食品',
+        goodPrice: '100.00',
         goodId: 100003
       }
+
     ]
   }
 })
@@ -217,27 +266,175 @@ Mock.mock(RegExp('http://localhost:8080/goods/goodsListSelect'), 'post', functio
       {
         goodImg: require('@/assets/images/shop/1.jpg'),
         goodName: '宠物狗食品',
-        goodPrice: 100.00,
+        goodPrice: '100.00',
         goodId: 100000
       },
       {
         goodImg: require('@/assets/images/shop/1.jpg'),
         goodName: '宠物狗食品',
-        goodPrice: 100.00,
+        goodPrice: '100.00',
         goodId: 100001
       },
       {
         goodImg: require('@/assets/images/shop/1.jpg'),
         goodName: '宠物狗食品',
-        goodPrice: 100.00,
+        goodPrice: '100.00',
         goodId: 100002
       },
       {
         goodImg: require('@/assets/images/shop/1.jpg'),
         goodName: '宠物狗食品',
-        goodPrice: 100.00,
+        goodPrice: '100.00',
         goodId: 100003
       }
+    ]
+  }
+})
+
+// 医生、医院列表
+Mock.mock(RegExp('http://localhost:8080/hospital/hospitalNavList' + '.*'), 'get', function (msg) {
+  // let option = msg.url.split('?')[1]
+  // console.log(msg, option)
+  return {
+    success: true,
+    data: [
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李珊珊',
+        speciality: ['猫', '狗'],
+        physicId: 100000 // 医生或医院的id
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '童晓红',
+        speciality: ['两栖类'],
+        physicId: 100010 // 医生或医院的id
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李莉',
+        speciality: ['水生']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李珊珊',
+        speciality: ['猫', '狗'],
+        physicId: 100110 // 医生或医院的id
+
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '童晓红',
+        speciality: ['两栖类']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李莉',
+        speciality: ['水生']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李珊珊',
+        speciality: ['猫', '狗']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '童晓红',
+        speciality: ['两栖类']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李莉',
+        speciality: ['水生']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李珊珊',
+        speciality: ['猫', '狗']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '童晓红',
+        speciality: ['两栖类']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李莉',
+        speciality: ['水生']
+      },
+    ]
+  }
+})
+Mock.mock(RegExp('http://localhost:8080/hospital/goodsListSelect' + '.*'), 'get', function (msg) {
+  // let option = msg.url.split('?')[1]
+  // console.log(msg, option)
+  return {
+    success: true,
+    data: [
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李珊珊',
+        speciality: ['猫', '狗'],
+        physicId: 100000 // 医生或医院的id
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '童晓红',
+        speciality: ['两栖类'],
+        physicId: 100010 // 医生或医院的id
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李莉',
+        speciality: ['水生']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李珊珊',
+        speciality: ['猫', '狗'],
+        physicId: 100110 // 医生或医院的id
+
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '童晓红',
+        speciality: ['两栖类']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李莉',
+        speciality: ['水生']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李珊珊',
+        speciality: ['猫', '狗']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '童晓红',
+        speciality: ['两栖类']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李莉',
+        speciality: ['水生']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李珊珊',
+        speciality: ['猫', '狗']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '童晓红',
+        speciality: ['两栖类']
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李莉',
+        speciality: ['水生']
+      },
     ]
   }
 })

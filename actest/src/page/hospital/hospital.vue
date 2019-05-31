@@ -6,7 +6,7 @@
     <div class="main-content-wrap">
       <div class="main-content">
 
-        <el-carousel indicator-position="outside" :interval="3000" type="card" >
+        <el-carousel :interval="3000" arrow="always">
           <el-carousel-item v-for="(item,index) in imgs" :key="index">
             <el-image :src="item" fit="contain"></el-image>
           </el-carousel-item>
@@ -93,7 +93,7 @@
 <script>
 import headernav from "@/components/headernav.vue";
 import foot from "@/components/foot"
-import {getCartList, goodsListSelect, navList, addCart} from "@/api/index"
+import { hospitalSelect, hospitalNavList} from "@/api/index"
 import {getStore} from "@/utils/storage"
 import { mapMutations } from 'vuex'
 
@@ -200,8 +200,8 @@ export default {
         })
     },
     //获取商品列表
-    _navList(){
-      navList().then(res => {
+    _hospitalNavList(){
+      hospitalNavList().then(res => {
         if(res.data.success == true){
           this.resultGood = res.data.data
           this.resultnum = this.total =res.data.data.length
@@ -210,13 +210,7 @@ export default {
         }
       })
     },
-    //获取购物车列表
-    _getCartList () { 
-      getCartList({userId: this.userId}).then(res => {
-        let cartList = res.data.goods;
-        this.INIT_BUYCART(cartList)
-      })
-    },
+
     priceMenuChange(visible){  
       this.rateMenuArrow=!visible;
     },
@@ -225,7 +219,7 @@ export default {
     },
     //筛选和排序时返回的数据
     _search(){  
-      goodsListSelect(this.selectObj).then(res =>{
+      hospitalSelect(this.selectObj).then(res =>{
         if(res.data.success==true){
           this.resultGood = res.data.data
           this.resultnum = this.total =res.data.data.length
@@ -237,8 +231,7 @@ export default {
   },
   created() {
     this.userId= getStore('user')
-    this._getCartList()
-    this._navList()
+    this._hospitalNavList()
   },
 }
 </script>
@@ -340,7 +333,7 @@ export default {
 
 .el-carousel{
   width: 80%;
-  height: 5rem;
+  height: 10rem;
   overflow: hidden;
   margin-bottom: 0.2rem;
 }

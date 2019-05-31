@@ -4,27 +4,26 @@
     <headernav></headernav>
 
     <div class="main-content-wrap">
+      <el-carousel indicator-position="outside" :interval="3000" type="card" >
+        <el-carousel-item v-for="(item,index) in imgs" :key="index">
+          <el-image :src="item" fit="contain"></el-image>
+        </el-carousel-item>
+      </el-carousel>
+
       <div class="main-content">
-
-        <el-carousel indicator-position="outside" :interval="3000" type="card" >
-          <el-carousel-item v-for="(item,index) in imgs" :key="index">
-            <el-image :src="item" fit="contain"></el-image>
-          </el-carousel-item>
-        </el-carousel>
-
         <!-- 搜索 -->
         <div class="screen-content">
           <div class="screen-item">
             <span>商品种类：</span>
             <div class="item-check">
-              <el-checkbox-group  @change="onChange1" v-model="goodKindcheked" :max='1'>
+              <el-checkbox-group  @change="onChange1" v-model="goodKindcheked" :max='2'>
                 <el-checkbox v-for="speci in goodKind" :label="speci" :key="speci" >{{speci}}</el-checkbox>
               </el-checkbox-group>
             </div>
           </div>
 
           <div class="screen-item">
-            <span>适用商品的宠物种类：</span>
+            <span>宠物种类：</span>
             <div class="item-check">
               <el-checkbox-group @change="onChange2" v-model="goodUserKindchecked">
                 <el-checkbox v-for="province in goodUserKind" :label="province" :key="province">{{province}}</el-checkbox>
@@ -36,7 +35,7 @@
 
         <p class="result-text">为您找到{{resultnum}}条相关结果</p>
         <!-- 搜索结果 -->
-        <div class="screen-result-wrap" style="width:70%">
+        <div class="screen-result-wrap" style="width:100%">
           <ul class="result-select">
             <li>综合</li>
             <li>
@@ -51,35 +50,29 @@
             </li>
           </ul>
 
-          <ul class="result-content-wrap" style="width:100%">
-            <li v-for="(item,index) in resultGood.slice((currentPage-1)*5,currentPage*5)" :key="index">
-              <div class="result-content">
-                <el-row>
-                  <el-col :span="24">
-                    <el-card class="good-content">
-                        <figure class="good-figure">
-                            <img :src="item.goodImg" alt="">
-                            <figcaption class="good-text">
-                              <p class="good-name">{{item.goodName}}</p>
-                              <span class="price">¥{{item.goodPrice.split(".")[0]}}.<mark>{{item.goodPrice.split(".")[1]}}</mark></span>
-                              <div class="good-discribe">{{item.goodDiscribe}}</div>
-                              <div class="good-price">
-                                <el-button type="danger" @click.native="toDescript(item.goodId)">查看详情</el-button>
-                                <el-button type="danger" @click.native="_addCart(item.goodId, item.goodName, item.goodPrice, item.goodImg)">加入购物车</el-button>
-                              </div>
-                          </figcaption>
-                          </figure>
-                    </el-card>
-                  </el-col>
-                </el-row>
-              </div>
-            </li>
+            <el-row>
+              <el-col :span="8" :offset="index%2 == 0 ? 2 : 4" 
+              style="margin-top:0.5rem"
+              v-for="(item,index) in resultGood.slice((currentPage-1)*6,currentPage*6)" :key="index">
+                <el-card :body-style="{ padding: '0px' }" shadow="hover">
+                      <el-image fit="contain"  :src="item.goodImg"></el-image>
+                      <div style="padding: 10px;text-align:left">
+                        <span class="good-name">{{item.goodName}}</span>
+                        <span class="price">¥{{item.goodPrice}}</span>
+                        <el-button type="danger" size="mini" @click.native="toDescript(item.goodId)">查看详情</el-button>
+                        <el-button type="danger" size="mini" style="float:right" @click.native="_addCart(item.goodId, item.goodName, item.goodPrice, item.goodImg)">加入购物车</el-button>
+                      </div>
+                </el-card>
+              </el-col>
+            </el-row>
+            
             <el-pagination
+              style="margin-top:0.5rem"
               :total="total"
               @current-change="currentPageChange"  
               :page-size="5" >
             </el-pagination>  
-          </ul>
+
         </div>
       </div>
     
@@ -119,13 +112,12 @@ export default {
         label:'降序'
       }],
       selectObj:{},
-      value:'',
       resultnum:0,
       goodKind,
       goodUserKind,
       num:1,
-      goodKindcheked:[],
-      goodUserKindchecked:[],
+      goodKindcheked:[],  //选中的商品种类
+      goodUserKindchecked:[],  //选中的宠物种类
       currentPage:1,
       total:0,
       userId:'',
@@ -149,19 +141,10 @@ export default {
   methods: {
     ...mapMutations(['INIT_BUYCART']),
     onChange1(value){
-      console.log(value)
+      if(value.length>1){
+        value.splice(0,1);
+      }console.log(value)
       this.selectObj.goodKindcheked=value
-      // let len=value.length-1
-      // // 当前不限未选中，选中不限后的结果
-      // if(value[len]=="不限"){
-      //   value.splice(0,len);
-      //   value.push("不限")
-      // }//当前不限选中
-      // if(value[len]!="不限"){
-      //   if(value[0]=="不限"){
-      //     value.splice(0,1);
-      //   }
-      // }
     },
     onChange2(value){
        console.log(value)
@@ -176,7 +159,7 @@ export default {
     sort(value){
       this.selectObj.select=value
       console.log(this.selectObj)
-      _search()
+      this._search()
     },
 
     currentPageChange(val){
@@ -205,6 +188,7 @@ export default {
         if(res.data.success == true){
           this.resultGood = res.data.data
           this.resultnum = this.total =res.data.data.length
+          console.log(this.resultGood, '')
         }else{
           this.$message.error('获取商品列表失败')
         }
@@ -244,20 +228,24 @@ export default {
 </script>
 <style scoped> 
 /* scoped:作用当前组件 */
+
+.main-content-wrap{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  margin:0.1rem 0;
+}
 .main-content{
   display:flex;
   justify-content:center;
-  width: 100%;
   flex-direction: column;
   align-items: center;
-}
-.main-content-wrap{
-  margin:0.1rem 0;
+  width: 70%;
 }
 .screen-content{
-  width:70%;
+  width:100%;
   border:1px solid #ebebeb;
-  padding: 0.2rem 0.1rem 0.2rem 0.6rem; 
+  padding: 0.2rem 0.1rem 0.2rem 0.3rem; 
   background: rgba(242, 242, 242, 0.2)
 }
 .screen-item{
@@ -266,18 +254,22 @@ export default {
 }
 .screen-item span{
   display: inline-block;
+  width: 8%;
+  vertical-align: top;
 }
-.item-check{
+.screen-item .item-check{
   display: inline-block;
+  width: 90%
 }
 .el-checkbox-group{
   width: 100%;
   height: 100%;
 }
+
 .result-text{
   color:rgba(64,158,255,1);
   margin: 0.2rem 0;
-  width: 70%;
+  width: 100%;
 }
 
 .result-select{
@@ -296,46 +288,22 @@ export default {
   border: 1px solid #ebebeb
 }
 
-.good-figure img{
-  width: 2.11rem;
-  height: 1.36rem;
-  position: absolute;
+.result-content{
+  /* width:50%;
+  float: left; */
 }
-.good-text{
+.good-name{
   display: inline-block;
-  margin-left: 2.35rem;
-  width:calc(100% - 2.35rem);
-  padding-top: 0.07rem;
-}
-.good-text .good-name{
-  display: inline-block;
-  font-size:0.23rem;
+  font-size:0.30rem;
   font-weight:bold;
   color:rgba(48,49,51,1);
   margin-bottom: 0.2rem;
 }
-.good-text .price{
+.price{
   float: right;
   font-size:0.32rem;
   font-weight:bold;
   color:rgba(245,108,108,1);
-}
-.good-text .price mark{
-  font-size:0.32rem;
-  color:rgba(245,108,108,1);
-  background: transparent;
-}
-.good-price{
-  float: right;
-}
-.good-discribe{
-  font-size:0.14rem;
-  font-family:MicrosoftYaHei;
-  font-weight:400;
-  color:rgba(96,98,102,1);
-  line-height:0.2rem;
-  height: 0.4rem;
-  margin-bottom: 0.08rem;
 }
 
 .el-carousel{
