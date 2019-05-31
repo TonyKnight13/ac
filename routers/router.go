@@ -12,9 +12,8 @@ import (
 )
 
 func init() {
-	beego.Router("/", &controllers.HomeController{})
-	beego.Router("/login", &controllers.AccountController{})
-	beego.Router("/logout", &controllers.LogoutController{})
-	beego.Router("/addpet", &controllers.AddPetController{})
-	beego.Router("/404.html", &controllers.BaseController{}, "*:Go404")
+	beego.Include(
+		&controllers.IndexController{},
+		&controllers.UserController{},
+	)
 }

@@ -1,8 +1,8 @@
 import axios from 'axios'
-// import qs from 'querystring'
+import qs from 'querystring'
 // axios.defaults.timeout = 10000
 axios.defaults.headers.post['Content-Type'] = 'application/json'
-const baseUrl = 'http://localhost:8080' // 服务器地址
+const baseUrl = 'http://localhost:8080'  //服务器地址
 
 // // 请求拦截器
 // axios.interceptors.request.use(function(config) {
@@ -17,71 +17,18 @@ const baseUrl = 'http://localhost:8080' // 服务器地址
 // return Promise.reject(error);
 // })
 
-
-// 注册账号
-export const register = (params) => {
-  return axios.post(baseUrl + '/users/register', JSON.stringify(params))
-}
 // 登陆
 export const userLogin = (params) => {
   // return axios.post(`${base}/yyzt-web/auth/login.do`,  query.stringify(params));
-  return axios.post(baseUrl + '/users/login', JSON.stringify(params))
+  return axios.post(baseUrl+'/users/login', JSON.stringify(params))
 }
 // 退出登陆
 export const loginOut = (params) => {
-  return axios.get(baseUrl + '/users/loginOut', params)
+  return axios.get(baseUrl+'/users/loginOut', params)
 }
 // 用户信息
 export const userInfo = (params) => {
-  return axios.get(baseUrl + '/users/userInfo', params)
-}
-// 修改密码
-export const changePass = (params) => {
-  return axios.post(baseUrl + '/users/changePass', JSON.stringify(params))
-}
-// 获取用户地址
-export const addressList = (params) => {
-  return axios.post(baseUrl + '/users/addressList', JSON.stringify(params))
-}
-// 修改收货地址
-export const addressUpdate = (params) => {
-  return axios.post(baseUrl + '/users/updateAddress', JSON.stringify(params))
-}
-// 添加收货地址
-export const addressAdd = (params) => {
-  return axios.post(baseUrl + '/users/addAddress', JSON.stringify(params))
-}
-// 删除收货地址
-export const addressDel = (params) => {
-  return axios.post(baseUrl + '/users/delAddress', JSON.stringify(params))
-}
-
-// 获取商品管理页面的商品列表
-export const goodsList = (params) => {
-  return axios.post(baseUrl + '/users/goodsList', JSON.stringify(params))
-}
-// 修改商品管理页面的商品列表
-export const goodsUpdate = (params) => {
-  return axios.post(baseUrl + '/users/goodsUpdate', JSON.stringify(params))
-}
-// 添加商品管理页面的商品列表
-export const goodsAdd = (params) => {
-  return axios.post(baseUrl + '/users/goodsAdd', JSON.stringify(params))
-}
-// 删除商品管理页面的商品列表
-export const goodsPut = (params) => {
-  return axios.post(baseUrl + '/users/goodsPut', JSON.stringify(params))
-}
-
-
-/* 商品 */
-// 商品列表接口
-export const navList = (params) => {
-  return axios.get(baseUrl + '/goods/navList', params)
-}
-// 商品详情
-export const productDet = (params) => {
-  return axios.get(baseUrl + '/goods/productDet', params)
+  return axios.get(baseUrl+'/users/checkLogin', params)
 }
 // 商品筛选
 export const goodsListSelect = (params) => {
@@ -123,22 +70,10 @@ export const delOrder = (params) => {
 export const submitOrder = (params) => {
   return axios.post(baseUrl + '/goods/addOrder', JSON.stringify(params))
 }
-
-
-
-
-
-
-// 上传图片
+// // 上传图片
 // export const upload = (params) => {
-//   return axios.post(baseUrl + '/users/imgaeUpload', JSON.stringify(params))
+//   return axios.post('/member/imgaeUpload', params)
 // }
-// // 删除购物车所有商品
-// export const delCartChecked = (params) => {
-//   return axios.post(baseUrl + '/goods/delCartChecked', params)
-// }
-
-
 // // 修改头像
 // export const updateheadimage = (params) => {
 //   return axios.post('/member/updateheadimage', params)

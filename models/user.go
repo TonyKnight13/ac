@@ -12,6 +12,7 @@ type User struct {
 	Id          int `orm:"auto"`
 	Account     string
 	Password    string
+	Identity    byte
 	UserProfile *UserProfile `orm:"null;rel(one);on_delete(set_null)"`
 	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
 	Changed     time.Time    `orm:"auto_now_add;type(datetime)"`
@@ -21,7 +22,7 @@ type UserProfile struct {
 	Id       int
 	Realname string `orm:"null"`
 	Username string
-	Sex      bool `orm:"null"`
+	Sex      byte `orm:"null"`
 	Phone    string
 	Email    string
 	Address  string
@@ -47,13 +48,19 @@ func (up *UserProfile) TableName() string {
 	return "user_profile"
 }
 
-func Register(Account string, Password string) error {
+func Register(Account string, Password string, Identity string) error {
 	o := orm.NewOrm()
 	vaild := validation.Validation{}
 
 	pwdmd5 := com.Md5(Password)
+	var id byte
+	if Identity == "0" {
+		id = 0
+	} else {
+		id = 1
+	}
 
-	user := &User{Account: Account, Password: pwdmd5}
+	user := &User{Account: Account, Password: pwdmd5, Identity: id}
 	userpro := new(UserProfile)
 
 	// 查询是否有重复的账号

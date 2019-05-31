@@ -698,4 +698,7 @@ MigrationBackup/
 **/node_modules/
 **/static/
 **/views/
+**/session/
 
+.conf
+.exe

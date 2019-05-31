@@ -6,7 +6,7 @@
         <!-- <span>爱宠社区 ，宠你所爱</span> -->
       </div>
       <el-form :model='loginForm' :rules="loginRules" ref="loginForm" style="padding:0 40px" status-icon>
-        <el-form-item prop="username">
+        <el-form-item prop="account">
           <el-input v-model="loginForm.username" placeholder="请输入用户名" required autofocus value></el-input>
         </el-form-item>
         <el-form-item prop="password">
