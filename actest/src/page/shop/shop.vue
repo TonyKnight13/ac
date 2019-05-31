@@ -31,7 +31,7 @@
               </el-checkbox-group>
             </div>
           </div>
-          <el-button type="primary" @click="onSubmit" style="float:right;" size="small">搜索</el-button>
+          <el-button type="primary" @click="search" style="float:right;" size="small">搜索</el-button>
         </div>
 
         <p class="result-text">为您找到{{resultnum}}条相关结果</p>
@@ -65,7 +65,7 @@
                               <div class="good-discribe">{{item.goodDiscribe}}</div>
                               <div class="good-price">
                                 <el-button type="danger" @click.native="toDescript(item.goodId)">查看详情</el-button>
-                                <el-button type="danger" @click.native="_addCart()">加入购物车</el-button>
+                                <el-button type="danger" @click.native="_addCart(item.goodId, item.goodName, item.goodPrice, item.goodImg)">加入购物车</el-button>
                               </div>
                           </figcaption>
                           </figure>
@@ -123,6 +123,7 @@ export default {
       resultnum:0,
       goodKind,
       goodUserKind,
+      num:1,
       goodKindcheked:[],
       goodUserKindchecked:[],
       currentPage:1,
@@ -166,20 +167,37 @@ export default {
        console.log(value)
        this.selectObj.goodUserKindchecked=value
     },
+    //搜索
+    search(){
+      console.log(this.selectObj)
+      _search()
+    },
     //排序
     sort(value){
       this.selectObj.select=value
       console.log(this.selectObj)
+      _search()
     },
-    //搜索
-    onSubmit(){
-      console.log(this.selectObj)
-    },
+
     currentPageChange(val){
       this.currentPage=val;
     },
+    //查看详情
     toDescript(id){
       this.$router.push({path: "/goodsDetails",query:{goodId:id}})
+    },
+    //立刻购买
+    _addCart(id, name, price, img){
+        addCart({userId: this.userId, goodId: id, goodNum: this.num}).then(res => {
+          // 并不重新请求数据
+          this.ADD_CART({
+            goodId: id,
+            goodPrice: price,
+            goodImg: name,
+            goodImg: img,
+            goodNum: this.num
+          })
+        })
     },
     //获取商品列表
     _navList(){
@@ -191,24 +209,35 @@ export default {
           this.$message.error('获取商品列表失败')
         }
       })
-    }
+    },
     //获取购物车列表
-    // _getCartList () { 
-    //   getCartList({userId: this.userId}).then(res => {
-    //     let cartList = res.data.goods;
-    //     this.INIT_BUYCART(cartList)
-    //   })
-    // },
-    // priceMenuChange(visible){  
-    //   this.rateMenuArrow=!visible;
-    // },
-    // rangeMenuChange(visible){
-    //   this.rangeMenuArrow=!visible;
-    // }
+    _getCartList () { 
+      getCartList({userId: this.userId}).then(res => {
+        let cartList = res.data.goods;
+        this.INIT_BUYCART(cartList)
+      })
+    },
+    priceMenuChange(visible){  
+      this.rateMenuArrow=!visible;
+    },
+    rangeMenuChange(visible){
+      this.rangeMenuArrow=!visible;
+    },
+    //筛选和排序时返回的数据
+    _search(){  
+      goodsListSelect(this.selectObj).then(res =>{
+        if(res.data.success==true){
+          this.resultGood = res.data.data
+          this.resultnum = this.total =res.data.data.length
+        }else{
+          this.$message.error('获取商品列表失败')
+        }
+      })
+    }
   },
   created() {
     this.userId= getStore('user')
-    // this._getCartList()
+    this._getCartList()
     this._navList()
   },
 }

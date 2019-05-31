@@ -30,9 +30,45 @@ export const loginOut = (params) => {
 export const userInfo = (params) => {
   return axios.get(baseUrl+'/users/checkLogin', params)
 }
-// 注册账号
-export const register = (params) => {
-  return axios.post(baseUrl+'/users/register', JSON.stringify(params))
+// 商品筛选
+export const goodsListSelect = (params) => {
+  return axios.post(baseUrl + '/goods/goodsListSelect', JSON.stringify(params))
+}
+
+/* 购物车 */
+// 加入购物车
+export const addCart = (params) => {
+  return axios.post(baseUrl + '/goods/addCart', JSON.stringify(params))
+}
+// 获取购物车列表
+export const getCartList = (params) => {
+  return axios.post(baseUrl + '/goods/cartList', JSON.stringify(params))
+}
+// 编辑购物车
+export const cartEdit = (params) => {
+  return axios.post(baseUrl + '/goods/cartEdit', JSON.stringify(params))
+}
+// // 全选
+// export const editCheckAll = (params) => {
+//   return axios.post(baseUrl + '/goods/editCheckAll', JSON.stringify(params))
+// }
+// 删除一条购物车商品
+export const cartDel = (params) => {
+  return axios.post(baseUrl + '/goods/cartDel', JSON.stringify(params))
+}
+
+// 订单
+// 获取用户订单
+export const orderList = (params) => {
+  return axios.get(baseUrl + '/goods/orderList', params)
+}
+// 删除订单
+export const delOrder = (params) => {
+  return axios.get(baseUrl + '/goods/delOrder', params)
+}
+// 生成订单
+export const submitOrder = (params) => {
+  return axios.post(baseUrl + '/goods/addOrder', JSON.stringify(params))
 }
 // // 上传图片
 // export const upload = (params) => {
