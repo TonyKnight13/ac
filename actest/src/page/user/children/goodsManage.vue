@@ -253,11 +253,7 @@ export default {
     save () {
       this.popupOpen = false
       let obj = {
-<<<<<<< HEAD
-        owner:this.userId,
-=======
         userId:this.userId,
->>>>>>> d2e9b0c9a2b97c7a9bfbd36394dbfe959c02d022
         goodId:this.msg.goodId,
         goodImg:this.msg.goodImg,
         goodName:this.msg.goodName,
