@@ -152,9 +152,9 @@ Mock.mock('http://localhost:8080/users/login', 'post', function (msg) {
   return {
     'result': 'success',
     'data': {
-      'account': 'chenwen',
-      'userId': '100101',
-      identity:'1'
+      account: 'chenwen',
+      userId: '100101',
+      identity: '1'
     },
     'token': '10011',
     'status': 200

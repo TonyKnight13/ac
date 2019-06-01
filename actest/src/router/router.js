@@ -1,12 +1,12 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import home from '../page/home.vue';
-import login from '../page/login.vue';
-import regist from '../page/regist.vue';
-import hs_death from '../page/hospital/hs-death.vue';
-import hs_inquiry from '../page/hospital/hs-inquiry.vue';
-import shop from '../page/shop/shop.vue';
-import usercenter from '../page/user/usecenter.vue';
+import Vue from 'vue'
+import Router from 'vue-router'
+import home from '../page/home.vue'
+import login from '../page/login.vue'
+import regist from '../page/regist.vue'
+import hs_death from '../page/hospital/hs-death.vue'
+import hs_inquiry from '../page/hospital/hs-inquiry.vue'
+import shop from '../page/shop/shop.vue'
+import usercenter from '../page/user/usecenter.vue'
 import store from '../store/index'
 import {getStore} from '../utils/storage'
 
@@ -45,6 +45,11 @@ const router = new Router({
       // meta: {
       //   isLogin: true,  // 添加该字段，表示进入这个路由是需要登录的
       // },
+    },
+    {
+      path: '/chart',
+      name: 'chart',
+      component: resolve => require(['../components/chart.vue'], resolve)
     },
     {
       path: '/shop',
