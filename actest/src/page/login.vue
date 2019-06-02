@@ -2,8 +2,8 @@
   <div class="wrapper">
     <div class="main">
       <div class="signHeader">
-        <!-- <img src="../assets/images/ac.png" style="height:82.5px;width:176px;"> -->
-        <!-- <span>爱宠社区 ，宠你所爱</span> -->
+        <img src="../assets/images/ac.png" style="height:82.5px;width:176px;">
+        <span>爱宠社区 ，宠你所爱</span>
       </div>
       <el-form :model='loginForm' :rules="loginRules" ref="loginForm" style="padding:0 40px" status-icon>
         <el-form-item prop="account">
@@ -88,21 +88,26 @@ export default {
             account:this.loginForm.username,
             password:this.loginForm.password,
           }).then(res=>{
-            console.log(res)
             //登录失败,先不讨论
-            if (res.data.status != 200) {
+            if (res.data.code == 0) {
               //element的友好提示
-              this.$message.error("error");
+              this.$message.error(res.data.message);
+              this.loading=false;
             //登录成功
             } else {
-              this.GET_USERNAME(res.data.data.userId);
-              this.SET_TOKEN(res.data.token);
+              this.GET_USERNAME(res.data.id);
+              // this.SET_TOKEN(res.data.token);
               console.log(res.data)
-              setStore('statusKey',res.data.data.identity)
-              //iViewUi的友好提示
-              this.$message.success(res.data.result);
+              setStore('userName', res.data.account)
+              setStore('identity',res.data.identity)
+              //element的友好提示
+              this.$message.success(res.data.message);
               //登录成功后跳转到指定页面
               this.$router.replace("/");
+              if(res.data.identity == '1'){ //如果是商家用户，则新开一个窗口并跳转到聊天室页面
+                let route =this.$router.resolve({path: '/chart'});
+                window.open(route.href,'_blank')
+              }
             }
           })
         }else{
@@ -126,7 +131,7 @@ export default {
   width: 100%;
   min-height: 10rem;
   height: 100%;
-  /* background:url('../assets/images/background/1.jpg') no-repeat center center fixed; */
+  background:url('../assets/images/background/1.jpg') no-repeat center center fixed;
   background-size: cover;
   display: flex;
   align-items: center;

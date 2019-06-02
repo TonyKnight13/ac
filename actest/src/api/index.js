@@ -27,10 +27,10 @@ export const userLogin = (params) => {
   // return axios.post(`${base}/yyzt-web/auth/login.do`,  query.stringify(params));
   return axios.post(baseUrl + '/users/login', JSON.stringify(params))
 }
-// // 退出登陆
-// export const loginOut = (params) => {
-//   return axios.get(baseUrl + '/users/loginOut', params)
-// }
+// 退出登陆
+export const loginOut = (params) => {
+  return axios.get(baseUrl + '/users/loginOut', params)
+}
 
 /* 个人中心 */
 // 用户信息

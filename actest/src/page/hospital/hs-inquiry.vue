@@ -126,7 +126,7 @@
             </el-table-column>
             <el-table-column align="right">
                 <template slot-scope="scope">
-                <el-button type="danger" size="small"  @click="wenzhen(scope.row.physicId)">问诊</el-button>
+                <el-button type="danger" size="small"  @click="goChart()">问诊</el-button>
               </template>
             </el-table-column>        
           </el-table>
@@ -239,27 +239,16 @@ export default {
       this._search()
     },
 
-
+    //前往聊天室
+    goChart(){
+      this.$router.push({path:'/chart'})
+    },
     currentPageChange(val){
       this.currentPage=val;
     },
-    //查看详情
-    toDescript(id){
-      this.$router.push({path: "/goodsDetails",query:{goodId:id}})
-    },
-    //立刻购买
-    _addCart(id, name, price, img){
-        addCart({userId: this.userId, goodId: id, goodNum: this.num}).then(res => {
-          // 并不重新请求数据
-          this.ADD_CART({
-            goodId: id,
-            goodPrice: price,
-            goodImg: name,
-            goodImg: img,
-            goodNum: this.num
-          })
-        })
-    },
+
+
+
     //获取商品列表
     _hospitalNavList(){
       hospitalNavList().then(res => {

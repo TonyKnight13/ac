@@ -111,6 +111,7 @@ export default {
         value:'DESC',
         label:'降序'
       }],
+      value:'',//升序降序的值
       selectObj:{},
       resultnum:0,
       goodKind,

@@ -35,6 +35,7 @@
   </div>
 </template>
 <script>
+import { loginOut } from '@/api/index.js';
 export default {
   name:'headernav',
   data(){
@@ -58,7 +59,11 @@ export default {
     },
     loginout(){
       this.$store.dispatch("logout");
-      this.$router.replace({path:'/login'})
+      loginOut().then(res => {
+        if(res.data.success == true){
+          this.$router.replace({path:'/login'})
+        }
+      })
     },
     toCart(){
       this.$router.push({path:'/cart'})

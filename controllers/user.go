@@ -26,7 +26,7 @@ func (c *UserController) Login() {
 		c.SetSession("userLogin", "1")
 		c.SetSession("Account", loginRecv.Account)
 		_, user := GetUserByAccount(loginRecv.Account)
-		c.Data["json"] = map[string]interface{}{"code": 1, "message": "贺喜你，登录成功", "Id": user.Id, "Account": user.Account, "Identity": user.Identity, "user": user}
+		c.Data["json"] = map[string]interface{}{"code": 1, "message": "贺喜你，登录成功", "id": user.Id, "account": user.Account, "identity": user.Identity, "user": user}
 		beego.Info(c.Data["json"])
 		beego.Info("成功")
 	} else {

@@ -2,8 +2,8 @@
   <div class="wrapper">
     <div class="main">
       <div class="signHeader">
-        <!-- <img src="../assets/images/ac.png" style="height:82.5px;width:176px;">
-        <span>爱宠社区 ，宠你所爱</span> -->
+        <img src="../assets/images/ac.png" style="height:82.5px;width:176px;">
+        <span>爱宠社区 ，宠你所爱</span>
       </div>
       <el-form :model='form' style="padding:0 40px" status-icon :rules="rules" ref="form">
         <el-form-item prop="account">
@@ -89,17 +89,6 @@ export default {
     }
   },
   methods: {
-    successMsg(){
-      this.$message({
-        message:"恭喜您，注册成功!",
-        type:'success'
-      })
-    },
-    errorMsg (m) {  //注册失败
-      this.$message.error({
-        message: m
-      })
-    },
     regist(formName){
       this.$refs[formName].validate(valid=>{
         if(valid){
@@ -110,12 +99,12 @@ export default {
             password2:this.form.checkPass,
             identity:this.form.statusKey
           }).then(res=>{
-            console.log(typeof res)
-            if(res.data.success === true){  //后台返回信息中success：true
-              this.successMsg()
+            console.log(res)
+            if(res.data.code === 1){  //后台返回信息中code==1 注册成功
+              this.$message.success(res.data.message);
               this.$router.replace({path:'/login'})
             }else{
-              this.errorMsg(res.data.msg)
+              this.$message.error(res.data.message);
               this.loading  = false;
               return false;
             }
@@ -135,7 +124,7 @@ export default {
   width: 100%;
   min-height: 9.37rem;
   height: 100%;
-  /* background:url('../assets/images/background/1.jpg') no-repeat center center fixed; */
+  background:url('../assets/images/background/1.jpg') no-repeat center center fixed;
   background-size: cover;
   display: flex;
   align-items: center;
