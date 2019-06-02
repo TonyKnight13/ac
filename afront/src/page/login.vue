@@ -6,7 +6,7 @@
         <span>爱宠社区 ，宠你所爱</span>
       </div>
       <el-form :model='loginForm' :rules="loginRules" ref="loginForm" style="padding:0 40px" status-icon>
-        <el-form-item prop="account">
+        <el-form-item prop="username">
           <el-input v-model="loginForm.username" placeholder="请输入用户名" required autofocus value></el-input>
         </el-form-item>
         <el-form-item prop="password">
@@ -78,7 +78,7 @@ export default {
     // }
   },
   methods: {
-    ...mapMutations(['SET_TOKEN','GET_USERNAME']),
+    ...mapMutations(['SET_TOKEN','GET_USERID']),
     handleLogin(){
       this.$refs.loginForm.validate(valid=>{
         if(valid){
@@ -95,7 +95,7 @@ export default {
               this.loading=false;
             //登录成功
             } else {
-              this.GET_USERNAME(res.data.id);
+              this.GET_USERID(res.data.id);
               // this.SET_TOKEN(res.data.token);
               console.log(res.data)
               setStore('userName', res.data.account)

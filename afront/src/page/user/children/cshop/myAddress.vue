@@ -45,7 +45,6 @@
           </el-form-item>
         </el-form>
         <el-button 
-        class="btn"
         :disabled=trueORfalse
         @click="save()">
         保存</el-button>
@@ -137,7 +136,7 @@ export default {
     },
     // 保存
     save () {
-      this.popupOpen = false
+      this.dialogVisible = false
       let obj = {
         userId:this.userId,
         addressId:this.msg.addressId,
@@ -177,7 +176,7 @@ export default {
         this.msg.address = item.address
         this.msg.addressId = item.addressId
       }else {
-        this.popupTitle = '新增收货地址'
+        this.dialogTitle = '新增收货地址'
         this.msg.realName = ''
         this.msg.phone = ''
         this.msg.address = ''

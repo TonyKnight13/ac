@@ -4,7 +4,7 @@
     <span slot="right"><el-button style="margin: 0" @click="update()">添加商品</el-button></span>
     <div slot="content" class="content">
 
-      <el-table :data="goodsList" v-if="goodsList.length" style="width: 100%" ref="multipleTable"
+      <el-table :data="goodsList" v-if="goodsList.length > 0" style="width: 100%" ref="multipleTable"
       :header-cell-style="{background:'#F3F4F7',color:'#555'}">
         <el-table-column prop="goodImg" label="商品图片" width="120" align="center">
           <template slot-scope="scope">            
@@ -113,7 +113,7 @@ export default {
   data () {
     return {
       goodsList:[],
-      dialogTitle:"修改收货地址",
+      dialogTitle:"修改商品信息",
       dialogVisible:false,
       options1: [{
           value: '宠物牌',
@@ -137,36 +137,39 @@ export default {
           value: '宠物玩具',
           label: '宠物玩具'
         }, {
-          value: '宠物清洁用品',
-          label: '宠物清洁用品'
+          value: '清洁用品',
+          label: '清洁用品'
+        },  {
+          value: '宠物药品',
+          label: '宠物药品'
         }, {
-          value: '其他宠物用品',
-          label: '其他宠物用品'
+          value: '其他用品',
+          label: '其他用品'
         },],
       options2: [{
           value: '狗',
           label: '狗'
         }, {
-          value: '猫咪',
-          label: '猫咪'
+          value: '猫',
+          label: '猫'
         }, {
-          value: '水族',
-          label: '水族'
-        }, {
-          value: '兔子',
-          label: '兔子'
-        }, {
-          value: '仓鼠',
-          label: '仓鼠'
-        }, {
-          value: '乌龟',
-          label: '乌龟'
+          value: '兔',
+          label: '兔'
         }, {
           value: '鸟',
           label: '鸟'
         }, {
+          value: '小型',
+          label: '小型'
+        }, {
+          value: '水生',
+          label: '水生'
+        }, {
+          value: '两栖',
+          label: '两栖'
+        }, {
           value: '其他宠物',
-          label: '北京其他宠物烤鸭'
+          label: '其他宠物'
         }],
       msg: {
         goodId:null,
@@ -219,13 +222,14 @@ export default {
         message: m
       })
     },
-    //获取地址列表
+    //获取商品列表
     _goodsList () {
       goodsList({userId: this.userId}).then(res => {
         let data = res.data.data
-        if (data.length) {
+        console.log( res.data.data, data.length)
+        if (data.length>0) {
           this.goodsList = data
-          // console.log(this.goodsList)
+          console.log(this.goodsList)
           // this.goodId = res.result[0].goodId || '1'
         } else {
           this.goodsList = []
@@ -241,6 +245,7 @@ export default {
     _goodsAdd (params) {
       goodsAdd(params).then(res => {
         if (res.data.msg == 'success') {
+          console.log(1, '')
           this._goodsList() //修改完成后重新获取地址列表
         } else {
           this.message(res.data.msg)
@@ -251,7 +256,7 @@ export default {
 
     // 保存
     save () {
-      this.popupOpen = false
+      this.dialogVisible = false
       let obj = {
         userId:this.userId,
         goodId:this.msg.goodId,
@@ -300,7 +305,7 @@ export default {
         this.msg.goodKind = item.goodKind
         this.msg.goodUserKind = item.goodUserKind
       }else {
-        this.popupTitle = '添加商品'
+        this.dialogTitle = '添加商品'
         this.msg.realName = ''
         this.msg.phone = ''
         this.msg.address = ''

@@ -68,48 +68,6 @@
 
         <p class="result-text">为您找到{{resultnum}}条相关结果</p>
         <!-- 搜索结果 -->
-        <!-- <div class="screen-result-wrap" style="width:100%">
-          <ul class="result-select">
-            <li>综合</li>
-            <li>
-              <el-select v-model="value" placeholder="请选择" @change="sort(value)">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </li>
-          </ul>
-
-          <ul class="result-content-wrap" style="width:100%">
-            <li v-for="(item,index) in resultGood.slice((currentPage-1)*5,currentPage*5)" :key="index">
-              <div class="result-content">
-                <el-row>
-                  <el-col :span="24">
-                    <el-card class="good-content">
-                        <figure class="good-figure">
-                            <img :src="item.goodImg" alt="">
-                            <figcaption class="good-text">
-                              <p class="good-name">{{item.goodName}}</p>
-                              <span class="price">¥{{item.goodPrice.split(".")[0]}}.<mark>{{item.goodPrice.split(".")[1]}}</mark></span>
-                              <div class="good-discribe">{{item.goodDiscribe}}</div>
-                              <div class="good-price">
-                                <el-button type="danger" @click.native="toDescript(item.goodId)">查看详情</el-button>
-                                <el-button type="danger" @click.native="_addCart(item.goodId, item.goodName, item.goodPrice, item.goodImg)">加入购物车</el-button>
-                              </div>
-                          </figcaption>
-                          </figure>
-                    </el-card>
-                  </el-col>
-                </el-row>
-              </div>
-            </li>
-
-          </ul>
-        </div> -->
-        
         <div style="width:100%">
           <el-table :data="resultList.slice((currentPage-1)*5,currentPage*5)"
           style="width: 100%" :header-cell-style="{background:'#F3F4F7',color:'#555'}">

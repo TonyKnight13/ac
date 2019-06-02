@@ -51,10 +51,10 @@ export default new Vuex.Store({
       setStore('token', data)
     },
     // 获取用户id
-    GET_USERNAME: (state, data) => {
+    GET_USERID: (state, data) => {
       // 把用户名存起来
       state.user = data
-      setStore('user', data)
+      setStore('userId', data)
     },
     // 登出
     LOGOUT: (state) => {
@@ -62,7 +62,7 @@ export default new Vuex.Store({
       state.token = null
       state.user = null
       removeStore('token')
-      removeStore('user')
+      removeStore('userId')
     },
     // 加入购物车
     ADD_CART: (state, {goodId, goodPrice, goodName, goodImg, goodNum = 1}) => {

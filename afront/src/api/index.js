@@ -17,6 +17,11 @@ const baseUrl = 'http://localhost:8080' // 服务器地址
 // return Promise.reject(error);
 // })
 
+//测试
+export const test = (params) => {
+  return axios.post(baseUrl + '/test', JSON.stringify(params))
+}
+
 
 // 注册账号
 export const register = (params) => {
@@ -29,7 +34,7 @@ export const userLogin = (params) => {
 }
 // 退出登陆
 export const loginOut = (params) => {
-  return axios.get(baseUrl + '/users/loginOut', params)
+  return axios.get(baseUrl + '/users/logout', params)
 }
 
 /* 个人中心 */
@@ -79,15 +84,15 @@ export const goodsPut = (params) => {
 /* 商店 */
 // 商品列表接口
 export const navList = (params) => {
-  return axios.get(baseUrl + '/goods/navList', params)
+  return axios.get(baseUrl + '/shop/navList', params)
 }
 // 商品详情
 export const productDet = (params) => {
-  return axios.get(baseUrl + '/goods/productDet', params)
+  return axios.get(baseUrl + '/shop/goodsDetail', params)
 }
 // 商品筛选
 export const goodsListSelect = (params) => {
-  return axios.post(baseUrl + '/goods/goodsListSelect', JSON.stringify(params))
+  return axios.post(baseUrl + '/shop/goodsListSelect', JSON.stringify(params))
 }
 
 /* 医院 */
@@ -99,40 +104,50 @@ export const hospitalNavList = (params) => {
 export const hospitalSelect = (params) => {
   return axios.post(baseUrl + '/hospital/hospitalSelect', JSON.stringify(params))
 }
+/* 殡葬管理 */
+export const deathRegist = (params) => {
+  return axios.post(baseUrl + '/death/deathManage', JSON.stringify(params))
+}
+//殡葬管理修改
+export const deathRegistUpdate = (params) => {
+  return axios.post(baseUrl + '/death/deathManageUpdate', JSON.stringify(params))
+}
+
+
 /* 购物车 */
 // 加入购物车
 export const addCart = (params) => {
-  return axios.post(baseUrl + '/goods/addCart', JSON.stringify(params))
+  return axios.post(baseUrl + '/shop/cartAdd', JSON.stringify(params))
 }
 // 获取购物车列表
 export const getCartList = (params) => {
-  return axios.post(baseUrl + '/goods/cartList', JSON.stringify(params))
+  return axios.post(baseUrl + '/shop/cartList', JSON.stringify(params))
 }
 // 编辑购物车
 export const cartEdit = (params) => {
-  return axios.post(baseUrl + '/goods/cartEdit', JSON.stringify(params))
+  return axios.post(baseUrl + '/shop/cartEdit', JSON.stringify(params))
 }
 // // 全选
 // export const editCheckAll = (params) => {
-//   return axios.post(baseUrl + '/goods/editCheckAll', JSON.stringify(params))
+//   return axios.post(baseUrl + '/shop/editCheckAll', JSON.stringify(params))
 // }
 // 删除一条购物车商品
 export const cartDel = (params) => {
-  return axios.post(baseUrl + '/goods/cartDel', JSON.stringify(params))
+  return axios.post(baseUrl + '/shop/cartDel', JSON.stringify(params))
 }
 
 // 订单
 // 获取用户订单
 export const orderList = (params) => {
-  return axios.get(baseUrl + '/goods/orderList', params)
+  return axios.get(baseUrl + '/shop/orderList', params)
 }
 // 删除订单
 export const delOrder = (params) => {
-  return axios.get(baseUrl + '/goods/delOrder', params)
+  return axios.get(baseUrl + '/shop/orderDel', params)
 }
 // 生成订单
 export const submitOrder = (params) => {
-  return axios.post(baseUrl + '/goods/addOrder', params)
+  return axios.post(baseUrl + '/shop/orderAdd', params)
 }
 
 

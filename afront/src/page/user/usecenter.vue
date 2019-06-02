@@ -16,7 +16,12 @@
                 <el-menu-item index="/myAddress">收货地址</el-menu-item>
                 <el-menu-item index="/order">商城订单</el-menu-item>
                 <el-menu-item index="/goodsManage">商品管理</el-menu-item>
-                <!-- <el-menu-item index="1-2">我的收藏</el-menu-item> -->
+            </el-submenu>
+            <el-submenu index="3" style="overflow:hidden">
+                <span slot="title">医院管理</span>
+                <el-menu-item index="/deathRegist">殡葬注册</el-menu-item>
+                <el-menu-item index="/docRegister">医生注册</el-menu-item>
+                <el-menu-item index="/hosRegister">医院注册</el-menu-item>
             </el-submenu>
             <!-- <el-submenu index="3" style="overflow:hidden">
                 <span slot="title">收货地址</span>
@@ -46,7 +51,7 @@
     },
     data(){
       return{
-        openeds: ['1','2','3'],
+        openeds: ['1'],
       }
     },
     watch:{
@@ -80,7 +85,7 @@
   }
   .content-right-wrap{
     width: calc(85% - 0.4rem);
-    height: 12rem;
+    height: 10rem;
     background: #ffffff;
   }
 </style>

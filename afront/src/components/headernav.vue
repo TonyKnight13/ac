@@ -9,8 +9,8 @@
         <el-menu-item index="/shop">宠物商店</el-menu-item>
         <el-submenu index="/hospital">
           <template slot="title">宠物医院</template>
-            <el-menu-item index="/hs_inquiry">宠物问诊</el-menu-item>
-            <el-menu-item index="/hs_death">宠物殡葬</el-menu-item>
+            <el-menu-item index="/hsInquiry">宠物问诊</el-menu-item>
+            <el-menu-item index="/hsDeath">宠物殡葬</el-menu-item>
         </el-submenu>
         <el-menu-item index="/baike">宠物百科</el-menu-item>
         <el-menu-item index="/usercenter">关于我们</el-menu-item>
@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     isLogin(){
-      if(sessionStorage.getItem("user")){
+      if(sessionStorage.getItem("userId")){
         return true
       }
     }
