@@ -11,8 +11,8 @@ type GoodsInfo struct {
 	Name        string
 	Kind        string //商品种类
 	Price       float32
-	Available   bool
-	Madein      string       //产地
+	Available   byte
+	Madein      byte         //产地(0：国内 1：进口)
 	Forpet      string       //针对宠物类别
 	Intro       string       //简介
 	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
@@ -68,6 +68,7 @@ func AddGoodsInfo(addGoodsInfo GoodsInfo, addGoodsIMG GoodsImg, adduserid int) e
 	goodsinfo.Available = addGoodsInfo.Available
 	goodsinfo.Forpet = addGoodsInfo.Forpet
 	goodsinfo.Madein = addGoodsInfo.Madein
+	goodsinfo.Intro = addGoodsInfo.Intro
 
 	goodsinfo.Created = time.Now()
 	goodsinfo.Changed = time.Now()
@@ -101,10 +102,11 @@ func UpdateGoodsInfo(id int, updGoods GoodsInfo, updGoodsImg GoodsImg) error {
 
 	goodsinfo.Intro = updGoods.Intro
 	goodsinfo.Forpet = updGoods.Forpet
-	goodsinfo.Kind = updGoods.Kind 
+	goodsinfo.Kind = updGoods.Kind
 	goodsinfo.Available = updGoods.Available
 	goodsinfo.Madein = updGoods.Madein
 	goodsinfo.Price = updGoods.Price
+	goodsinfo.Intro = updGoods.Intro
 
 	goodsinfo.Changed = time.Now()
 

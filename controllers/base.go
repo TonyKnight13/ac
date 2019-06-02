@@ -12,7 +12,7 @@ type BaseController struct {
 func (b *BaseController) Prepare() {
 	userLogin := b.GetSession("userLogin")
 	username := b.GetSession("username")
-	if username == nil{
+	if username == nil {
 		username = b.GetSession("account")
 	}
 	if userLogin == nil {

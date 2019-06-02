@@ -21,16 +21,16 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `goods_kind`;
 CREATE TABLE `goods_kind` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `kindname` varchar(255) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of goods_kind
 -- ----------------------------
-INSERT INTO `goods_kind` VALUES ('1', '牵引绳');
-INSERT INTO `goods_kind` VALUES ('2', '宠物窝');
-INSERT INTO `goods_kind` VALUES ('3', '宠物笼');
+INSERT INTO `goods_kind` VALUES ('1', '宠物牌');
+INSERT INTO `goods_kind` VALUES ('2', '牵引线');
+INSERT INTO `goods_kind` VALUES ('3', '宠物窝');
 INSERT INTO `goods_kind` VALUES ('4', '宠物食品');
 INSERT INTO `goods_kind` VALUES ('5', '宠物食具');
 INSERT INTO `goods_kind` VALUES ('6', '宠物服装');

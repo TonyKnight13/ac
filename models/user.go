@@ -124,7 +124,7 @@ func CheckLog(Account string, Password string) (err error, user *User) {
 	return err, user
 }
 
-func GetUserByAccount(account string) (err error, user *User) {
+func GetUserByAccount(account interface{}) (err error, user *User) {
 	o := orm.NewOrm()
 	user = new(User)
 	qs := o.QueryTable(user)
