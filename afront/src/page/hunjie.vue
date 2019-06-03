@@ -1,8 +1,8 @@
 <template>
 <div>
   <YShelf title="商品管理">
-    <div slot="content" class="content" label-width="100px" >
-        <el-form :model="msg" ref="msg" >
+    <div slot="content" class="content" >
+        <el-form :model="msg" ref="msg" status-icon label-width="100px" style="width:70%;">
           <!-- 个人信息 -->
           <el-form-item label="用户名" >
             <el-input v-model="msg.username"></el-input>
@@ -17,7 +17,7 @@
           <el-form-item label="年龄">
             <el-input v-model="msg.age"></el-input>
           </el-form-item>
-          <el-form-item>
+          <el-form-item label="用户图片">
             <el-upload
               class="avatar-uploader"
               action="https://jsonplaceholder.typicode.com/posts/"
@@ -29,24 +29,24 @@
           </el-form-item>
           
           <!-- 收货地址 -->
-          <el-form-item>
+          <el-form-item label="收货人姓名">
             <el-input placeholder="收货人姓名" v-model="msg.realName1"></el-input>
           </el-form-item>
           <el-form-item label="收货手机号码">
             <el-input v-model="msg.phone2"></el-input>
           </el-form-item> 
-          <el-form-item >
+          <el-form-item label="收货地址">
             <el-input placeholder="收货地址" v-model="msg.address1"></el-input>
           </el-form-item>
 
           <!-- 殡葬管理 -->
-          <el-form-item>
+          <el-form-item label="殡葬馆名">
             <el-input placeholder="殡葬馆名" v-model="msg.name"></el-input>
           </el-form-item>
           <el-form-item label="殡葬电话号码">
             <el-input v-model="msg.phone3"></el-input>
           </el-form-item> 
-          <el-form-item >
+          <el-form-item label="殡葬馆地址">
             <el-input placeholder="殡葬馆地址" v-model="msg.address2"></el-input>
           </el-form-item>
 
@@ -68,27 +68,27 @@
 
 
           <!-- 医院管理 -->
-          <el-form-item>
+          <el-form-item label="医院名称">
             <el-input placeholder="医院名称" v-model="msg.hospitalName"></el-input>
           </el-form-item>
           <el-form-item label="医院电话号码">
             <el-input v-model="msg.phone4"></el-input>
           </el-form-item> 
-          <el-form-item >
+          <el-form-item label="医院地址">
             <el-input placeholder="医院地址" v-model="msg.address3"></el-input>
           </el-form-item>
 
           <!-- 商品上架 -->
-          <el-form-item >
+          <el-form-item label="商品名称">
             <el-input placeholder="商品名称" v-model="msg.goodName"></el-input>
           </el-form-item>
-          <el-form-item>
+          <el-form-item label="商品描述">
             <el-input type="textarea" placeholder="商品描述" :rows="2" v-model="msg.detail"></el-input>
           </el-form-item>
-          <el-form-item>
+          <el-form-item label="商品单价(￥)">
             <el-input placeholder="商品单价(￥)" v-model="msg.goodPrice"></el-input>
           </el-form-item>
-          <el-form-item >
+          <el-form-item label="商品种类">
             <el-select v-model="msg.goodKind" placeholder="商品种类">
               <el-option
                 v-for="item in options1"
@@ -98,7 +98,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item >
+          <el-form-item label="宠物种类">
               <el-select v-model="msg.goodUserKind" multiple collapse-tags placeholder="宠物种类">
                 <el-option
                   v-for="item in options2"
@@ -108,11 +108,11 @@
                 </el-option>
               </el-select>
           </el-form-item>
-          <el-form-item >
+          <el-form-item label="上架/下架">
               <el-radio v-model="msg.isPut" label="0">下架</el-radio>
               <el-radio v-model="msg.isPut" label="1">上架</el-radio>
           </el-form-item>
-          <el-form-item>
+          <el-form-item label="商品图片">
             <el-upload
               class="avatar-uploader"
               action="https://jsonplaceholder.typicode.com/posts/"
@@ -124,14 +124,15 @@
           </el-form-item>
 
           <!-- 零散的 -->
-          <el-form-item >
-            <el-input-number v-model="msg.num" :min="1" :max="10" label="商品数量"></el-input-number>
+          <el-form-item label="商品数量">
+            <el-input-number v-model="msg.num" :min="1" :max="10" ></el-input-number>
           </el-form-item>
 
-          <el-form-item >
-            <el-input-number v-model="msg.orderTotal" label="订单总价格"></el-input-number>
+          <el-form-item label="订单总价格">
+            <el-input-number v-model="msg.orderTotal" ></el-input-number>
           </el-form-item>          
         </el-form>
+
         <el-button 
         class="btn"
         @click="save()">
@@ -209,11 +210,11 @@ export default {
   data () {
     return {
       options1:op1,
-      options2: op2,
+      options2:op2,
       msg: {
         /* 个人信息 */
         username:null, //用户名
-        sex: '1', //性别
+        sex: '0', //性别
         phone1:null, //电话
         age:null,//年龄
         userImg:null,
@@ -230,10 +231,10 @@ export default {
 
         /* 医生管理 */
         realName2:null, //医生真名
-        options3:op2, //专业
+        major:null, //专业
         
         /* 医院管理 */
-        hospitalName:null, //医生真名
+        hospitalName:null, //医院名
         phone4:null,  //医院电话号码
         address3:null, //医院地址
 
@@ -269,14 +270,39 @@ export default {
     // 保存
     save () {
       let obj = {
-        goodId:this.msg.goodId,
-        goodImg:this.msg.goodImg,
-        goodName:this.msg.goodName,
-        goodPrice:this.msg.goodPrice,
+        username:this.msg.username, 
+        sex: this.msg.sex, 
+        phone1: this.msg.phone1,        
+        age:this.msg.age, 
+        userImg: this.msg.userImg, 
+
+        realName:this.msg.realName, 
+        phone2: this.msg.phone2, 
+        address: this.msg.address, 
+
+        name:this.msg.name, 
+        phone3: this.msg.phone3, 
+        address2: this.msg.address2, 
+
+        realName2:this.msg.realName2, 
+        sex: this.msg.sex, 
+        major: this.msg.major, 
+
+        hospitalName:this.msg.hospitalName, 
+        phone4: this.msg.phone4, 
+        address3: this.msg.address3,
+
+        goodName: this.msg.goodName, 
+        goodPrice: this.msg.goodPrice, 
+        goodImg: this.msg.goodImg, 
         isPut:this.msg.isPut,
         detail:this.msg.detail,
         goodKind:this.msg.goodKind,//商品种类
-        goodUserKind:this.msg.goodUserKind//使用商品的宠物种类
+        goodUserKind:this.msg.goodUserKind, //使用商品的宠物种类
+
+        num: this.msg.num, 
+        orderTotal: this.msg.orderTotal, 
+
       }
 
     },
@@ -313,4 +339,13 @@ export default {
     height: 178px;
     display: block;
   }
+  .el-form-item__content{
+    margin-left: 150px !important;
+  }
+</style>
+<style>
+.el-upload {
+  background: #ebebeb !important
+}
+
 </style>

@@ -17,7 +17,7 @@ const baseUrl = 'http://localhost:8080' // 服务器地址
 // return Promise.reject(error);
 // })
 
-//测试
+// 测试
 export const test = (params) => {
   return axios.post(baseUrl + '/test', JSON.stringify(params))
 }
@@ -40,12 +40,17 @@ export const loginOut = (params) => {
 /* 个人中心 */
 // 用户信息
 export const userInfo = (params) => {
-  return axios.get(baseUrl + '/users/userInfo', params)
+  return axios.post(baseUrl + '/users/userInfo', JSON.stringify(params))
+}
+// 用户信息修改
+export const userInfoUpdata = (params) => {
+  return axios.post(baseUrl + '/users/userInfoUpdata', JSON.stringify(params))
 }
 // 修改密码
 export const changePass = (params) => {
   return axios.post(baseUrl + '/users/changePass', JSON.stringify(params))
 }
+
 /* 我的地址 */
 // 获取用户地址
 export const addressList = (params) => {
@@ -95,25 +100,6 @@ export const goodsListSelect = (params) => {
   return axios.post(baseUrl + '/shop/goodsListSelect', JSON.stringify(params))
 }
 
-/* 医院 */
-// 医院商品列表接口
-export const hospitalNavList = (params) => {
-  return axios.get(baseUrl + '/hospital/hospitalNavList', params)
-}
-// 医院、医生筛选
-export const hospitalSelect = (params) => {
-  return axios.post(baseUrl + '/hospital/hospitalSelect', JSON.stringify(params))
-}
-/* 殡葬管理 */
-export const deathRegist = (params) => {
-  return axios.post(baseUrl + '/death/deathManage', JSON.stringify(params))
-}
-//殡葬管理修改
-export const deathRegistUpdate = (params) => {
-  return axios.post(baseUrl + '/death/deathManageUpdate', JSON.stringify(params))
-}
-
-
 /* 购物车 */
 // 加入购物车
 export const addCart = (params) => {
@@ -150,7 +136,39 @@ export const submitOrder = (params) => {
   return axios.post(baseUrl + '/shop/orderAdd', params)
 }
 
-
+/* 医院 */
+// 医院商品列表接口
+export const hospitalNavList = (params) => {
+  return axios.get(baseUrl + '/hospital/hospitalNavList', params)
+}
+// 医院、医生筛选
+export const hospitalSelect = (params) => {
+  return axios.post(baseUrl + '/hospital/hospitalSelect', JSON.stringify(params))
+}
+/* 殡葬管理 */
+export const deathRegist = (params) => {
+  return axios.post(baseUrl + '/death/deathManage', JSON.stringify(params))
+}
+// 殡葬管理修改
+export const deathRegistUpdate = (params) => {
+  return axios.post(baseUrl + '/death/deathManageUpdate', JSON.stringify(params))
+}
+/* 医生信息 */
+export const doctuorInfo = (params) => {
+  return axios.post(baseUrl + '/doctor/info', JSON.stringify(params))
+}
+// 医生信息修改
+export const doctuorInfoUpdate = (params) => {
+  return axios.post(baseUrl + '/doctor/InfoUpdate', JSON.stringify(params))
+}
+/* 医院信息 */
+export const hospitalInfo = (params) => {
+  return axios.post(baseUrl + '/hospital/info', JSON.stringify(params))
+}
+// 医院信息修改
+export const hospitalInfoUpdate = (params) => {
+  return axios.post(baseUrl + '/hospital/infoUpdate', JSON.stringify(params))
+}
 
 
 
@@ -159,34 +177,8 @@ export const submitOrder = (params) => {
 // export const upload = (params) => {
 //   return axios.post(baseUrl + '/users/imgaeUpload', JSON.stringify(params))
 // }
-// // 删除购物车所有商品
-// export const delCartChecked = (params) => {
-//   return axios.post(baseUrl + '/goods/delCartChecked', params)
-// }
-
 
 // // 修改头像
 // export const updateheadimage = (params) => {
 //   return axios.post('/member/updateheadimage', params)
-// }
-
-// // 首页接口
-// export const productHome = (params) => {
-//   return axios.get('/goods/home', params)
-// }
-// // 首页接口
-// export const navList = (params) => {
-//   return axios.get('/goods/navList', params)
-// }
-// // 推荐板块
-// export const recommend = (params) => {
-//   return axios.get('/goods/recommend', params)
-// }
-// // 捐赠板块
-// export const thank = (params) => {
-//   return axios.get('/goods/thank', params)
-// }
-// // 极验验证码
-// export const geetest = (params) => {
-//   return axios.get('/member/geetestInit?t=' + (new Date()).getTime(), params)
 // }

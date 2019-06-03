@@ -19,9 +19,9 @@
             </el-submenu>
             <el-submenu index="3" style="overflow:hidden">
                 <span slot="title">医院管理</span>
-                <el-menu-item index="/deathRegist">殡葬注册</el-menu-item>
-                <el-menu-item index="/docRegister">医生注册</el-menu-item>
-                <el-menu-item index="/hosRegister">医院注册</el-menu-item>
+                <el-menu-item index="/deathRegist">殡葬馆</el-menu-item>
+                <el-menu-item index="/docRegister">医生信息</el-menu-item>
+                <el-menu-item index="/hosRegister">医院信息</el-menu-item>
             </el-submenu>
             <!-- <el-submenu index="3" style="overflow:hidden">
                 <span slot="title">收货地址</span>

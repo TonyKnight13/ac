@@ -1,11 +1,11 @@
 <template>
 <div>
-  <YShelf title="收货地址">
+  <YShelf title="殡葬馆">
     <div slot="content" class="content">
         <!-- <div slot="content" class="md" :data-id="msg.addressId"> -->
           <el-form :model="msg" ref="msg" :rules="rules" status-icon style="width:80%;text-align:center" label-width="100px">
-            <el-form-item label="姓名" prop="name">
-              <el-input placeholder="姓名" v-model="msg.name"></el-input>
+            <el-form-item label="殡葬馆名" prop="name">
+              <el-input placeholder="殡葬馆名" v-model="msg.name"></el-input>
             </el-form-item>
             <el-form-item  label="电话号码" prop="phone">
               <el-input placeholder="电话号码" v-model="msg.phone"></el-input>
@@ -13,7 +13,7 @@
             <el-form-item  label="殡葬馆地址" prop="address">
               <el-input placeholder="殡葬馆地址" v-model="msg.address"></el-input>
             </el-form-item>
-            <el-form-item prop="image">
+            <!-- <el-form-item prop="image">
               <el-upload
                 class="avatar-uploader" 
                 action="https://jsonplaceholder.typicode.com/posts/"
@@ -22,7 +22,7 @@
                 <img v-if="msg.goodImg" :src="msg.goodImg" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item>
               <el-button  @click="save()">保存</el-button>
               <el-button @click="resetForm('msg')">重置</el-button>
@@ -44,7 +44,6 @@ import { deathRegist, deathRegistUpdate} from '@/api/index'
 import { getStore } from '@/utils/storage'
 import YShelf from '@/components/shelf';
 export default {
-  name: 'MyAddress',
   components:{
     YShelf
   },
@@ -72,10 +71,6 @@ export default {
     };
   },
   computed: {
-    // trueORfalse () {
-    //   let msg = this.msg
-    //   return !Boolean(msg.name && msg.phone && msg.address)
-    // }
   },
   methods: {
     handleAvatarSuccess(res, file) {
@@ -116,7 +111,6 @@ export default {
         if(valid){
           let obj = {
             userId:this.userId,
-            addressId:this.msg.addressId,
             name:this.msg.name,
             phone:this.msg.phone,
             address:this.msg.address
@@ -129,7 +123,7 @@ export default {
     //修改信息
     _deathRegistUpdate (params) {
       deathRegistUpdate(params).then(res => {  
-        this._deathRegist() //修改完成后重新获取地址列表
+        this._deathRegist() //修改完成后重新获取信息
       })
     },
   },

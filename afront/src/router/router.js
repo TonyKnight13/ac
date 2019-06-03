@@ -134,7 +134,7 @@ const router = new Router({
           name: 'docRegister',
           component:resolve => require(['../page/user/children/chospital/docRegister.vue'], resolve)
         },{
-          path: '/deathRegist',
+          path: '/hosRegister',
           name: 'hosRegister',
           component:resolve => require(['../page/user/children/chospital/hosRegister.vue'], resolve)
         },
