@@ -4,18 +4,21 @@
     <headernav></headernav>
 
     <div class="main-content-wrap">
-      <div style="padding:0 2rem;background:#FFB90F;width:80%;margin-bottom:0.5rem;">
+      <!-- <div style="padding:0 2rem;background:#FFB90F;width:80%;margin-bottom:0.5rem;">
         <el-carousel :interval="3000" arrow="always" loop> 
           <el-carousel-item v-for="(item,index) in imgs" :key="index">
             <el-image :src="item" fit="scale-down"></el-image>
           </el-carousel-item>
         </el-carousel>
-      </div>
+      </div> -->
         
-      <div class="main-content">
+      <div class="map-content">
+        <div id="l-map"></div>
+      </div>
 
+      <div class="main-content">
         <div style="align-self: flex-start;width:100%">
-          <el-tabs v-model="activeName" type="card">
+          <el-tabs v-model="activeName" type="card" >
             <el-tab-pane label="医生" name="doctor">
                 <!-- 搜索 -->
                 <div class="screen-content">
@@ -41,7 +44,7 @@
             </el-tab-pane>
             <el-tab-pane label="医院" name="hospital">
               <!-- 搜索 -->
-              <div class="screen-content">
+              <!-- <div class="screen-content">
                   <div class="screen-item">
                     <span>种类：</span>
                     <div class="item-check">
@@ -60,16 +63,15 @@
                     </div>
                   </div>
                   <el-button type="primary" @click="search" size="small" style="background:#FFB90F;border-color:#FFB90F">搜索</el-button>
-              </div>
+              </div> -->
             </el-tab-pane>
           </el-tabs>
         </div>
 
 
-        <p class="result-text">为您找到{{resultnum}}条相关结果</p>
-        <!-- 搜索结果 -->
-        <div style="width:100%">
-          <el-table :data="resultList.slice((currentPage-1)*5,currentPage*5)"
+        <!-- 医生搜索结果 -->
+        <div style="width:100%" v-if="this.activeName == 'doctor'">
+          <el-table :data="docList.slice((currentPage-1)*5,currentPage*5)"
           style="width: 100%" :header-cell-style="{background:'#F3F4F7',color:'#555'}">
             <el-table-column  width="200">
               <template slot-scope="scope">
@@ -84,6 +86,36 @@
             </el-table-column>
             <el-table-column align="right">
                 <template slot-scope="scope">
+                <el-button type="danger" size="small"  @click="selectMap()">查询</el-button>
+              </template>
+            </el-table-column>        
+          </el-table>
+
+          <el-pagination
+            :current-page="currentPage"
+            :total="total"
+            @current-change="currentPageChange"  
+            :page-size="5" >
+          </el-pagination>  
+        </div>
+
+        <!-- 医院搜索结果 -->
+        <div  style="width:100%" v-else>
+          <el-table :data="hosList.slice((currentPage-1)*5,currentPage*5)"
+          style="width: 100%" :header-cell-style="{background:'#F3F4F7',color:'#555'}">
+            <el-table-column  width="200">
+              <template slot-scope="scope">
+                <el-image :src="scope.row.image" fit="contain"></el-image>
+              </template>
+            </el-table-column>
+            <el-table-column  width="">
+              <template slot-scope="scope">
+                <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.name}}</span><br>
+                <span style="font-weight:600;font-size:0.26rem;">地址：{{scope.row.address}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column align="right">
+                <template>
                 <el-button type="danger" size="small"  @click="goChart()">问诊</el-button>
               </template>
             </el-table-column>        
@@ -95,7 +127,6 @@
             :page-size="5" >
           </el-pagination>  
         </div>
-
           
 
       </div>
@@ -110,9 +141,10 @@
 <script>
 import headernav from "@/components/headernav.vue";
 import foot from "@/components/foot"
-import { hospitalSelect, hospitalNavList} from "@/api/index"
+import { docNavList,docSelect, hospitalNavList} from "@/api/index"
 import {getStore} from "@/utils/storage"
 import { mapMutations } from 'vuex'
+import BMap from 'BMap'
 
 const special=['不限', '狗', '猫', '兔子', '水生', '鸟', '两栖']
 const area=['不限', '浙江', '上海', '江苏', '北京', '四川', '台湾', '云南', '西藏', '黑龙江']
@@ -128,6 +160,11 @@ export default {
               require('@/assets/images/background/5.jpg'),
               require('@/assets/images/background/6.jpg'),
             ],
+      center:{
+        lng:120.15,
+        lat:30.28
+      },
+      map: null,
       options:[{
         value:'ASCE',
         label:'升序'
@@ -141,7 +178,6 @@ export default {
         specialcheked:['不限'], //选中的种类
         areachecked:['不限'] //选中的地区
       },    
-      resultnum:0,
       special,
       area,
       num:1,
@@ -150,24 +186,51 @@ export default {
       currentPage:1,
       total:0,
       userId:'',
-      resultList:[], //接受后台传来的医生、医院列表数据
-      //  筛选按钮
-      // rateMenuArrow:true,
-      // rangeMenuArrow:true
+      docList:[], //接受后台传来的医生列表数据
+      hosList:[], //接受后台传来的医院列表数据
+
     }
   },
-  computed:{
-    
-  },
 
-  created:function() {
-    let num=this.resultList.length
-    this.total=num
-    console.log(this.total)
-    // this.total=this.resultList.length
+  watch: {
+    activeName(){
+      if(this.activeName == 'doctor'){
+        return this.total = this.docList.length ;
+      }else{
+        this.currentPage=1
+        return this.total = this.hosList.length;
+      }
+    },
+  },
+  mounted () {
+   this.initMap()
   },
   methods: {
-    ...mapMutations(['INIT_BUYCART']),
+    ...mapMutations(['INIT_BUYCART']),    
+    currentPageChange(val){
+      this.currentPage=val;
+    },
+    initMap(){
+        let map = new BMap.Map("l-map");            // 创建Map实例
+        let point = new BMap.Point(this.center.lng, this.center.lat)
+        map.centerAndZoom(point, 11);
+        map.enableScrollWheelZoom(true)
+        map.enableDoubleClickZoom(true)
+        var geolocation = new BMap.Geolocation();
+      	geolocation.getCurrentPosition((r) => {
+          console.log(r)
+          if(r){
+            this.center.lng=r.longitude
+            this.center.lat=r.latitude
+            let mk = new BMap.Marker(r.point);
+            map.addOverlay(mk);
+            map.panTo(r.point);
+            map.centerAndZoom(r.point, 14)
+            this.map = map
+            console.log(this.center)
+          }       
+        },{enableHighAccuracy: true})
+    },
     onChange1(value){
       if(value.length>1){
         value.splice(0,1);
@@ -192,54 +255,52 @@ export default {
     },
     //搜索
     search(){
-      this.selectObj.physicTag=this.activeName  
+      // this.selectObj.physicTag=this.activeName  
       console.log(this.selectObj)
       this._search()
+    },
+    selectMap(){
+
     },
 
     //前往聊天室
     goChart(){
       this.$router.push({path:'/chart'})
     },
-    currentPageChange(val){
-      this.currentPage=val;
-    },
 
-
-
-    //获取商品列表
+    //获取医院列表
     _hospitalNavList(){
       hospitalNavList().then(res => {
-        if(res.data.success == true){
-          this.resultList = res.data.data
-          this.resultnum = this.total =res.data.data.length
+        if(res.data.code == 1){
+          this.hosList = res.data.data;
         }else{
-          this.$message.error('获取商品列表失败')
+          this.$message.error('获取医院列表失败')
+        }
+      })
+    },
+    //获取医生列表
+    _docNavList(){
+      docNavList().then(res => {
+        if(res.data.code == 1){
+          this.docList = res.data.data;
+          this.total = res.data.data.length
+        }else{
+          this.$message.error('获取医生列表失败')
         }
       })
     },
 
-    priceMenuChange(visible){  
-      this.rateMenuArrow=!visible;
-    },
-    rangeMenuChange(visible){
-      this.rangeMenuArrow=!visible;
-    },
-    //筛选和排序时返回的数据
+    //医生筛选时返回的数据
     _search(){  
-      hospitalSelect(this.selectObj).then(res =>{
-        if(res.data.success==true){
-          this.resultList = res.data.data
-          this.resultnum = this.total =res.data.data.length
-        }else{
-          this.$message.error('获取商品列表失败')
-        }
+      docSelect(this.selectObj).then(res =>{
+        this._docNavList()
       })
     }
   },
   created() {
     this.userId= getStore('user')
     this._hospitalNavList()
+    this._docNavList()
   },
 }
 </script>
@@ -299,8 +360,24 @@ export default {
   overflow: hidden;
 }
 
+#allmap {width: 100%;height: 100%; margin:0;font-family:"微软雅黑";}
+.map-content{
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  background:#FFB90F;
+  margin-bottom:0.2rem;
+}
+#l-map{
+  height:7rem;
+  width:70%;
+  text-align:center;
+}
 
 </style>
+
+
 <style>
 /* 多选框 */
 .el-checkbox__input.is-checked+.el-checkbox__label {
@@ -336,6 +413,9 @@ export default {
 }
 .el-carousel__container{
   height:6.2rem;
+}
+.BMap_cpyCtrl {
+  display: none;
 }
 </style>
 

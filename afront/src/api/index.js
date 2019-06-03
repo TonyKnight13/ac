@@ -137,14 +137,19 @@ export const submitOrder = (params) => {
 }
 
 /* 医院 */
-// 医院商品列表接口
+// 医院列表接口
 export const hospitalNavList = (params) => {
   return axios.get(baseUrl + '/hospital/hospitalNavList', params)
 }
-// 医院、医生筛选
-export const hospitalSelect = (params) => {
-  return axios.post(baseUrl + '/hospital/hospitalSelect', JSON.stringify(params))
+// 医生列表接口
+export const docNavList = (params) => {
+  return axios.get(baseUrl + '/hospital/docNavList', params)
 }
+// 医生筛选
+export const docSelect = (params) => {
+  return axios.post(baseUrl + '/hospital/docSelect', JSON.stringify(params))
+}
+
 /* 殡葬管理 */
 export const deathRegist = (params) => {
   return axios.post(baseUrl + '/death/deathManage', JSON.stringify(params))
