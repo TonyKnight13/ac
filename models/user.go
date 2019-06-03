@@ -131,3 +131,13 @@ func GetUserByAccount(account interface{}) (err error, user *User) {
 	err = qs.Filter("Account", account).One(user)
 	return err, user
 }
+
+func ChangePwd(userid interface{}, pwd string) error {
+	o := orm.NewOrm()
+	user := User{Id: userid.(int)}
+	pwdmd5 := com.Md5(pwd)
+	user.Password = pwdmd5
+	user.Changed = time.Now()
+	_, err := o.Update(&user)
+	return err
+}

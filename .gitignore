@@ -702,3 +702,4 @@ MigrationBackup/
 
 *.conf
 *.exe
+conf/app.conf

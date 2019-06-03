@@ -14,6 +14,7 @@ type UserController struct {
 func (c *UserController) URLMapping() {
 	c.Mapping("Login", c.Login)
 	c.Mapping("Regist", c.Regist)
+	c.Mapping("Logout", c.Logout)
 	c.Mapping("UserInfo", c.UserInfo)
 }
 
@@ -75,6 +76,12 @@ func (c *UserController) UserInfo() {
 
 // @router /users/changePass [post]
 func (c *UserController) ChangePwd() {
+	userId := c.GetSession("userId")
+	var newPwd string
+	json.Unmarshal(c.Ctx.Input.RequestBody, newPwd)
+	err := ChangePwd(userId, newPwd)
+	if err != nil {
+	}
 
 }
 
