@@ -86,7 +86,7 @@
             </el-table-column>
             <el-table-column align="right">
                 <template slot-scope="scope">
-                <el-button type="danger" size="small"  @click="selectMap()">查询</el-button>
+                <el-button type="danger" size="small"  @click="selectMap(scope.row.name)">查询</el-button>
               </template>
             </el-table-column>        
           </el-table>
@@ -165,6 +165,7 @@ export default {
         lat:30.28
       },
       map: null,
+      input:'',
       options:[{
         value:'ASCE',
         label:'升序'
@@ -230,6 +231,17 @@ export default {
             console.log(this.center)
           }       
         },{enableHighAccuracy: true})
+    },
+    selectMap(name){
+      this.input = name
+      let map = this.map;            // 创建Map实例
+      let point = new BMap.Point(this.center.lng, this.center.lat)        
+      map.centerAndZoom(point, 14);      
+      var myKeys = this.input;
+      var local = new BMap.LocalSearch(map, {
+        renderOptions:{map: map},
+      });
+      local.searchInBounds(myKeys, map.getBounds());  
     },
     onChange1(value){
       if(value.length>1){
