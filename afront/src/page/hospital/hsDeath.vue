@@ -32,7 +32,7 @@ export default {
 }
 </script>
 <style scoped>
-
+#allmap {width: 100%;height: 100%; margin:0;font-family:"微软雅黑";}
 .main-content-wrap{
   width: 100%;
   background: #ffffff
