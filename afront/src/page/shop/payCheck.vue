@@ -127,7 +127,7 @@ export default {
     //   })
     // },
     _productDet (goodId,num) {
-      productDet({params: {goodId}}).then(res => {
+      productDet({goodId:goodId}).then(res => {
         let item = res.data
         item.goodImg = item.goodImg
         item.goodNum = num

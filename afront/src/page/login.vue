@@ -6,8 +6,8 @@
         <span>爱宠社区 ，宠你所爱</span>
       </div>
       <el-form :model='loginForm' :rules="loginRules" ref="loginForm" style="padding:0 40px" status-icon>
-        <el-form-item prop="username">
-          <el-input v-model="loginForm.username" placeholder="请输入用户名" required autofocus value></el-input>
+        <el-form-item prop="account">
+          <el-input v-model="loginForm.account" placeholder="请输入用户名" required autofocus value></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input v-model="loginForm.password" placeholder="请输入密码" show-password required autofocus value></el-input>
@@ -39,12 +39,19 @@ export default {
 
   },
   data() {
-    // <!--验证用户是否为空-->
-    let checkName = (rule, value, callback) => {
+    // <!--验证账号是否为空-->
+    let checkAccount = (rule, value, callback) => {
       if (value ==="") {
-        callback(new Error('请输入用户名'))
+        callback(new Error('请输入手机号或邮箱'))
       } else {
-        callback()
+          if (value !== '') { 
+            let reg1=/^1[3456789]\d{9}$/;
+            let reg2=/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            if(!reg1.test(value) && !reg2.test(value)){
+              callback(new Error('请输入有效的手机号码或邮箱'));
+            }
+          }
+          callback()
       }
     }
     // <!--验证密码-->
@@ -58,13 +65,12 @@ export default {
     return {
       loading:'false',
       loginForm:{
-        username:'',
+        account:'',
         password:''
       },
       loginRules: {
-        username: [
-          { validator: checkName, trigger: 'blur'},
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        account: [
+          { validator: checkAccount, trigger: 'blur',},
         ],
         password: [{ validator: validatePass, trigger: 'blur',}]
       },
@@ -85,7 +91,7 @@ export default {
           // this.disabled=true;
           this.loading=true;
           userLogin({
-            account:this.loginForm.username,
+            account:this.loginForm.account,
             password:this.loginForm.password,
           }).then(res=>{
             //登录失败,先不讨论

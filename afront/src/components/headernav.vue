@@ -9,11 +9,15 @@
         <el-menu-item index="/shop">宠物商店</el-menu-item>
         <el-submenu index="/hospital">
           <template slot="title">宠物医院</template>
-            <el-menu-item index="/hsInquiry">宠物问诊</el-menu-item>
-            <el-menu-item index="/hsDeath">宠物殡葬</el-menu-item>
+          <el-menu-item index="/hsInquiry">宠物问诊</el-menu-item>
+          <el-menu-item index="/hsDeath">宠物殡葬</el-menu-item>
         </el-submenu>
-        <el-menu-item index="/baike">宠物百科</el-menu-item>
-        <el-menu-item index="/usercenter">关于我们</el-menu-item>
+        <el-submenu index="/baike">
+          <template slot="title">宠物百科</template>
+          <el-menu-item index="/baike">社区分享</el-menu-item>
+          <el-menu-item index="/">宠物殡葬</el-menu-item>
+        </el-submenu>
+        <!-- <el-menu-item index="/usercenter">关于我们</el-menu-item> -->
         <el-menu-item style="float:right;">
           <i class="el-icon-shopping-cart-2" @click="toCart"></i>
         </el-menu-item> 
@@ -59,7 +63,7 @@ export default {
     },
     loginout(){
       this.$store.dispatch("logout");
-      loginOut().then(res => {
+      loginOut({userId: sessionStorage.getItem("userId")}).then(res => {
         if(res.data.success == true){
           this.$router.replace({path:'/login'})
         }

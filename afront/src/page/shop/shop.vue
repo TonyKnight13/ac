@@ -93,7 +93,6 @@ import { mapMutations } from 'vuex'
 const goodKind=['宠物牌', '牵引线', '宠物窝', '宠物食品', '宠物食具', '宠物服装', '宠物玩具', '清洁用品', '宠物药品', '其他用品']
 const goodUserKind=['狗', '猫', '兔', '鸟', '小型', '水生', '两栖', '其他宠物']
 export default {
-  name:"shop",
   components:{
       headernav,foot 
   },

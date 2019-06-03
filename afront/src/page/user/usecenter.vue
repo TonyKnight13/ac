@@ -15,9 +15,9 @@
                 <span slot="title">商城管理</span>
                 <el-menu-item index="/myAddress">收货地址</el-menu-item>
                 <el-menu-item index="/order">商城订单</el-menu-item>
-                <el-menu-item index="/goodsManage">商品管理</el-menu-item>
+                <el-menu-item index="/goodsManage" v-if="userId">商品管理</el-menu-item>
             </el-submenu>
-            <el-submenu index="3" style="overflow:hidden">
+            <el-submenu index="3" style="overflow:hidden" v-if="userId">
                 <span slot="title">医院管理</span>
                 <el-menu-item index="/deathRegist">殡葬馆</el-menu-item>
                 <el-menu-item index="/docRegister">医生信息</el-menu-item>
@@ -44,6 +44,7 @@
 <script>
   import headernav from "@/components/headernav.vue";
   import foot from "@/components/foot"
+  import {getStore} from "@/utils/storage"
   export default {
     name:"home",
     components:{
@@ -52,12 +53,17 @@
     data(){
       return{
         openeds: ['1'],
+        userId:null,
       }
     },
     watch:{
       
     },
     methods: {
+
+    },
+    created() {
+      this.userId=getStore('userId')
     },
   }
 </script>

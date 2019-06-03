@@ -34,7 +34,7 @@ export const userLogin = (params) => {
 }
 // 退出登陆
 export const loginOut = (params) => {
-  return axios.get(baseUrl + '/users/logout', params)
+  return axios.post(baseUrl + '/users/logout', JSON.stringify(params))
 }
 
 /* 个人中心 */
@@ -93,7 +93,7 @@ export const navList = (params) => {
 }
 // 商品详情
 export const productDet = (params) => {
-  return axios.get(baseUrl + '/shop/goodsDetail', params)
+  return axios.post(baseUrl + '/shop/goodsDetail', JSON.stringify(params))
 }
 // 商品筛选
 export const goodsListSelect = (params) => {
@@ -125,15 +125,15 @@ export const cartDel = (params) => {
 // 订单
 // 获取用户订单
 export const orderList = (params) => {
-  return axios.get(baseUrl + '/shop/orderList', params)
+  return axios.post(baseUrl + '/shop/orderList', JSON.stringify(params))
 }
 // 删除订单
 export const delOrder = (params) => {
-  return axios.get(baseUrl + '/shop/orderDel', params)
+  return axios.post(baseUrl + '/shop/orderDel', JSON.stringify(params))
 }
 // 生成订单
 export const submitOrder = (params) => {
-  return axios.post(baseUrl + '/shop/orderAdd', params)
+  return axios.post(baseUrl + '/shop/orderAdd', JSON.stringify(params))
 }
 
 /* 医院 */
@@ -175,6 +175,10 @@ export const hospitalInfoUpdate = (params) => {
   return axios.post(baseUrl + '/hospital/infoUpdate', JSON.stringify(params))
 }
 
+/* 百科 */
+export const baikeData = (params) => {
+  return axios.get(baseUrl + '/baike/baikeData', params)
+}
 
 
 

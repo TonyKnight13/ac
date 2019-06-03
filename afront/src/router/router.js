@@ -56,6 +56,11 @@ const router = new Router({
       path: '/chart',  //聊天室
       name: 'chart',
       component: chart
+    },    
+    {
+      path: '/baike',  //百科
+      name: 'baike',
+      component:resolve => require(['../page/hospital/baike.vue'], resolve)
     },
     {
       path: '/shop',
@@ -153,10 +158,8 @@ router.beforeEach((to, from, next) => {
     if (user) { // 通过vuex state获取当前的token是否存在
       next()
     } else {
-      next({
-        path: '/login'
-        // query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
-      })
+      alert('请登录')
+      next(error)
     }
   } else {
     next()
@@ -167,9 +170,7 @@ router.beforeEach((to, from, next) => {
       next()
     } else {
       alert('你没有权限进入')
-      next({
-        path: '/userbase'
-      })
+      next(error)
     }
   } else {
     next()

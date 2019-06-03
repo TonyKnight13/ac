@@ -18,7 +18,7 @@
 
       <div class="main-content">
         <div style="align-self: flex-start;width:100%">
-          <el-tabs v-model="activeName" type="card" >
+          <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
             <el-tab-pane label="医生" name="doctor">
                 <!-- 搜索 -->
                 <div class="screen-content">
@@ -43,27 +43,6 @@
                 </div>
             </el-tab-pane>
             <el-tab-pane label="医院" name="hospital">
-              <!-- 搜索 -->
-              <!-- <div class="screen-content">
-                  <div class="screen-item">
-                    <span>种类：</span>
-                    <div class="item-check">
-                      <el-checkbox-group  @change="onChange1" v-model="specialcheked" :max='1'>
-                        <el-checkbox v-for="speci in special" :label="speci" :key="speci" >{{speci}}</el-checkbox>
-                      </el-checkbox-group>
-                    </div>
-                  </div>
-
-                  <div class="screen-item">
-                    <span>地区：</span>
-                    <div class="item-check">
-                      <el-checkbox-group @change="onChange2" v-model="areachecked">
-                        <el-checkbox v-for="province in area" :label="province" :key="province">{{province}}</el-checkbox>
-                      </el-checkbox-group>
-                    </div>
-                  </div>
-                  <el-button type="primary" @click="search" size="small" style="background:#FFB90F;border-color:#FFB90F">搜索</el-button>
-              </div> -->
             </el-tab-pane>
           </el-tabs>
         </div>
@@ -123,6 +102,7 @@
 
           <el-pagination
             :total="total"
+            :current-page="currentPage"
             @current-change="currentPageChange"  
             :page-size="5" >
           </el-pagination>  
@@ -210,6 +190,10 @@ export default {
     ...mapMutations(['INIT_BUYCART']),    
     currentPageChange(val){
       this.currentPage=val;
+    },
+    handleClick(tab, event){
+      this.currentPageChange(1)
+      console.log(tab.name, event);
     },
     initMap(){
         let map = new BMap.Map("l-map");            // 创建Map实例
