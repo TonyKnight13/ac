@@ -71,7 +71,8 @@ export default {
               userId:this.userId,
               password:this.psdForm.pass
             }).then(res => {
-              
+              this.$message.success("修改成功")
+              this.$router.push({path:'/login'})
             })
           } else {
             console.log('error submit!!');
@@ -84,7 +85,7 @@ export default {
       }
   },
   created() {
-    this.userId = getStore(userId)
+    this.userId = getStore("userId")
   },
 }
 </script>

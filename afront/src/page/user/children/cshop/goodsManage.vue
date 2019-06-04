@@ -6,20 +6,23 @@
 
       <el-table :data="goodsList" v-if="goodsList.length > 0" style="width: 100%" ref="multipleTable"
       :header-cell-style="{background:'#F3F4F7',color:'#555'}">
-        <el-table-column prop="imgUrl" label="商品图片" width="120" align="center">
+        <el-table-column label="商品图片" width="120" align="center">
           <template slot-scope="scope">            
-            <el-image :src="scope.row.goodImg" fit="contain" @click="goodsDetails(scope.row.goodId)"></el-image>
+            <img :src="scope.row.imgUrl" @click="goodsintros(scope.row.goodId)" />
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="商品名称" width="120" align="center">
+        <el-table-column prop="goodName" label="商品名称" width="120" align="center">
         </el-table-column>
         <el-table-column prop="price" label="商品单价(￥)" width="120" align="center">
         </el-table-column>
         <el-table-column prop="kind" label="商品种类" width="200" align="center">
+          <!-- <template slot-scope="scope">
+            <span>{{scope.row.kind}}</span>
+          </template> -->
         </el-table-column>
         <el-table-column prop="forpet" label="适用商品的宠物种类" width="200" align="center">
           <template slot-scope="scope">
-            <span>{{scope.row.goodUserKind.join(" ")}}</span>
+            <span>{{scope.row.forpet}}</span>
           </template>
         </el-table-column>
 
@@ -43,19 +46,19 @@
     </div>
   </YShelf>
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" center @close="closeDilog('msg')">
-      <!-- <div slot="content" class="md" :data-id="msg.goodId"> -->
+      <!-- <div slot="content" class="md" :data-goodId="msg.goodId"> -->
         <el-form :model="msg" ref="msg" :rules="rules">
           <el-form-item prop="goodName">
             <el-input placeholder="商品名称" v-model="msg.goodName"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-input type="textarea" placeholder="商品描述" :rows="2" v-model="msg.detail"></el-input>
+            <el-input type="textarea" placeholder="商品描述" :rows="2" v-model="msg.intro"></el-input>
           </el-form-item>
-          <el-form-item prop="goodPrice">
-            <el-input placeholder="商品单价(￥)" v-model="msg.goodPrice"></el-input>
+          <el-form-item prop="price">
+            <el-input placeholder="商品单价(￥)" v-model="msg.price"></el-input>
           </el-form-item>
-          <el-form-item prop="goodKind">
-            <el-select v-model="msg.goodKind" placeholder="商品种类">
+          <el-form-item prop="Kind">
+            <el-select v-model="msg.Kind" placeholder="商品种类">
               <el-option
                 v-for="item in options1"
                 :key="item.value"
@@ -64,8 +67,8 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item prop="goodUserKind">
-              <el-select v-model="msg.goodUserKind" placeholder="适用商品的宠物种类">
+          <el-form-item prop="forpet">
+              <el-select v-model="msg.forpet" placeholder="适用商品的宠物种类">
                 <el-option
                   v-for="item in options2"
                   :key="item.value"
@@ -75,8 +78,8 @@
               </el-select>
           </el-form-item>
           <el-form-item>
-              <el-radio v-model="msg.isPut" label='0'>下架</el-radio>
-              <el-radio v-model="msg.isPut" label='1'>上架</el-radio>
+              <el-radio v-model="msg.available" label='0'>下架</el-radio>
+              <el-radio v-model="msg.available" label='1'>上架</el-radio>
           </el-form-item>
           <el-form-item>
             <el-select v-model="msg.madein" placeholder="请选择产地">
@@ -89,9 +92,9 @@
             </el-select>            
           </el-form-item>
 
-          <el-form-item prop="goodImg">
+          <el-form-item prop="imgUrl">
               <input @change="uploadPhoto($event)" type="file" class="kyc-passin">
-              <img :src="msg.userImg" alt="">
+              <img :src="msg.imgUrl" alt="">
 
           </el-form-item>
 
@@ -113,12 +116,13 @@ import { goodsList, goodsUpdate, goodsAdd, goodsPut } from '@/api/index'
 import { getStore } from '@/utils/storage'
 import YShelf from '@/components/shelf';
 export default {
-  name: 'MyAddress',
+  goodName: 'MyAddress',
   components:{
     YShelf
   },
   data () {
     return {
+      
       options:[{
           value: 0,
           label: '国内'
@@ -186,15 +190,15 @@ export default {
           label: '其他宠物'
         }],
       msg: {
-        goodId:null,
+        goodId:'',
         goodName:'',
-        detail:'',
+        intro:'',
         madein:null,
-        goodPrice:null,
-        goodImg:'',
-        isPut:'1',
-        goodKind:'',//商品种类
-        goodUserKind:'',//使用商品的宠物种类
+        price:null,
+        imgUrl:null,
+        available:'1',
+        Kind:'',//商品种类
+        forpet:'',//使用商品的宠物种类
       },
 
 
@@ -203,16 +207,16 @@ export default {
         goodName: [
           { required: true, message: '商品名称', trigger: 'blur' }
         ],
-        goodPrice: [
+        price: [
           { required: true, message: '请输入商品单价', trigger: 'blur' }
         ],
-        goodImg: [
+        imgUrl: [
           { required: true, message: '请输入商品图片', trigger: 'blur' }
         ],
-        goodKind: [
+        Kind: [
           { required: true, message: '请输入商品种类', trigger: 'blur' }
         ],
-        goodUserKind: [
+        forpet: [
           { required: true, message: '请输入适用商品的宠物种类', trigger: 'blur' }
         ],
       }
@@ -222,7 +226,7 @@ export default {
     trueORfalse () {
       let msg = this.msg
       return false
-      return !Boolean(msg.goodName && msg.goodPrice && msg.goodImg && msg.goodKind && msg.goodUserKind)
+      return !Boolean(msg.goodName && msg.price && msg.imgUrl && msg.Kind && msg.forpet)
     }
   },
   methods: {
@@ -230,7 +234,7 @@ export default {
         // 利用fileReader对象获取file
         var file = e.target.files[0];
         var filesize = file.size;
-        var filename = file.name;
+        var filegoodName = file.goodName;
         // 2,621,440   2M
         if (filesize > 2101440) {
             // 图片大于2MB
@@ -277,7 +281,7 @@ export default {
     //添加商品
     _goodsAdd (params) {
       goodsAdd(params).then(res => {
-        if (res.data.msg == 'success') {
+        if (res.data.code == 1) {
           this._goodsList() //修改完成后重新获取地址列表
         } else {
           this.message(res.data.msg)
@@ -292,16 +296,16 @@ export default {
       
       let obj = {
         userId:this.userId,
-        id:this.msg.goodId,
-        imgUrl:this.msg.goodImg,
-        name:this.msg.goodName,
-        price:this.msg.goodPrice,
-        available: parseInt( this.msg.isPut),
-        intro:this.msg.detail,
-        Kind:this.msg.goodKind,//商品种类
-        forpet:this.msg.goodUserKind//使用商品的宠物种类
+        goodId:this.msg.goodId,
+        imgUrl:this.msg.imgUrl,
+        goodName:this.msg.goodName,
+        price:this.msg.price,
+        available: this.msg.available,
+        intro:this.msg.intro,
+        Kind:this.msg.Kind,//商品种类
+        forpet:this.msg.forpet//使用商品的宠物种类
       }
-      console.log(typeof obj.available, typeof this.msg.goodKind,)
+      console.log(typeof obj.available, typeof this.msg.Kind,)
       if (obj.goodId) {
         this._goodsUpdate(obj)
       } else {
@@ -331,27 +335,29 @@ export default {
       this.dialogVisible=true;
       if(item){
         this.dialogTitle = '修改商品'
+        this.userId =this.userId
         this.msg.goodName = item.goodName
-        this.msg.detail = item.detail
-        this.msg.goodPrice = item.goodPrice
-        this.msg.goodImg = item.goodImg
-        this.msg.isPut = item.isPut
-        this.msg.goodKind = item.goodKind
-        this.msg.goodUserKind = item.goodUserKind
+        this.msg.intro = item.intro
+        this.msg.price = item.price
+        this.msg.imgUrl = item.imgUrl
+        this.msg.available = item.available
+        this.msg.Kind = item.Kind
+        this.msg.forpet = item.forpet
       }else {
         this.dialogTitle = '添加商品'
+        this.userId =this.userId
         this.msg.goodName = null
-        this.msg.detail = null
-        this.msg.goodPrice = null
-        this.msg.goodImg = null
-        this.msg.isPut = '1'
-        this.msg.goodKind = null
-        this.msg.goodUserKind = null
+        this.msg.intro = null
+        this.msg.price = null
+        this.msg.imgUrl = null
+        this.msg.available = '1'
+        this.msg.Kind = null
+        this.msg.forpet = null
       }
     }
   },
   created () {
-    this.userId = getStore('user')
+    this.userId = getStore('userId')
     this._goodsList()
   },
 };

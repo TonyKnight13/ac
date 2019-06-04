@@ -22,13 +22,13 @@
           <el-form-item label="真名" prop="realname">
             <el-input v-model="msg.realname"></el-input>
           </el-form-item>
-          <el-form-item label="手机号码" prop="phone" v-if="identity == '2'">
+          <el-form-item label="手机号码" prop="phone" v-if="identity == 2">
             <el-input v-model="msg.phone"></el-input>
           </el-form-item> 
-          <el-form-item label="地址" prop="address" v-if="identity == '2'">
+          <el-form-item label="地址" prop="address" v-if="identity == 2">
             <el-input v-model="msg.address"></el-input>
           </el-form-item> 
-          <el-form-item label="专业" prop="major" v-if="identity == '2'">
+          <el-form-item label="专业" prop="special" v-if="identity == 2">
               <el-select v-model="msg.special" placeholder="专业">
                 <el-option
                   v-for="item in options"
@@ -51,7 +51,7 @@
               <img :src="msg.userImg" alt="">
           </el-form-item>
           <el-form-item>
-            <el-button @click="save()"> 保存</el-button>
+            <el-button @click="save('msg')"> 保存</el-button>
             <el-button @click="resetForm('msg')">重置</el-button>  
           </el-form-item>   
         </el-form>
@@ -61,7 +61,7 @@
 </template>
 <script>
 import { userInfo, userInfoUpdate} from '@/api/index'
-import { getStore } from '@/utils/storage'
+import { getStore, setStore } from '@/utils/storage'
 import YShelf from '@/components/shelf';
 
 var op2 = [{
@@ -101,7 +101,7 @@ export default {
       msg:{
         username:'',
         realname:'',
-        sex: '0',
+        sex: null,
         hobby:'',
         userImg:null,
         /* 医生用户可见 */
@@ -121,7 +121,7 @@ export default {
         address:[
           { required: true, message: '请输入地址', trigger: 'blur' }
         ],
-        major:[
+        special:[
           { required: true, message: '请输入专业', trigger: 'blur' }
         ],
         phone: [
@@ -164,19 +164,21 @@ export default {
     //初始化用户信息
     _userInfo () {
       userInfo({userId: this.userId}).then(res => {
-        console.log(res.data.img)
+        
+        let obj = JSON.parse(getStore("userInfo"))
+        console.log(obj)
         if(res.data.code == 1 ){
           // if(res.data.username && res.data.sex && res.data.phone && res.data.userImg){
             this.msg = {
-              username: res.data.username,
-              realname:res.data.realname,
-              sex: res.data.sex,
-              hobby:res.data.hobby,
-              userImg: res.data.img,
-              phone: res.data.phone,
-              address:res.data.address,
-              special:res.data.special,
-              intro:res.data.intro,
+              username: obj.username,
+              realname:obj.realname,
+              sex: String(obj.sex),
+              hobby:obj.hobby,
+              userImg: obj.img,
+              phone: obj.phone,
+              address:obj.address,
+              special:obj.special,
+              intro:obj.intro,
             }
           // }else{
           //   this.msg = {
@@ -193,8 +195,8 @@ export default {
       })
     },
         // 保存
-    save () {
-      this.$refs.msg.validate(valid=>{
+    save (formName) {
+      this.$refs[formName].validate(valid=>{
         if(valid){
           var obj = {
             userId:this.userId,
@@ -208,8 +210,8 @@ export default {
             address:this.msg.address,
             special:this.msg.special,
             intro:this.msg.intro,
-           img:this.msg.userImg
           }
+          
           this._userInfoUpdate(obj)
         }
       })
@@ -217,8 +219,12 @@ export default {
 
     //修改信息
     _userInfoUpdate (params) {
+      setStore("userInfo",params)
       userInfoUpdate(params).then(res => {  
-        this._userInfo() //修改完成后重新获取信息
+        // if(res.data.code==1){
+          this._userInfo() //修改完成后重新获取信息
+        // }
+        
       })
     },
   },
@@ -226,6 +232,7 @@ export default {
     this.userId = getStore('userId')
     this._userInfo()
     this.identity =getStore("identity")
+    
   },
 }
 </script>

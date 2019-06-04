@@ -106,6 +106,7 @@ export default {
               console.log(res.data)
               setStore('userName', res.data.account)
               setStore('identity',res.data.identity)
+              console.log(getStore('identity'), '')
               //element的友好提示
               this.$message.success("恭喜你，登录成功！");
               //登录成功后跳转到指定页面
@@ -129,6 +130,22 @@ export default {
     },
   },
   mounted(){  //在html渲染完后加载
+  },
+  created(){
+        var obj = {
+            userId:'',
+            username:'',
+            realname:'',
+            sex:null ,
+            hobby:'',
+            img:'',
+
+            phone:'',
+            address:'',
+            special:'',
+            intro:'',
+    }
+    setStore("userInfo",obj)
   }
 }
 </script>

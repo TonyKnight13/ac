@@ -14,7 +14,7 @@
               <el-input placeholder="医院地址" v-model="msg.address"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button  @click="save()">保存</el-button>
+              <el-button  @click="save('msg')">保存</el-button>
               <el-button @click="resetForm('msg')">重置</el-button>
             </el-form-item>
           </el-form>
@@ -31,7 +31,7 @@
 
 <script>
 import { userInfo, userInfoUpdate} from '@/api/index'
-import { getStore } from '@/utils/storage'
+import { getStore,setStore } from '@/utils/storage'
 import YShelf from '@/components/shelf';
 
 export default {
@@ -74,28 +74,29 @@ export default {
     //初始化殡葬馆信息
     _userInfo () {
       userInfo({userId: this.userId}).then(res => {
+        let obj = JSON.parse(getStore("userInfo"))
         if(res.data.code == 1 ){
-          if(res.data.realname && res.data.phone && res.data.address){
+          // if(res.data.realname && res.data.phone && res.data.address){
             this.msg = {
               realname: res.data.realname,
               phone: res.data.phone,
               address: res.data.address
             }
-          }else{
-            this.msg = {
-              realname: '',
-              phone:'',
-              address:'',
-            }
-          }
+          // }else{
+          //   this.msg = {
+          //     realname: '',
+          //     phone:'',
+          //     address:'',
+          //   }
+          // }
         }else{
           this.$message.error(res.data.msg)
         }
       })
     },
     // 保存
-    save () {
-      this.$refs.msg.validate(valid=>{
+    save (formName) {
+      this.$refs[formName].validate(valid=>{
         if(valid){
           let obj = {
             userId:this.userId,
@@ -110,6 +111,7 @@ export default {
 
     //修改信息
     _userInfoUpdate (params) {
+      setStore("userInfo",params)
       userInfoUpdate(params).then(res => {  
         this._userInfo() //修改完成后重新获取地址列表
       })

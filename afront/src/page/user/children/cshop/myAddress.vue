@@ -57,7 +57,7 @@
 
 <script>
 import { addressList, addressUpdate, addressAdd, addressDel } from '@/api/index'
-import { getStore } from '@/utils/storage'
+import { getStore,setStore } from '@/utils/storage'
 import YShelf from '@/components/shelf';
 export default {
   name: 'MyAddress',
@@ -127,7 +127,7 @@ export default {
     //添加地址
     _addressAdd (params) {
       addressAdd(params).then(res => {
-        if (res.data.msg == 'success') {
+        if (res.data.code == 1) {
           this._addressList() //修改完成后重新获取地址列表
         } else {
           this.message(res.data.msg)
@@ -144,6 +144,7 @@ export default {
         phone:this.msg.phone,
         address:this.msg.address
       }
+      
       if (obj.addressId) {
         this._addressUpdate(obj)
       } else {
@@ -154,7 +155,7 @@ export default {
     // 删除
     del (addressId,i) {
       addressDel({userId: this.userId,addressId: addressId}).then(res => {
-        if (res.data.success === true) {
+        if (res.data.code == 1) {
           this.addressList.forEach((item,i) => {
             if(item.addressId == addressId){
               this.addressList.splice(i, 1)
@@ -185,7 +186,7 @@ export default {
     }
   },
   created () {
-    this.userId = getStore('user')
+    this.userId = getStore('userId')
     this._addressList()
   },
 };
