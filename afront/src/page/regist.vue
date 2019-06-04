@@ -87,13 +87,7 @@ export default {
           label: '商家用户'
         }, {
           value: '2',
-          label: '医生用户'
-        }, {
-          value: '3',
-          label: '医院用户'
-        }, {
-          value: '4',
-          label: '殡葬用户'
+          label: '医方用户'
         }],
       form:{
         account:'',

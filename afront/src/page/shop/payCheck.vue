@@ -128,12 +128,9 @@ export default {
     // },
     _productDet (goodId,num) {
       productDet({goodId:goodId}).then(res => {
-        let item = res.data
-        item.goodImg = item.goodImg
-        item.goodNum = num
-        item.goodName = item.goodName
-        item.goodPrice = item.goodPrice
-        this.cartList.push(item)
+        if(res.data.code ==1){
+          this.cartList.push(goodId)
+        }
       })
     },
     _addressList () {//获取地址列表
@@ -177,7 +174,7 @@ export default {
         return
       }
       for (var i = 0; i < this.cartList.length; i++) {
-          array.push(this.cartList[i])
+        array.push(this.cartList[i].goodId)
       }
       let params = {
         userId: this.userId,

@@ -49,7 +49,7 @@ const router = new Router({
       name:'hsInquiry',
       component:hsInquiry,
       meta: {
-        isLogin: true,  // 添加该字段，表示进入这个路由是需要登录的
+        isLogin: true,  // 添加该字段，表示进入这个路由是需要登录的 
       },
     },
     {
@@ -89,7 +89,10 @@ const router = new Router({
     {
       path:'/cart',
       name:'cart',
-      component:resolve => require(['../page/shop/children/cart.vue'], resolve)
+      component:resolve => require(['../page/shop/children/cart.vue'], resolve),
+      meta: {
+        isLogin: true // 添加该字段，表示进入这个路由是需要登录的
+      }
     },
     {
       path:'/usercenter',
@@ -115,9 +118,9 @@ const router = new Router({
           path: '/goodsManage',
           name: 'goodsManage',
           component: resolve => require(['../page/user/children/cshop/goodsManage.vue'], resolve),
-          meta: {
-            status: true
-          }
+          // meta: {
+          //   status: true
+          // }
         },
         {
           path:'/order',
@@ -164,7 +167,7 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
-  let identity = getStore('identity') 
+  let identity = getStore('identity')
   if (to.meta.status) { // 判断该路由是否需要用户身份标签
     if (identity != '0') {
       next()
