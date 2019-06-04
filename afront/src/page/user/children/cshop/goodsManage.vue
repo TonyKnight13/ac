@@ -74,10 +74,10 @@
                 </el-option>
               </el-select>
           </el-form-item>
-          <el-form-item prop="isPut">
+          <!-- <el-form-item prop="isPut">
               <el-radio v-model="msg.isPut" label="0">下架</el-radio>
               <el-radio v-model="msg.isPut" label="1">上架</el-radio>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item prop="goodImg">
             <el-upload
               class="avatar-uploader"
@@ -177,7 +177,7 @@ export default {
         detail:'',
         goodPrice:'',
         goodImg:'',
-        isPut:'1',
+        // isPut:'1',
         goodKind:'',//商品种类
         goodUserKind:[]//使用商品的宠物种类
       },
@@ -245,7 +245,6 @@ export default {
     _goodsAdd (params) {
       goodsAdd(params).then(res => {
         if (res.data.msg == 'success') {
-          console.log(1, '')
           this._goodsList() //修改完成后重新获取地址列表
         } else {
           this.message(res.data.msg)
@@ -263,7 +262,7 @@ export default {
         goodImg:this.msg.goodImg,
         goodName:this.msg.goodName,
         goodPrice:this.msg.goodPrice,
-        isPut:this.msg.isPut,
+        // isPut:this.msg.isPut,
         detail:this.msg.detail,
         goodKind:this.msg.goodKind,//商品种类
         goodUserKind:this.msg.goodUserKind//使用商品的宠物种类
@@ -301,7 +300,7 @@ export default {
         this.msg.detail = item.detail
         this.msg.goodPrice = item.goodPrice
         this.msg.goodImg = item.goodImg
-        this.msg.isPut = item.isPut
+        // this.msg.isPut = item.isPut
         this.msg.goodKind = item.goodKind
         this.msg.goodUserKind = item.goodUserKind
       }else {

@@ -53,7 +53,7 @@ export default {
         name: '',
         address: '',
         phone: '',
-        image:null
+        // image:null
       },
       userId: '',
       rules: {
@@ -73,9 +73,9 @@ export default {
   computed: {
   },
   methods: {
-    handleAvatarSuccess(res, file) {
-      this.msg.image = URL.createObjectURL(file.raw);
-    },
+    // handleAvatarSuccess(res, file) {
+    //   this.msg.image = URL.createObjectURL(file.raw);
+    // },
     //重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -85,19 +85,19 @@ export default {
     _deathRegist () {
       deathRegist({userId: this.userId}).then(res => {
         if(res.data.code == 1 ){
-          if(res.data.name && res.data.address && res.data.phone && res.data.image){
+          if(res.data.name && res.data.address && res.data.phone){
             this.msg = {
               name: res.data.name,
               address: res.data.address,
               phone: res.data.phone,
-              image: null
+              // image: null
             }
           }else{
             this.msg = {
               name: '',
               address: '',
               phone: '',
-              image: null
+              // image: null
             }
           }
         }else{

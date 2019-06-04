@@ -49,13 +49,18 @@ const router = new Router({
       name:'hsInquiry',
       component:hsInquiry,
       meta: {
-        isLogin: true,  // 添加该字段，表示进入这个路由是需要登录的
+        isLogin: true,  // 添加该字段，表示进入这个路由是需要登录的 
       },
     },
     {
       path: '/chart',  //聊天室
       name: 'chart',
       component: chart
+    },    
+    {
+      path: '/baike',  //百科
+      name: 'baike',
+      component:resolve => require(['../page/hospital/baike.vue'], resolve)
     },
     {
       path: '/shop',
@@ -84,7 +89,10 @@ const router = new Router({
     {
       path:'/cart',
       name:'cart',
-      component:resolve => require(['../page/shop/children/cart.vue'], resolve)
+      component:resolve => require(['../page/shop/children/cart.vue'], resolve),
+      meta: {
+        isLogin: true // 添加该字段，表示进入这个路由是需要登录的
+      }
     },
     {
       path:'/usercenter',
@@ -110,9 +118,9 @@ const router = new Router({
           path: '/goodsManage',
           name: 'goodsManage',
           component: resolve => require(['../page/user/children/cshop/goodsManage.vue'], resolve),
-          meta: {
-            status: true
-          }
+          // meta: {
+          //   status: true
+          // }
         },
         {
           path:'/order',
@@ -153,23 +161,19 @@ router.beforeEach((to, from, next) => {
     if (user) { // 通过vuex state获取当前的token是否存在
       next()
     } else {
-      next({
-        path: '/login'
-        // query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
-      })
+      alert('请登录')
+      next(error)
     }
   } else {
     next()
   }
-  let identity = getStore('identity') 
+  let identity = getStore('identity')
   if (to.meta.status) { // 判断该路由是否需要用户身份标签
-    if (identity === '1') {
+    if (identity != '0') {
       next()
     } else {
       alert('你没有权限进入')
-      next({
-        path: '/userbase'
-      })
+      next(error)
     }
   } else {
     next()

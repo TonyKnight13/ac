@@ -97,7 +97,7 @@ export default {
       this.$refs[formName].resetFields();
     },
 
-    //初始化殡葬馆信息
+    //初始化信息
     _doctuorInfo () {
       doctuorInfo({userId: this.userId}).then(res => {
         if(res.data.code == 1 ){

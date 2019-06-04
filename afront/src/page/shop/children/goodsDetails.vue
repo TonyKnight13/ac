@@ -58,8 +58,8 @@ export default {
   },
   methods: {
     ...mapMutations(['ADD_CART']),
-    _productDet (goodId) { //决定url后参数的字段
-      productDet({params: {goodId}}).then(res => {  
+    _productDet (goodId) { 
+      productDet({goodId:goodId}).then(res => {  
         console.log(res.data.goodName)
         let result = res.data
         this.goodName = result.goodName

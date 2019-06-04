@@ -70,7 +70,7 @@ export default{
           // size: this.pageSize,
           // page: this.currentPage
       }
-      orderList({params:{options}}).then(res => {
+      orderList(options).then(res => {
         if(res.data.data){
           this.orderList = res.data.data
         }

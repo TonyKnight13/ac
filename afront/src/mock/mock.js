@@ -526,12 +526,13 @@ Mock.mock(RegExp('http://localhost:8080/goods/delOrder' + '.*'), 'get', function
 })
 
 
-// 医生、医院列表
-Mock.mock(RegExp('http://localhost:8080/hospital/hospitalNavList' + '.*'), 'get', function (msg) {
+// 医生列表
+Mock.mock(RegExp('http://localhost:8080/hospital/docNavList' + '.*'), 'get', function (msg) {
   // let option = msg.url.split('?')[1]
   // console.log(msg, option)
   return {
     success: true,
+    code: 1,
     data: [
       {
         image: require('@/assets/images/shop/1.jpg'),
@@ -601,6 +602,56 @@ Mock.mock(RegExp('http://localhost:8080/hospital/hospitalNavList' + '.*'), 'get'
   }
 })
 
+Mock.mock(RegExp('http://localhost:8080/hospital/hospitalNavList' + '.*'), 'get', function (msg) {
+  // let option = msg.url.split('?')[1]
+  // console.log(msg, option)
+  return {
+    success: true,
+    code: 1,
+    data: [
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李珊珊',
+        address: 'xxxxx',
+        physicId: 100000 // 医生或医院的id
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '童晓红',
+        address: 'xxxxx',
+        physicId: 100010 // 医生或医院的id
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李莉',
+        address: 'xxxxx',
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李珊珊',
+        address: 'xxxxx',
+        physicId: 100110 // 医生或医院的id
+
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '童晓红',
+        address: 'xxxxx',
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李莉',
+        address: 'xxxxx',
+      },
+      {
+        image: require('@/assets/images/shop/1.jpg'),
+        name: '李珊珊',
+        address: 'xxxxx',
+      }
+
+    ]
+  }
+})
 //殡葬管理
 Mock.mock(RegExp('http://localhost:8080/hospital/deathRegist' + '.*'), 'post', function (msg) {
   // let option = msg.url.split('?')[1]
