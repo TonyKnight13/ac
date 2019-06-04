@@ -135,8 +135,35 @@ func init() {
 
     beego.GlobalControllerRouter["actest/controllers:UserController"] = append(beego.GlobalControllerRouter["actest/controllers:UserController"],
         beego.ControllerComments{
+            Method: "AddAddress",
+            Router: `/users/addAddress`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["actest/controllers:UserController"] = append(beego.GlobalControllerRouter["actest/controllers:UserController"],
+        beego.ControllerComments{
+            Method: "AddressList",
+            Router: `/users/addressList`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["actest/controllers:UserController"] = append(beego.GlobalControllerRouter["actest/controllers:UserController"],
+        beego.ControllerComments{
             Method: "ChangePwd",
             Router: `/users/changePass`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["actest/controllers:UserController"] = append(beego.GlobalControllerRouter["actest/controllers:UserController"],
+        beego.ControllerComments{
+            Method: "DelAddress",
+            Router: `/users/delAddress`,
             AllowHTTPMethods: []string{"post"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -191,6 +218,15 @@ func init() {
         beego.ControllerComments{
             Method: "Regist",
             Router: `/users/register`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["actest/controllers:UserController"] = append(beego.GlobalControllerRouter["actest/controllers:UserController"],
+        beego.ControllerComments{
+            Method: "UpdateAddress",
+            Router: `/users/updateAddress`,
             AllowHTTPMethods: []string{"post"},
             MethodParams: param.Make(),
             Filters: nil,

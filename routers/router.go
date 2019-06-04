@@ -15,5 +15,7 @@ func init() {
 	beego.Include(
 		&controllers.IndexController{},
 		&controllers.UserController{},
+		&controllers.WikiController{},
+		&controllers.HospitalController{},
 	)
 }
