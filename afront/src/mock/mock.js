@@ -11,10 +11,11 @@ Mock.setup({
 let userDate=[
   {  //内容
     userId:null,
+    identity:null,
     addressList:null,  //地址列表 Array[]
     cartList:null,  //购物车列表 Array[]
     orderList:null, //订单列表  Array[]
-    userInfo:null,  //用户详细信息  Object{}
+    userInfo:{},  //用户详细信息  Object{}
     goodsList:null  //商品列表 只有专业用户才有 数组
   }
 ]
@@ -85,10 +86,11 @@ let orderList=[
 let userInfo = {
   account: null,
   password: null,
-  stateKey: null, // 用户身份标签  0 普通 1 专业 //用户Id  buyer seller
+  username:null,
+  realname:null,
   sex: null,
   phone: null,
-  age: null
+  
 }
 // 商品列表
 let goodsList=[
@@ -106,7 +108,7 @@ let goodsList=[
 // 随机生成6位数字
 var randomNum = ('000000' + Math.floor(Math.random() * 999999)).slice(-6)
 let userIdArry = [] // 存放已有的用户id
-let accountArry = [] // 存放已有的用户名
+let accountArry = [] // 存放已有的账户名
 
 // Mock.mock( url, post/get , 返回的数据)；返回前端传来的数据
 // 注册
@@ -118,13 +120,13 @@ Mock.mock('http://localhost:8080/users/register', 'post', function (msg) {
 
   if (accountArry.indexOf(user.account) != -1) {
     return {
-      success: false,
-      msg: '用户名已注册'
+      code: false,
+      msg: '账号已注册'
     }
   } else {
     accountArry.push(user.account)
     while (flag === false) {
-      if (userIdArry.indexOf(id) == -1) {
+      if (userIdArry.indexOf(id) == -1) { //遍历数组查看是否存在id，没有返回-1
         userIdArry.push(id)
         flag = true
       } else {
@@ -137,24 +139,32 @@ Mock.mock('http://localhost:8080/users/register', 'post', function (msg) {
       userInfo: {
         account: user.account,
         password: user.password1,
-        identity: user.identity
       }
     })
-    console.log(userDate)
     return {
-      success: true
+      code: 1
     }
   }
 })
 // 登录
 Mock.mock('http://localhost:8080/users/login', 'post', function (msg) {
-  // console.log(JSON.parse(msg.body).account, msg)
-  return {
-    code: 1,
-    account: 'chenwen',
-    id: '100101',
-    identity: 2,
-    message:'ssss'
+  console.log(JSON.parse(msg.body))
+  let obj = JSON.parse(msg.body)
+  for(let i=0;i<accountArry.length;i++){
+    if(accountArry.indexOf(obj.account) != -1) {
+      for(let i=0;i<userDate.length;i++){
+        if(userDate[i].userInfo.account == obj.account){
+          if(userDate[i].userInfo.password == obj.password){
+            
+          }
+        }
+      }
+    }else{
+      return{
+        code:0,
+        msg:'账号不存在'
+      }
+    }
   }
 })
 
@@ -673,11 +683,12 @@ Mock.mock(RegExp('http://localhost:8080/hospital/deathRegistUpdate'), 'post', fu
 
 
 Mock.mock(RegExp('http://localhost:8080/users/userInfoUpdate'), 'post', function (msg) {
+  console.log('sss')
   // let option = msg.url.split('?')[1]
  let imgssss = JSON.parse(msg.body).img
   return {
     code:1,
-    img:img
+    img:imgssss
   }
 })
 

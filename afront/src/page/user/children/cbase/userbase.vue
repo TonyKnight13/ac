@@ -22,13 +22,13 @@
           <el-form-item label="真名" prop="realname">
             <el-input v-model="msg.realname"></el-input>
           </el-form-item>
-          <el-form-item label="手机号码" prop="phone" v-if="identity == 2">
+          <el-form-item label="手机号码" prop="phone" v-if="identity == '2'">
             <el-input v-model="msg.phone"></el-input>
           </el-form-item> 
-          <el-form-item label="地址" prop="address" v-if="identity == 2">
+          <el-form-item label="地址" prop="address" v-if="identity == '2'">
             <el-input v-model="msg.address"></el-input>
           </el-form-item> 
-          <el-form-item label="专业" prop="major" v-if="identity == 2">
+          <el-form-item label="专业" prop="major" v-if="identity == '2'">
               <el-select v-model="msg.special" placeholder="专业">
                 <el-option
                   v-for="item in options"
@@ -51,7 +51,7 @@
               <img :src="msg.userImg" alt="">
           </el-form-item>
           <el-form-item>
-            <el-button @click="save('msg')"> 保存</el-button>
+            <el-button @click="save()"> 保存</el-button>
             <el-button @click="resetForm('msg')">重置</el-button>  
           </el-form-item>   
         </el-form>
@@ -211,7 +211,6 @@ export default {
            img:this.msg.userImg
           }
           this._userInfoUpdate(obj)
-          this.msg.userImg=""
         }
       })
     },

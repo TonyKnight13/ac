@@ -90,14 +90,9 @@
           </el-form-item>
 
           <el-form-item prop="goodImg">
-            <el-upload
-              class="avatar-uploader"
-              action="https://jsonplaceholder.typicode.com/posts/"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess">
-              <img v-if="msg.goodImg" :src="msg.goodImg" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
+              <input @change="uploadPhoto($event)" type="file" class="kyc-passin">
+              <img :src="msg.userImg" alt="">
+
           </el-form-item>
 
           <el-form-item>
@@ -231,8 +226,25 @@ export default {
     }
   },
   methods: {
-    handleAvatarSuccess(res, file) {
-      this.msg.goodImg = URL.createObjectURL(file.raw);
+    uploadPhoto (e) {
+        // 利用fileReader对象获取file
+        var file = e.target.files[0];
+        var filesize = file.size;
+        var filename = file.name;
+        // 2,621,440   2M
+        if (filesize > 2101440) {
+            // 图片大于2MB
+            alert("图片过大")
+            return false
+        }
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (e) => {
+            // 读取到的图片base64 数据编码 将此编码字符串传给后台即可
+            var imgcode = e.target.result;
+            this.msg.userImg=imgcode
+            console.log(this.msg.userImg);
+        }
     },
     closeDilog:function(form){
         this.dialogFormVisible = false;
