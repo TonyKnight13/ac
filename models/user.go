@@ -32,6 +32,7 @@ type UserProfile struct {
 	Province string
 	City     string
 	CoverUrl string
+	Special  string
 	Articles []*Article   `orm:"null;reverse(many)"`
 	Orders   []*Order     `orm:"null;reverse(many)"`
 	Goods    []*GoodsInfo `orm:"null;reverse(many)"`
@@ -90,20 +91,38 @@ func Register(Account string, Password string, Identity int) error {
 	return nil
 }
 
-func UpdatePro(id int, updPro UserProfile) error {
+func UpdatePro(id int, updPro UserInfoRecv) error {
 	o := orm.NewOrm()
-	pro := UserProfile{Id: id}
+
+	var pro UserProfile
+	var user User
+	errUserProfile := o.QueryTable("user_profile").Filter("id", id).One(&pro)
+	errUser := o.QueryTable("user").Filter("id", id).One(&user)
+
+	if errUserProfile != nil {
+		return errUserProfile
+	}
+
+	if errUser != nil {
+		return errUser
+	}
+
+	if user.Identity == 2 {
+		pro.Special = updPro.Special
+	}
 
 	pro.CoverUrl = updPro.CoverUrl
 	pro.Address = updPro.Address
 	pro.Realname = updPro.Realname
 	pro.Username = updPro.Username
-	pro.Birth = updPro.Birth
+	pro.Province = updPro.Province
+	// pro.Birth = updPro.Birth
 	pro.Hobby = updPro.Hobby
-	pro.Sex = updPro.Sex
+	pro.Sex = byte(updPro.Sex)
 	pro.Intro = updPro.Intro
-	pro.Email = updPro.Email
+	// pro.Email = updPro.Email
 	pro.Phone = updPro.Phone
+
 	pro.User.Changed = time.Now()
 	_, err := o.Update(&pro)
 	return err
@@ -137,4 +156,23 @@ func ChangePwd(userid interface{}, pwd string) error {
 	user.Changed = time.Now()
 	_, err := o.Update(&user)
 	return err
+}
+
+func GetUserListByIdentity(Identity int) (error, []*UserProfile) {
+	var userPros []*UserProfile
+	o := orm.NewOrm()
+	_, err := o.QueryTable("user_profile").Filter("identity", Identity).All(&userPros)
+	return err, userPros
+}
+
+func SelecrDoc(docSelectRecv DocsSelectRecv) (error, []*UserInfoRecv) {
+	o := orm.NewOrm()
+	var userInfos []*UserInfoRecv
+	cond := orm.NewCondition()
+
+	cond1 := cond.AndCond(SetPageCond("special", docSelectRecv.special)).AndCond(SetPageCond("province", docSelectRecv.area))
+	qs := o.QueryTable("user_profile")
+	qs = qs.SetCond(cond1)
+	_, err := qs.All(&userInfos)
+	return err, userInfos
 }

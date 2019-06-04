@@ -205,6 +205,15 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["actest/controllers:UserController"] = append(beego.GlobalControllerRouter["actest/controllers:UserController"],
+        beego.ControllerComments{
+            Method: "UserInfoUpdate",
+            Router: `/users/userInfoUpdate`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["actest/controllers:WikiController"] = append(beego.GlobalControllerRouter["actest/controllers:WikiController"],
         beego.ControllerComments{
             Method: "ArticleList",

@@ -21,10 +21,11 @@ func (c *ShopController) URLMapping() {
 
 // @router /shop/navList [get]
 func (c *ShopController) ShopList() {
-	var forsell byte
-	forsell = 1
-	err, goodsList := GetGoodsList(forsell)
+	var Available byte
+	Available = 1
+	err, goodsList := GetGoodsList(Available)
 	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "获取商城列表失败"}
 		beego.Info(err)
 	}
 	c.Data["json"] = map[string]interface{}{"code": 1, "data": goodsList}
@@ -33,15 +34,25 @@ func (c *ShopController) ShopList() {
 
 // @router /shop/goodsListSelect [post]
 func (c *ShopController) GoodsListSelect() {
-
+	var goodsSelectRecv GoodsSelectRecv
+	json.Unmarshal(c.Ctx.Input.RequestBody, &goodsSelectRecv)
+	err, goodsInfos := SelectGoods(goodsSelectRecv)
+	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "商城列表筛选失败"}
+		beego.Info(err)
+	}
+	c.Data["json"] = map[string]interface{}{"code": 1, "data": goodsInfos}
+	c.ServeJSON()
 }
 
 // @router /shop/goodsDetail [get]
 func (c *ShopController) GoodsDetail() {
 	var goodsId int
-	json.Unmarshal(c.Ctx.Input.RequestBody, goodsId)
+	json.Unmarshal(c.Ctx.Input.RequestBody, &goodsId)
+	beego.Info(goodsId)
 	err, goodsInfo := GetGoodsByGid(goodsId)
 	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "商品详情查看失败"}
 		beego.Info(err)
 	}
 	c.Data["json"] = map[string]interface{}{"code": 1, "data": goodsInfo}
@@ -74,8 +85,11 @@ func (c *ShopController) OrderAdd() {
 	var orderRecv OrderRecv
 	err := AddOrder(uid.(int), orderRecv)
 	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "订单添加失败"}
 		beego.Info(err)
 	}
+	c.Data["json"] = map[string]interface{}{"code": 1}
+	c.ServeJSON()
 }
 
 // @router /shop/orderList [get]
@@ -83,10 +97,11 @@ func (c *ShopController) OrderList() {
 	uid := c.GetSession("userId")
 	err, orders := GetOrderListByUid(uid)
 	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "订单列表查看失败"}
 		beego.Info(err)
 	}
 	c.Data["json"] = map[string]interface{}{"code": 1, "data": orders}
-
+	c.ServeJSON()
 }
 
 // @router /shop/orderDel[get]
@@ -94,7 +109,9 @@ func (c *ShopController) OrderDel() {
 	var orderId int
 	err := RemoveOrder(orderId)
 	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "订单删除失败"}
 		beego.Info(err)
 	}
 	c.Data["json"] = map[string]interface{}{"code": 1}
+	c.ServeJSON()
 }

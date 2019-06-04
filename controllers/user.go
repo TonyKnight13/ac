@@ -17,6 +17,7 @@ func (c *UserController) URLMapping() {
 	c.Mapping("Logout", c.Logout)
 	c.Mapping("UserInfo", c.UserInfo)
 	c.Mapping("ChangePwd", c.ChangePwd)
+	c.Mapping("UserInfoUpdate", c.UserInfoUpdate)
 	c.Mapping("GoodsList", c.GoodsList)
 	c.Mapping("GoodsUpd", c.GoodsUpdate)
 	c.Mapping("GoodsAdd", c.GoodsAdd)
@@ -36,12 +37,8 @@ func (c *UserController) Login() {
 		c.SetSession("userId", user.Id)
 		c.SetSession("userIdentity", user.Identity)
 
-		c.Data["json"] = map[string]interface{}{"code": 1, "message": "贺喜你，登录成功", "id": user.Id, "account": user.Account, "identity": user.Identity, "user": user}
+		c.Data["json"] = map[string]interface{}{"code": 1, "id": user.Id, "account": user.Account, "identity": user.Identity}
 		beego.Info(c.Data["json"])
-
-		uid := c.GetSession("userId")
-		beego.Info(uid)
-		beego.Info("成功")
 	} else {
 		c.Data["json"] = map[string]interface{}{"code": 0, "message": "登录失败"}
 	}
@@ -58,7 +55,10 @@ func (c *UserController) Regist() {
 
 	if err1 != nil {
 		beego.Info(err1)
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "注册失败"}
 	}
+	c.Data["json"] = map[string]interface{}{"code": 1}
+	c.ServeJSON()
 }
 
 // @router /users/logout [get]
@@ -67,6 +67,8 @@ func (c *UserController) Logout() {
 	c.DelSession("account")
 	c.DelSession("userId")
 	c.DelSession("userIdentity")
+	c.Data["json"] = map[string]interface{}{"code": 1}
+	c.ServeJSON()
 }
 
 // @router /users/userInfo [get]
@@ -74,7 +76,7 @@ func (c *UserController) UserInfo() {
 	account := c.GetSession("account")
 	_, user := GetUserByAccount(account)
 	userProfile := user.UserProfile
-	c.Data["json"] = map[string]interface{}{"userProfile": userProfile}
+	c.Data["json"] = map[string]interface{}{"code": 1, "userProfile": userProfile}
 	c.ServeJSON()
 }
 
@@ -82,11 +84,27 @@ func (c *UserController) UserInfo() {
 func (c *UserController) ChangePwd() {
 	userId := c.GetSession("userId")
 	var newPwd string
-	json.Unmarshal(c.Ctx.Input.RequestBody, newPwd)
+	json.Unmarshal(c.Ctx.Input.RequestBody, &newPwd)
 	err := ChangePwd(userId, newPwd)
 	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 1, "message": "修改失败"}
 	}
+	c.Data["json"] = map[string]interface{}{"code": 1}
+	c.ServeJSON()
+}
 
+// @router /users/userInfoUpdate [post]
+func (c *UserController) UserInfoUpdate() {
+	var userInfoRecv UserInfoRecv
+	json.Unmarshal(c.Ctx.Input.RequestBody, &userInfoRecv)
+	uid := c.GetSession("userId")
+	err := UpdatePro(uid.(int), userInfoRecv)
+	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "信息更新失败"}
+		beego.Info(err)
+	}
+	c.Data["json"] = map[string]interface{}{"code": 1}
+	c.ServeJSON()
 }
 
 // @router /users/goodsList [get]
@@ -98,6 +116,7 @@ func (c *UserController) GoodsList() {
 	}
 	err, goodsList := GetUserGoodsByUid(Uid)
 	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "商品列表获取失败"}
 		beego.Info(err)
 	}
 	// var json map[string]interface{}
@@ -118,7 +137,15 @@ func (c *UserController) GoodsUpdate() {
 	}
 	var goodsInfoRecv GoodsInfoRecv
 	json.Unmarshal(c.Ctx.Input.RequestBody, &goodsInfoRecv)
-
+	Gid := goodsInfoRecv.Id
+	//图片更新暂时不做
+	err := UpdateGoodsInfo(Gid, goodsInfoRecv)
+	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "更新商品失败"}
+		beego.Info(err)
+	}
+	c.Data["json"] = map[string]interface{}{"code": 1}
+	c.ServeJSON()
 }
 
 // @router /users/goodsAdd [post]
@@ -133,72 +160,11 @@ func (c *UserController) GoodsAdd() {
 	var addGoodsImg GoodsImg
 	addGoodsImg.ImgUrl = goodsInfoRecv.ImgUrl
 	addGoodsImg.Cover = 1
-	err := AddGoodsInfo(goodsInfoRecv.Goods, addGoodsImg, usrId.(int))
+	err := AddGoodsInfo(goodsInfoRecv, addGoodsImg, usrId.(int))
 	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "添加商品失败"}
 		beego.Info((err))
 	}
+	c.Data["json"] = map[string]interface{}{"code": 1}
+	c.ServeJSON()
 }
-
-// type AccountController struct {
-// 	BaseController
-// }
-
-// func (ac *AccountController) Get() {
-// 	Login := ac.isLogin
-// 	if Login {
-// 		ac.Redirect("/", 302)
-// 	} else {
-// 		ac.TplName = "login.html"
-// 	}
-// }
-
-// func (ac *AccountController) Post() {
-// 	action := ac.GetString("action")
-// 	if action == "login"{
-// 		account := ac.GetString("account")
-// 		pwd := ac.GetString("password")
-// 		// autoLogin := ac.GetString("autoLogin") == "on"
-
-// 		if "" == account {
-// 			ac.Data["json"] = map[string]interface{}{"code": 0, "message": "账号不能为空"}
-// 			ac.ServeJSON()
-// 		}
-// 		if "" == pwd {
-// 			ac.Data["json"] = map[string]interface{}{"code": 0, "message": "请填写密码"}
-// 			ac.ServeJSON()
-// 		}
-
-// 		err, user := CheckLog(account, pwd)
-
-// 		if err == nil {
-// 			ac.SetSession("userLogin", "1")
-// 			ac.SetSession("account",account)
-// 			ac.Data["json"] = map[string]interface{}{"code": 1, "message": "贺喜你，登录成功", "user": user}
-// 		} else {
-// 			ac.Data["json"] = map[string]interface{}{"code": 0, "message": "登录失败"}
-// 		}
-// 		ac.ServeJSON()
-// 	}else if action == "regist"{
-// 		// message := ac.GetString("message")
-// 		account := ac.GetString("account")
-// 		pwd := ac.GetString("password")
-
-// 		err := Register(account, pwd)
-
-// 		if err != nil {
-// 			beego.Error(err)
-// 		}
-
-// 		ac.Redirect("/", 302)
-// 	}
-// }
-
-// type LogoutController struct {
-// 	BaseController
-// }
-
-// func (lout *LogoutController) Get() {
-// 	lout.DelSession("userLogin")
-// 	lout.DelSession("account")
-// 	lout.Redirect("/", 302)
-// }
