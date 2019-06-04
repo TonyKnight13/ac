@@ -37,7 +37,7 @@ func (p *Pet) TableName() string {
 }
 
 func (pi *PetImg) TableName() string {
-	return "petImg"
+	return "pet_img"
 }
 
 // 添加宠物信息

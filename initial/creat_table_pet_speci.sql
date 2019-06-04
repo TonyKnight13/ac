@@ -35,3 +35,4 @@ INSERT INTO `pet_speci` VALUES ('4', '鸟');
 INSERT INTO `pet_speci` VALUES ('5', '小型');
 INSERT INTO `pet_speci` VALUES ('6', '水生');
 INSERT INTO `pet_speci` VALUES ('7', '两栖');
+INSERT INTO `pet_speci` VALUES ('8', '其它');

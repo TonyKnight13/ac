@@ -31,5 +31,4 @@ func UploadFile(h *multipart.FileHeader) (string, string) {
 	filename = utils.GetGuid() + ext
 
 	return dir, filename
-
 }

@@ -11,19 +11,21 @@ type GoodsInfo struct {
 	Name        string
 	Kind        string //商品种类
 	Price       float32
-	Available   bool
-	Madein      string       //产地
+	Forsell     byte
+	Available   byte
+	Madein      byte         //产地(0：国内 1：进口)
 	Forpet      string       //针对宠物类别
 	Intro       string       //简介
 	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
 	Changed     time.Time    `orm:"auto_now_add;type(datetime)"`
 	UserProfile *UserProfile `orm:"rel(fk)"` //seller
+	Orders      []*Order     `orm:"reverse(many)"`
 	GoodsImg    []*GoodsImg  `orm:"null;reverse(many);on_delete(set_null)"`
 }
 
 type GoodsImg struct {
 	Id        int
-	Cover     bool `orm:"default(0)"`
+	Cover     byte `orm:"default(0)"`
 	ImgUrl    string
 	GoodsInfo *GoodsInfo `orm:"rel(fk)"`
 }
@@ -33,11 +35,11 @@ func init() {
 }
 
 func (g *GoodsInfo) TableName() string {
-	return "goodsinfo"
+	return "goods_info"
 }
 
 func (gi *GoodsImg) TableName() string {
-	return "goodsimg"
+	return "goods_img"
 }
 
 /*
@@ -68,6 +70,7 @@ func AddGoodsInfo(addGoodsInfo GoodsInfo, addGoodsIMG GoodsImg, adduserid int) e
 	goodsinfo.Available = addGoodsInfo.Available
 	goodsinfo.Forpet = addGoodsInfo.Forpet
 	goodsinfo.Madein = addGoodsInfo.Madein
+	goodsinfo.Intro = addGoodsInfo.Intro
 
 	goodsinfo.Created = time.Now()
 	goodsinfo.Changed = time.Now()
@@ -101,13 +104,36 @@ func UpdateGoodsInfo(id int, updGoods GoodsInfo, updGoodsImg GoodsImg) error {
 
 	goodsinfo.Intro = updGoods.Intro
 	goodsinfo.Forpet = updGoods.Forpet
-	goodsinfo.Kind = updGoods.Kind 
+	goodsinfo.Kind = updGoods.Kind
 	goodsinfo.Available = updGoods.Available
 	goodsinfo.Madein = updGoods.Madein
 	goodsinfo.Price = updGoods.Price
+	goodsinfo.Intro = updGoods.Intro
 
 	goodsinfo.Changed = time.Now()
 
 	_, err := o.Update(&goodsinfo)
 	return err
+}
+
+func GetUserGoodsByUid(Uid interface{}) (error, []*GoodsInfo) {
+	o := orm.NewOrm()
+	// user := UserProfile{Id: Uid.(int)}
+	var goodslist []*GoodsInfo
+	_, err := o.QueryTable("goods_info").Filter("user_profile", Uid.(int)).RelatedSel().All(&goodslist)
+	return err, goodslist
+}
+
+func GetGoodsList(forsell byte) (error, []*GoodsInfo) {
+	o := orm.NewOrm()
+	var goodslist []*GoodsInfo
+	_, err := o.QueryTable("goods_info").Filter("forsell", forsell).All(&goodslist)
+	return err, goodslist
+}
+
+func GetGoodsByGid(Gid interface{}) (error, GoodsInfo) {
+	o := orm.NewOrm()
+	goodsInfo := GoodsInfo{Id: Gid.(int)}
+	err := o.Read(&goodsInfo)
+	return err, goodsInfo
 }

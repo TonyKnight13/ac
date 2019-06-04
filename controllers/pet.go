@@ -2,11 +2,12 @@ package controllers
 
 import (
 	. "actest/models"
-	"github.com/astaxie/beego"
 	"encoding/json"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/astaxie/beego"
 )
 
 type AddPetController struct {
@@ -14,15 +15,15 @@ type AddPetController struct {
 }
 
 func (ap *AddPetController) Get() {
-	if !ap.isLogin{
-		ap.Redirect("/login",302)
-		return 
+	if !ap.isLogin {
+		ap.Redirect("/login", 302)
+		return
 	}
 	var vmaps map[string]interface{}
 	vmaps = make(map[string]interface{})
 
-	speciMap := ShowValues("PetSpeci")
-	variMap := ShowValues("PetVari")
+	_, speciMap := ShowValues("PetSpeci")
+	_, variMap := ShowValues("PetVari")
 
 	vmaps["speci"] = speciMap
 	vmaps["vari"] = variMap
@@ -39,20 +40,20 @@ func (ap *AddPetController) Get() {
 }
 
 func (ap *AddPetController) Post() {
-	if !ap.isLogin{
-		ap.Redirect("/login",302)
-		return 
+	if !ap.isLogin {
+		ap.Redirect("/login", 302)
+		return
 	}
 	user := new(User)
 	var err error
 	account := ap.GetSession("account")
-	if accountstr, ok := account.(string);ok{
+	if accountstr, ok := account.(string); ok {
 		err, user = GetUserByAccount(accountstr)
 		if err != nil {
 			beego.Error(err)
 		}
 	}
-	
+
 	userid := user.Id
 
 	speci := ap.GetString("speci")
@@ -80,7 +81,7 @@ func (ap *AddPetController) Post() {
 	birthString += " 00:00:00"
 	birth, err1 := time.Parse("2006-01-02 15:04:05", birthString)
 
-	if err1 != nil{
+	if err1 != nil {
 		beego.Error(err1)
 	}
 

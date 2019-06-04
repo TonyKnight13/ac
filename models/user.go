@@ -12,7 +12,7 @@ type User struct {
 	Id          int `orm:"auto"`
 	Account     string
 	Password    string
-	Identity    byte
+	Identity    int          //0:普通用户 1:商家 2:医方
 	UserProfile *UserProfile `orm:"null;rel(one);on_delete(set_null)"`
 	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
 	Changed     time.Time    `orm:"auto_now_add;type(datetime)"`
@@ -32,8 +32,11 @@ type UserProfile struct {
 	Province string
 	City     string
 	CoverUrl string
-	Pet      []*Pet `orm:"null;reverse(many)"`
-	User     *User  `orm:"reverse(one)"`
+	Articles []*Article   `orm:"null;reverse(many)"`
+	Orders   []*Order     `orm:"null;reverse(many)"`
+	Goods    []*GoodsInfo `orm:"null;reverse(many)"`
+	Pet      []*Pet       `orm:"null;reverse(many)"`
+	User     *User        `orm:"reverse(one)"`
 }
 
 func init() {
@@ -48,19 +51,13 @@ func (up *UserProfile) TableName() string {
 	return "user_profile"
 }
 
-func Register(Account string, Password string, Identity string) error {
+func Register(Account string, Password string, Identity int) error {
 	o := orm.NewOrm()
 	vaild := validation.Validation{}
 
 	pwdmd5 := com.Md5(Password)
-	var id byte
-	if Identity == "0" {
-		id = 0
-	} else {
-		id = 1
-	}
 
-	user := &User{Account: Account, Password: pwdmd5, Identity: id}
+	user := &User{Account: Account, Password: pwdmd5, Identity: Identity}
 	userpro := new(UserProfile)
 
 	// 查询是否有重复的账号
@@ -124,10 +121,20 @@ func CheckLog(Account string, Password string) (err error, user *User) {
 	return err, user
 }
 
-func GetUserByAccount(account string) (err error, user *User) {
+func GetUserByAccount(account interface{}) (err error, user *User) {
 	o := orm.NewOrm()
 	user = new(User)
 	qs := o.QueryTable(user)
 	err = qs.Filter("Account", account).One(user)
 	return err, user
+}
+
+func ChangePwd(userid interface{}, pwd string) error {
+	o := orm.NewOrm()
+	user := User{Id: userid.(int)}
+	pwdmd5 := com.Md5(pwd)
+	user.Password = pwdmd5
+	user.Changed = time.Now()
+	_, err := o.Update(&user)
+	return err
 }
