@@ -14,8 +14,16 @@ type LoginRecv struct {
 }
 
 type GoodsInfoRecv struct {
-	Goods  GoodsInfo
-	ImgUrl string
+	UserId    int
+	Id        int
+	Name      string
+	Kind      string
+	Price     float32
+	Available int
+	Madein    int
+	Forpet    string
+	Intro     string
+	ImgUrl    string
 }
 
 type OrderRecv struct {
@@ -31,4 +39,28 @@ type ArticleRecv struct {
 	Title   string
 	Special string
 	Content string
+}
+
+type GoodsSelectRecv struct {
+	GoodsKind []string
+	Forpet    []string
+	Madein    int
+	OrderBy   string
+}
+
+type UserInfoRecv struct {
+	Realname string
+	Username string
+	Sex      int
+	Phone    string
+	Address  string
+	Province string
+	Hobby    string
+	Intro    string
+	Special  string
+	CoverUrl string
+}
+type DocsSelectRecv struct {
+	special []string
+	area    []string
 }

@@ -11,7 +11,6 @@ type GoodsInfo struct {
 	Name        string
 	Kind        string //商品种类
 	Price       float32
-	Forsell     byte
 	Available   byte
 	Madein      byte         //产地(0：国内 1：进口)
 	Forpet      string       //针对宠物类别
@@ -47,7 +46,7 @@ AddGoodsInfo
 当seller上传商品时调用该函数，因此首先要将在这里作为外键但是是seller主键的Id获取掉
 */
 
-func AddGoodsInfo(addGoodsInfo GoodsInfo, addGoodsIMG GoodsImg, adduserid int) error {
+func AddGoodsInfo(addGoodsInfo GoodsInfoRecv, addGoodsIMG GoodsImg, adduserid int) error {
 	o := orm.NewOrm()
 	o.Using("default")
 	goodsinfo := new(GoodsInfo)
@@ -67,9 +66,9 @@ func AddGoodsInfo(addGoodsInfo GoodsInfo, addGoodsIMG GoodsImg, adduserid int) e
 	goodsinfo.Name = addGoodsInfo.Name
 	goodsinfo.Kind = addGoodsInfo.Kind
 	goodsinfo.Price = addGoodsInfo.Price
-	goodsinfo.Available = addGoodsInfo.Available
+	goodsinfo.Available = 1
 	goodsinfo.Forpet = addGoodsInfo.Forpet
-	goodsinfo.Madein = addGoodsInfo.Madein
+	goodsinfo.Madein = byte(addGoodsInfo.Madein)
 	goodsinfo.Intro = addGoodsInfo.Intro
 
 	goodsinfo.Created = time.Now()
@@ -93,20 +92,20 @@ func AddGoodsInfo(addGoodsInfo GoodsInfo, addGoodsIMG GoodsImg, adduserid int) e
 	return nil
 }
 
-func UpdateGoodsInfo(id int, updGoods GoodsInfo, updGoodsImg GoodsImg) error {
+func UpdateGoodsInfo(id int, updGoods GoodsInfoRecv) error {
 	o := orm.NewOrm()
 	goodsinfo := GoodsInfo{Id: id}
-	goodsimg := new(GoodsImg)
+	// goodsimg := new(GoodsImg)
 
-	goodsimg.ImgUrl = updGoodsImg.ImgUrl
-	goodsimg.Cover = updGoodsImg.Cover
-	goodsimg.GoodsInfo = &goodsinfo
+	// goodsimg.ImgUrl = updGoodsImg.ImgUrl
+	// goodsimg.Cover = updGoodsImg.Cover
+	// goodsimg.GoodsInfo = &goodsinfo
 
 	goodsinfo.Intro = updGoods.Intro
 	goodsinfo.Forpet = updGoods.Forpet
 	goodsinfo.Kind = updGoods.Kind
-	goodsinfo.Available = updGoods.Available
-	goodsinfo.Madein = updGoods.Madein
+	goodsinfo.Available = byte(updGoods.Available)
+	goodsinfo.Madein = byte(updGoods.Madein)
 	goodsinfo.Price = updGoods.Price
 	goodsinfo.Intro = updGoods.Intro
 
@@ -124,10 +123,10 @@ func GetUserGoodsByUid(Uid interface{}) (error, []*GoodsInfo) {
 	return err, goodslist
 }
 
-func GetGoodsList(forsell byte) (error, []*GoodsInfo) {
+func GetGoodsList(available byte) (error, []*GoodsInfo) {
 	o := orm.NewOrm()
 	var goodslist []*GoodsInfo
-	_, err := o.QueryTable("goods_info").Filter("forsell", forsell).All(&goodslist)
+	_, err := o.QueryTable("goods_info").Filter("available", available).All(&goodslist)
 	return err, goodslist
 }
 
@@ -136,4 +135,23 @@ func GetGoodsByGid(Gid interface{}) (error, GoodsInfo) {
 	goodsInfo := GoodsInfo{Id: Gid.(int)}
 	err := o.Read(&goodsInfo)
 	return err, goodsInfo
+}
+
+func SelectGoods(goodsSelectRecv GoodsSelectRecv) (error, []*GoodsInfo) {
+	o := orm.NewOrm()
+	var goodsInfos []*GoodsInfo
+	cond := orm.NewCondition()
+
+	cond1 := cond.AndCond(SetPageCond("kind", goodsSelectRecv.GoodsKind)).AndCond(SetPageCond("forpet", goodsSelectRecv.Forpet))
+	cond2 := cond1.And("madein", byte(goodsSelectRecv.Madein))
+	qs := o.QueryTable("goods_info")
+	qs = qs.SetCond(cond2)
+
+	if goodsSelectRecv.OrderBy == "DESC" {
+		qs = qs.OrderBy("-price")
+	} else {
+		qs = qs.OrderBy("price")
+	}
+	_, err := qs.All(&goodsInfos)
+	return err, goodsInfos
 }
