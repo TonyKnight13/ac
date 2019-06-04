@@ -107,7 +107,7 @@ export default {
               setStore('userName', res.data.account)
               setStore('identity',res.data.identity)
               //element的友好提示
-              this.$message.success(res.data.message);
+              this.$message.success("恭喜你，登录成功！");
               //登录成功后跳转到指定页面
               this.$router.replace("/");
               if(res.data.identity == '1'){ //如果是商家用户，则新开一个窗口并跳转到聊天室页面

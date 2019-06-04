@@ -163,9 +163,9 @@ export default {
     },
     onChange3(value){
       if(value[0] == '国内'){
-        this.selectObj.place='0'
+        this.selectObj.place=0
       }else{
-        this.selectObj.place='1'
+        this.selectObj.place=1
       }
     },    //搜索
     search(){
