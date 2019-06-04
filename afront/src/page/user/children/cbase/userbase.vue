@@ -196,7 +196,7 @@ export default {
     save () {
       this.$refs.msg.validate(valid=>{
         if(valid){
-          let obj = {
+          var obj = {
             userId:this.userId,
             username:this.msg.username,
             realname:this.msg.realname,

@@ -65,7 +65,7 @@ func (c *UserController) Regist() {
 	c.ServeJSON()
 }
 
-// @router /users/logout [get]
+// @router /users/logout [post]
 func (c *UserController) Logout() {
 	c.DelSession("userLogin")
 	c.DelSession("account")
@@ -75,7 +75,7 @@ func (c *UserController) Logout() {
 	c.ServeJSON()
 }
 
-// @router /users/userInfo [get]
+// @router /users/userInfo [post]
 func (c *UserController) UserInfo() {
 	account := c.GetSession("account")
 	_, user := GetUserByAccount(account)

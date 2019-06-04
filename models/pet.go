@@ -24,7 +24,7 @@ type Pet struct {
 type PetImg struct {
 	Id     int
 	Cover  bool   `orm:"default(0)"`
-	ImgURL string `orm:"column(imgURL)"`
+	ImgURL string ` type(text) `
 	Pet    *Pet   `orm:"rel(fk)"`
 }
 

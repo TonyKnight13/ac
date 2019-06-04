@@ -30,7 +30,7 @@ type UserProfile struct {
 	Intro     string    `orm:"null"`
 	Province  string
 	City      string
-	CoverUrl  string
+	CoverUrl  string `type(text)`
 	Special   string
 	Addresses []*Address   `orm:"null;reverse(many)"`
 	Articles  []*Article   `orm:"null;reverse(many)"`
@@ -111,7 +111,7 @@ func UpdatePro(id int, updPro UserInfoRecv) error {
 		pro.Special = updPro.Special
 	}
 
-	pro.CoverUrl = updPro.CoverUrl
+	pro.CoverUrl = updPro.Img
 	pro.Realname = updPro.Realname
 	pro.Username = updPro.Username
 	pro.Province = updPro.Province

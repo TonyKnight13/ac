@@ -175,11 +175,11 @@ export const hospitalInfoUpdate = (params) => {
 }
 
 /* 百科 */
+//经验列表
 export const baikeData = (params) => {
   return axios.get(baseUrl + '/baike/experience', params)
 }
-
-/* 百科 */
+//上传文章
 export const addArticle = (params) => {
   return axios.post(baseUrl + '/baike/addArticle', JSON.stringify(params))
 }

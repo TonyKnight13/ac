@@ -58,7 +58,7 @@ type UserInfoRecv struct {
 	Hobby    string
 	Intro    string
 	Special  string
-	CoverUrl string
+	Img      string
 }
 type DocsSelectRecv struct {
 	special []string
