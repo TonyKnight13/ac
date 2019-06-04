@@ -80,13 +80,13 @@ export default {
     };
     return {
       options: [{
-          value: '0',
+          value: 0,
           label: '普通用户'
         }, {
-          value: '1',
+          value: 1,
           label: '商家用户'
         }, {
-          value: '2',
+          value: 2,
           label: '医方用户'
         }],
       form:{
@@ -107,6 +107,7 @@ export default {
   },
   methods: {
     regist(formName){
+      console.log(typeof this.form.identity, '')
       this.$refs[formName].validate(valid=>{
         if(valid){
           this.loading=true;

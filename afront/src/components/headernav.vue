@@ -15,7 +15,7 @@
         <el-submenu index="/baike">
           <template slot="title">宠物百科</template>
           <el-menu-item index="/baike">社区分享</el-menu-item>
-          <el-menu-item index="/">宠物殡葬</el-menu-item>
+          <el-menu-item index="/">词条百科</el-menu-item>
         </el-submenu>
         <!-- <el-menu-item index="/usercenter">关于我们</el-menu-item> -->
         <el-menu-item style="float:right;">
