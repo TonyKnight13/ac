@@ -20,8 +20,7 @@ func (b *BaseController) Prepare() {
 	} else {
 		b.isLogin = true
 	}
-	b.Data["isLogin"] = b.isLogin
-	b.Data["username"] = username
+
 }
 
 func (b *BaseController) Go404() {

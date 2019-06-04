@@ -7,6 +7,33 @@ import (
 
 func init() {
 
+    beego.GlobalControllerRouter["actest/controllers:HospitalController"] = append(beego.GlobalControllerRouter["actest/controllers:HospitalController"],
+        beego.ControllerComments{
+            Method: "DoctorList",
+            Router: `/hospital/docNavList`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["actest/controllers:HospitalController"] = append(beego.GlobalControllerRouter["actest/controllers:HospitalController"],
+        beego.ControllerComments{
+            Method: "DoctorSelect",
+            Router: `/hospital/docSelect`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["actest/controllers:HospitalController"] = append(beego.GlobalControllerRouter["actest/controllers:HospitalController"],
+        beego.ControllerComments{
+            Method: "HospitalList",
+            Router: `/hospital/hospitalNavList`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["actest/controllers:IndexController"] = append(beego.GlobalControllerRouter["actest/controllers:IndexController"],
         beego.ControllerComments{
             Method: "Get",
@@ -173,6 +200,15 @@ func init() {
         beego.ControllerComments{
             Method: "UserInfo",
             Router: `/users/userInfo`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["actest/controllers:WikiController"] = append(beego.GlobalControllerRouter["actest/controllers:WikiController"],
+        beego.ControllerComments{
+            Method: "ArticleList",
+            Router: `/baike/experience[get]`,
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,

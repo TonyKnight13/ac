@@ -16,6 +16,10 @@ func (c *UserController) URLMapping() {
 	c.Mapping("Regist", c.Regist)
 	c.Mapping("Logout", c.Logout)
 	c.Mapping("UserInfo", c.UserInfo)
+	c.Mapping("ChangePwd", c.ChangePwd)
+	c.Mapping("GoodsList", c.GoodsList)
+	c.Mapping("GoodsUpd", c.GoodsUpdate)
+	c.Mapping("GoodsAdd", c.GoodsAdd)
 }
 
 // @router /users/login [post]
@@ -87,17 +91,52 @@ func (c *UserController) ChangePwd() {
 
 // @router /users/goodsList [get]
 func (c *UserController) GoodsList() {
+	userIdentity := c.GetSession("userIdentity")
+	Uid := c.GetSession("userId")
+	if userIdentity.(int) == 0 {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "没有权限"}
+	}
+	err, goodsList := GetUserGoodsByUid(Uid)
+	if err != nil {
+		beego.Info(err)
+	}
+	// var json map[string]interface{}
+	// json["code"] = 1
+	// for i, goods := range goodsList {
+	// 	json[string(i)] = map[string]interface{}{"goodsId": goods.Id, "goodsName": goods.Name, "goodsKind": goods.Kind, "goodsForpet": goods.Forpet, "goodsPrice": goods.Price, "goodsMadein": goods.Madein, "goodsAvailable": goods.Available, "goodsintro": goods.Intro}
+	// }
+	c.Data["json"] = map[string]interface{}{"code": 1, "data": goodsList}
+	c.ServeJSON()
 
 }
 
 // @router /users/goodsUpdate [post]
 func (c *UserController) GoodsUpdate() {
+	userIdentity := c.GetSession("userIdentity")
+	if userIdentity.(int) == 0 {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "没有权限"}
+	}
+	var goodsInfoRecv GoodsInfoRecv
+	json.Unmarshal(c.Ctx.Input.RequestBody, &goodsInfoRecv)
 
 }
 
 // @router /users/goodsAdd [post]
 func (c *UserController) GoodsAdd() {
-
+	userIdentity := c.GetSession("userIdentity")
+	if userIdentity.(int) == 0 {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "没有权限"}
+	}
+	usrId := c.GetSession("userId")
+	var goodsInfoRecv GoodsInfoRecv
+	json.Unmarshal(c.Ctx.Input.RequestBody, &goodsInfoRecv)
+	var addGoodsImg GoodsImg
+	addGoodsImg.ImgUrl = goodsInfoRecv.ImgUrl
+	addGoodsImg.Cover = 1
+	err := AddGoodsInfo(goodsInfoRecv.Goods, addGoodsImg, usrId.(int))
+	if err != nil {
+		beego.Info((err))
+	}
 }
 
 // type AccountController struct {

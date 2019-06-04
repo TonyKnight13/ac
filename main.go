@@ -2,7 +2,6 @@ package main
 
 import (
 	_ "actest/initial"
-	. "actest/models"
 	_ "actest/models"
 	_ "actest/routers"
 
@@ -13,6 +12,5 @@ import (
 func main() {
 	orm.Debug = true
 	orm.RunSyncdb("default", false, true)
-	GetGoodsList()
 	beego.Run()
 }
