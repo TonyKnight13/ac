@@ -69,6 +69,7 @@ export default {
         }
       })
     },
+
     toCart(){
       this.$router.push({path:'/cart'})
     }

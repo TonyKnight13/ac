@@ -62,6 +62,7 @@ const router = new Router({
       name: 'baike',
       component:resolve => require(['../page/hospital/baike.vue'], resolve)
     },
+
     {
       path: '/shop',
       name: 'shop',
@@ -86,6 +87,7 @@ const router = new Router({
       name: 'orderPay',
       component:resolve => require(['../page/shop/orderPay.vue'], resolve)
     },
+
     {
       path:'/cart',
       name:'cart',

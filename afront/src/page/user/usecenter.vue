@@ -91,7 +91,7 @@
   }
   .content-right-wrap{
     width: calc(85% - 0.4rem);
-    height: 10rem;
+    min-height: 10rem;
     background: #ffffff;
   }
 </style>
