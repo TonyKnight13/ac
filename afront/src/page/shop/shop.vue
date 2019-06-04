@@ -30,6 +30,15 @@
               </el-checkbox-group>
             </div>
           </div>
+
+          <div class="screen-item">
+            <span>产地：</span>
+            <div class="item-check">
+              <el-checkbox-group @change="onChange3" v-model="placeChecked">
+                <el-checkbox v-for="place in places" :label="province" :key="place">{{place}}</el-checkbox>
+              </el-checkbox-group>
+            </div>
+          </div>
           <el-button type="primary" @click="search" style="float:right;" size="small">搜索</el-button>
         </div>
 
@@ -115,9 +124,11 @@ export default {
       resultnum:0,
       goodKind,
       goodUserKind,
+      places:['国内','进口'], //产地
       num:1,
       goodKindcheked:[],  //选中的商品种类
       goodUserKindchecked:[],  //选中的宠物种类
+      placeChecked:[],
       currentPage:1,
       total:0,
       userId:'',
@@ -147,17 +158,23 @@ export default {
       this.selectObj.goodKindcheked=value
     },
     onChange2(value){
-       console.log(value)
-       this.selectObj.goodUserKindchecked=value
+      console.log(value)
+      this.selectObj.goodUserKindchecked=value
     },
-    //搜索
+    onChange3(value){
+      if(value[0] == '国内'){
+        this.selectObj.place='0'
+      }else{
+        this.selectObj.place='1'
+      }
+    },    //搜索
     search(){
       console.log(this.selectObj)
       _search()
     },
     //排序
     sort(value){
-      this.selectObj.select=value
+      this.selectObj.sort=value
       console.log(this.selectObj)
       this._search()
     },

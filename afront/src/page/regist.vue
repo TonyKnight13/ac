@@ -15,9 +15,15 @@
         <el-form-item >
           <el-input v-model="form.checkPass" placeholder="请确认密码" show-password required autofocus value></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-radio v-model="form.statusKey" label="0">宠物用户</el-radio>
-          <el-radio v-model="form.statusKey" label="1">专业用户</el-radio>
+        <el-form-item prop="identity"> 
+          <el-select v-model="form.identity" placeholder="请选择身份">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item >
           <el-button 
@@ -73,11 +79,27 @@ export default {
       }
     };
     return {
+      options: [{
+          value: '0',
+          label: '普通用户'
+        }, {
+          value: '1',
+          label: '商家用户'
+        }, {
+          value: '2',
+          label: '医生用户'
+        }, {
+          value: '3',
+          label: '医院用户'
+        }, {
+          value: '4',
+          label: '殡葬用户'
+        }],
       form:{
         account:'',
         pass:'',
         checkPass:'',
-        statusKey:'0', //身份标签
+        identity:null, //身份标签
       },
       loading:false,
       registxt:'注册',
@@ -85,6 +107,7 @@ export default {
         pass: [{ validator: validatePass, trigger: 'blur' }],
         checkPass: [{ validator: validatePass2, trigger: 'blur' }],
         account: [{ validator: checkName, trigger: 'blur' }],
+        identity: [{  required: true, message: '请选择身份', trigger: 'blur'  }],
       },
     }
   },
@@ -97,7 +120,7 @@ export default {
             account:this.form.account,
             password1:this.form.pass,
             password2:this.form.checkPass,
-            identity:this.form.statusKey
+            identity:this.form.identity
           }).then(res=>{
             console.log(res)
             if(res.data.code === 1){  //后台返回信息中code==1 注册成功
@@ -132,7 +155,7 @@ export default {
 }
 .main{
   position: relative;
-  height: 500px;
+  height: 520px;
   width: 450px;
   margin: 1rem 0;
   border: 1px solid white;

@@ -64,8 +64,8 @@
               </template>
             </el-table-column>
             <el-table-column align="right">
-                <template slot-scope="scope">
-                <el-button type="danger" size="small"  @click="selectMap(scope.row.name)">查询</el-button>
+                <template >
+                <el-button type="danger" size="small"  @click="goChart()">问诊</el-button>
               </template>
             </el-table-column>        
           </el-table>
@@ -94,8 +94,8 @@
               </template>
             </el-table-column>
             <el-table-column align="right">
-                <template>
-                <el-button type="danger" size="small"  @click="goChart()">问诊</el-button>
+                <template slot-scope="scope">
+                <el-button type="danger" size="small"  @click="selectMap(scope.row.name)">查询</el-button>
               </template>
             </el-table-column>        
           </el-table>
@@ -155,8 +155,8 @@ export default {
       }],
       activeName:'doctor',  //当前选中的tab标签
       selectObj:{      //筛选用的数据体
-        physicTag:'',//physicTag  选中的是医生还是医院标签
-        specialcheked:['不限'], //选中的种类
+        // physicTag:'',//physicTag  选中的是医生还是医院标签
+        specialcheked:['不限'], //选中的宠物种类
         areachecked:['不限'] //选中的地区
       },    
       special,

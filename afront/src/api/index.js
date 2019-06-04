@@ -29,7 +29,6 @@ export const register = (params) => {
 }
 // 登陆
 export const userLogin = (params) => {
-  // return axios.post(`${base}/yyzt-web/auth/login.do`,  query.stringify(params));
   return axios.post(baseUrl + '/users/login', JSON.stringify(params))
 }
 // 退出登陆

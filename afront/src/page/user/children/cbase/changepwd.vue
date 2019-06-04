@@ -20,7 +20,8 @@
 </template>
 <script>
 import YShelf from '@/components/shelf';
-
+import { changePass } from '@/api/index'
+import { getStore } from '@/utils/storage'
 export default {
   name: 'changepwd',
   components:{
@@ -51,6 +52,7 @@ export default {
         pass: '',
         checkPass: '',
       },
+      userId:null,
       rules: {
         pass: [
           { validator: validatePass, trigger: 'blur', }
@@ -65,7 +67,12 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            changePass({
+              userId:this.userId,
+              password:this.psdForm.pass
+            }).then(res => {
+              
+            })
           } else {
             console.log('error submit!!');
             return false;
@@ -75,7 +82,10 @@ export default {
       resetForm(formName) {
         this.$refs[formName].resetFields();
       }
-    }
+  },
+  created() {
+    this.userId = getStore(userId)
+  },
 }
 </script>
 <style scoped>

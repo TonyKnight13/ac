@@ -166,7 +166,7 @@ router.beforeEach((to, from, next) => {
   }
   let identity = getStore('identity') 
   if (to.meta.status) { // 判断该路由是否需要用户身份标签
-    if (identity === '1') {
+    if (identity != '0') {
       next()
     } else {
       alert('你没有权限进入')
