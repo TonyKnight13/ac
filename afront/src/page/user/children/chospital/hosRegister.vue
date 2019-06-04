@@ -4,8 +4,8 @@
     <div slot="content" class="content">
         <!-- <div slot="content" class="md" :data-id="msg.addressId"> -->
           <el-form :model="msg" ref="msg" :rules="rules" status-icon style="width:80%;" label-width="100px">
-            <el-form-item label="医院名称" prop="hospitalName">
-              <el-input placeholder="医院名称" v-model="msg.hospitalName"></el-input>
+            <el-form-item label="医院名称" prop="realname">
+              <el-input placeholder="医院名称" v-model="msg.realname"></el-input>
             </el-form-item>
             <el-form-item label="电话号码" prop="phone">
               <el-input placeholder="医院电话号码" v-model="msg.phone"></el-input>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { hospitalInfo, hospitalInfoUpdate} from '@/api/index'
+import { userInfo, userInfoUpdate} from '@/api/index'
 import { getStore } from '@/utils/storage'
 import YShelf from '@/components/shelf';
 
@@ -41,13 +41,13 @@ export default {
   data () {
     return {
       msg: {
-        hospitalName: '',
+        realname: '',
         phone:'',
         address:'',
       },
       userId: '',
       rules: {
-        hospitalName: [
+        realname: [
           { required: true, message: '请输入姓名', trigger: 'blur' }
         ],
         phone: [
@@ -72,18 +72,18 @@ export default {
     },
 
     //初始化殡葬馆信息
-    _hospitalInfo () {
-      hospitalInfo({userId: this.userId}).then(res => {
+    _userInfo () {
+      userInfo({userId: this.userId}).then(res => {
         if(res.data.code == 1 ){
-          if(res.data.hospitalName && res.data.phone && res.data.address){
+          if(res.data.realname && res.data.phone && res.data.address){
             this.msg = {
-              hospitalName: res.data.hospitalName,
+              realname: res.data.realname,
               phone: res.data.phone,
               address: res.data.address
             }
           }else{
             this.msg = {
-              hospitalName: '',
+              realname: '',
               phone:'',
               address:'',
             }
@@ -99,25 +99,25 @@ export default {
         if(valid){
           let obj = {
             userId:this.userId,
-            hospitalName: this.msg.hospitalName,
+            realname: this.msg.realname,
             phone: this.msg.phone,
             address: this.msg.address,
             }
-            this._hospitalInfoUpdate(obj)
+            this._userInfoUpdate(obj)
           }
         })
     },
 
     //修改信息
-    _hospitalInfoUpdate (params) {
-      hospitalInfoUpdate(params).then(res => {  
-        this._hospitalInfo() //修改完成后重新获取地址列表
+    _userInfoUpdate (params) {
+      userInfoUpdate(params).then(res => {  
+        this._userInfo() //修改完成后重新获取地址列表
       })
     },
   },
   created () {
     this.userId = getStore('userId')
-    this._hospitalInfo()
+    this._userInfo()
   },
 };
 </script>

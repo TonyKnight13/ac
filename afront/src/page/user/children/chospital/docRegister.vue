@@ -8,7 +8,7 @@
               <el-input placeholder="姓名" v-model="msg.realName"></el-input>
             </el-form-item>
             <el-form-item label="专业" prop="major">
-                <el-select v-model="msg.major" multiple collapse-tags placeholder="专业">
+                <el-select v-model="msg.major" placeholder="专业">
                   <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { doctuorInfo, doctuorInfoUpdate} from '@/api/index'
+import { userInfo, doctuorInfoUpdate} from '@/api/index'
 import { getStore } from '@/utils/storage'
 import YShelf from '@/components/shelf';
 var op2 = [{
@@ -73,7 +73,7 @@ export default {
       options:op2,
       msg: {
         realName: '',
-        major:[],
+        major:'',
       },
       userId: '',
       rules: {
@@ -99,7 +99,7 @@ export default {
 
     //初始化信息
     _doctuorInfo () {
-      doctuorInfo({userId: this.userId}).then(res => {
+      userInfo({userId: this.userId}).then(res => {
         if(res.data.code == 1 ){
           if(res.data.realName && res.data.major){
             this.msg = {
@@ -124,7 +124,7 @@ export default {
           let obj = {
             userId:this.userId,
             realName: this.msg.realName,
-            major: this.msg.major,
+            special: this.msg.major,
             }
             this._doctuorInfoUpdate(obj)
           }
