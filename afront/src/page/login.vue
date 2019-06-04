@@ -97,7 +97,7 @@ export default {
             //登录失败,先不讨论
             if (res.data.code == 0) {
               //element的友好提示
-              this.$message.error(res.data.message);
+              this.$message.error(res.data.msg);
               this.loading=false;
             //登录成功
             } else {

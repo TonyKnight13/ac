@@ -122,7 +122,7 @@ export default {
               this.$message.success("恭喜你，注册成功！");
               this.$router.replace({path:'/login'})
             }else{
-              this.$message.error(res.data.message);
+              this.$message.error(res.data.msg);
               this.loading  = false;
               return false;
             }
