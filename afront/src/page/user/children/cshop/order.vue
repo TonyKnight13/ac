@@ -38,7 +38,10 @@
             </el-table>
       </div>
      </y-shelf>
-
+     
+    <el-dialog title="收款码" :visible.sync="dialogVisible" @close="closeDilog()">
+      <img :src="pay" />
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -53,7 +56,9 @@ export default{
     return {
       orderList:[],
       userId: '',
-      loading:true
+      loading:true,
+      dialogVisible:false,
+      pay:require('@/assets/images/pay.jpg'),
     }
   },
   created () {
@@ -116,12 +121,7 @@ export default{
     //跳转到支付页面
     orderPayment (orderId) {
       // 需要拿到订单id
-      this.$router.push({
-        path: '/orderPay',
-        query: {
-          'orderId': orderId
-        }
-      })
+      this.dialogVisible =true
     },
   },
 }

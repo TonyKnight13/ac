@@ -6,14 +6,11 @@
           <el-form-item label="用户名" prop="username">
             <el-input v-model="msg.username"></el-input>
           </el-form-item>      
-          <el-form-item label="真名" prop="username" >
-            <el-input v-model="msg.realname"></el-input>
-          </el-form-item>
-          <el-form-item label="性别" prop="sex" >
+          <el-form-item label="性别">
               <el-radio v-model="msg.sex" label="0">男</el-radio>
               <el-radio v-model="msg.sex" label="1">女</el-radio>
           </el-form-item>     
-          <el-form-item label="爱好" prop="hobby">
+          <el-form-item label="爱好">
             <el-input
               type="textarea"
               :rows="2"
@@ -22,13 +19,16 @@
             </el-input>          
           </el-form-item> 
 
-          <el-form-item label="手机号码" prop="phone">
+          <el-form-item label="真名" prop="realname">
+            <el-input v-model="msg.realname"></el-input>
+          </el-form-item>
+          <el-form-item label="手机号码" prop="phone" v-if="identity == 2">
             <el-input v-model="msg.phone"></el-input>
           </el-form-item> 
           <el-form-item label="地址">
             <el-input v-model="msg.address"></el-input>
           </el-form-item> 
-          <el-form-item label="专业" prop="major">
+          <el-form-item label="专业" prop="major" v-if="identity == 2">
               <el-select v-model="msg.special" placeholder="专业">
                 <el-option
                   v-for="item in options"
@@ -47,17 +47,11 @@
             </el-input>  
           </el-form-item> 
           <el-form-item label="用户头像" prop="userImg">
-              <el-upload
-                class="avatar-uploader" 
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :show-file-list="false"
-                :on-success="handleAvatarSuccess">
-                <img v-if="msg.userImg" :src="msg.userImg" class="avatar">
-                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-              </el-upload>
+              <input @change="uploadPhoto($event)" type="file" class="kyc-passin">
+              <img :src="msg.userImg" alt="">
           </el-form-item>
           <el-form-item>
-            <el-button @click="save('msg')"> 保存</el-button>
+            <el-button @click="save()"> 保存</el-button>
             <el-button @click="resetForm('msg')">重置</el-button>  
           </el-form-item>   
         </el-form>
@@ -69,6 +63,7 @@
 import { userInfo, userInfoUpdate} from '@/api/index'
 import { getStore } from '@/utils/storage'
 import YShelf from '@/components/shelf';
+
 var op2 = [{
           value: '狗',
           label: '狗'
@@ -120,10 +115,19 @@ export default {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
-        // phone: [
-        //   { required: true, message: '手机号不能为空', trigger: 'blur' },
-        //   { type: 'string', pattern: /^1[3|4|5|7|8][0-9]{9}$/, message: '手机号格式出错', trigger: 'blur' }
-        // ],
+        realname:[
+          { required: true, message: '请输入真名', trigger: 'blur' }
+        ],
+        address:[
+          { required: true, message: '请输入地址', trigger: 'blur' }
+        ],
+        major:[
+          { required: true, message: '请输入专业', trigger: 'blur' }
+        ],
+        phone: [
+          { required: true, message: '手机号不能为空', trigger: 'blur' },
+          { type: 'string', pattern: /^1[3|4|5|7|8][0-9]{9}$/, message: '手机号格式出错', trigger: 'blur' }
+        ],
         userImg:[
           {required: true, message: '头像不能为空', trigger: 'blur' }
         ]
@@ -132,8 +136,25 @@ export default {
     };
   },
   methods:{
-    handleAvatarSuccess(res, file) {
-      this.msg.image = URL.createObjectURL(file.raw);
+    uploadPhoto (e) {
+        // 利用fileReader对象获取file
+        var file = e.target.files[0];
+        var filesize = file.size;
+        var filename = file.name;
+        // 2,621,440   2M
+        if (filesize > 2101440) {
+            // 图片大于2MB
+            alert("图片过大")
+            return false
+        }
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (e) => {
+            // 读取到的图片base64 数据编码 将此编码字符串传给后台即可
+            var imgcode = e.target.result;
+            this.msg.userImg=imgcode
+            console.log(this.msg.userImg);
+        }
     },
     //重置
     resetForm(formName) {
@@ -143,6 +164,7 @@ export default {
     //初始化用户信息
     _userInfo () {
       userInfo({userId: this.userId}).then(res => {
+        console.log(res.data.img)
         if(res.data.code == 1 ){
           // if(res.data.username && res.data.sex && res.data.phone && res.data.userImg){
             this.msg = {
@@ -150,8 +172,7 @@ export default {
               realname:res.data.realname,
               sex: res.data.sex,
               hobby:res.data.hobby,
-              userImg: res.data.coverUrl,
-
+              userImg: res.data.img,
               phone: res.data.phone,
               address:res.data.address,
               special:res.data.special,
@@ -173,25 +194,26 @@ export default {
     },
         // 保存
     save () {
-      this.$refs.msg.validate(valid=>{
-        if(valid){
-          let obj = {
+      // this.$refs.msg.validate(valid=>{
+      //   if(valid){
+          var obj = {
             userId:this.userId,
             username:this.msg.username,
             realname:this.msg.realname,
             sex:parseInt(this.msg.sex) ,
             hobby:this.msg.hobby,
-            coverUrl:this.msg.userImg,
+            img:this.msg.userImg,
 
             phone:this.msg.phone,
             address:this.msg.address,
             special:this.msg.special,
             intro:this.msg.intro,
-           
+           img:this.msg.userImg
           }
           this._userInfoUpdate(obj)
-        }
-      })
+          this.msg.userImg=""
+      //   }
+      // })
     },
 
     //修改信息

@@ -65,7 +65,7 @@ export default {
       this.$store.dispatch("logout");
       loginOut({userId: sessionStorage.getItem("userId")}).then(res => {
         if(res.data.code == 1){
-          this.$router.replace({path:'/login'})
+          this.$router.replace({path:'/'})
         }
       })
     },
