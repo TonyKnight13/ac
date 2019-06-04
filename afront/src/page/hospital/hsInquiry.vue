@@ -26,7 +26,7 @@
                     <span>种类：</span>
                     <div class="item-check">
                       <el-checkbox-group  @change="onChange1" v-model="specialcheked" :max='2'>
-                        <el-checkbox v-for="speci in special" :label="speci" :key="speci" >{{speci}}</el-checkbox>
+                        <el-checkbox v-for="speci in specials" :label="speci" :key="speci" >{{speci}}</el-checkbox>
                       </el-checkbox-group>
                     </div>
                   </div>
@@ -35,7 +35,7 @@
                     <span>地区：</span>
                     <div class="item-check">
                       <el-checkbox-group @change="onChange2" v-model="areachecked">
-                        <el-checkbox v-for="province in area" :label="province" :key="province">{{province}}</el-checkbox>
+                        <el-checkbox v-for="province in areas" :label="province" :key="province">{{province}}</el-checkbox>
                       </el-checkbox-group>
                     </div>
                   </div>
@@ -126,8 +126,8 @@ import {getStore} from "@/utils/storage"
 import { mapMutations } from 'vuex'
 import BMap from 'BMap'
 
-const special=['不限', '狗', '猫', '兔子', '水生', '鸟', '两栖']
-const area=['不限', '浙江', '上海', '江苏', '北京', '四川', '台湾', '云南', '西藏', '黑龙江']
+const specials=['不限', '狗', '猫', '兔子', '水生', '鸟', '两栖']
+const areas=['不限', '浙江', '上海', '江苏', '北京', '四川', '台湾', '云南', '西藏', '黑龙江']
 export default {
   name:"shop",
   components:{
@@ -159,11 +159,11 @@ export default {
         specialcheked:['不限'], //选中的宠物种类
         areachecked:['不限'] //选中的地区
       },    
-      special,
-      area,
+      specials,
+      areas,
       num:1,
-      specialcheked:['不限'],
-      areachecked:['不限'],
+      special:['不限'],
+      area:['不限'],
       currentPage:1,
       total:0,
       userId:'',
@@ -391,7 +391,7 @@ export default {
 }
 
 .el-tabs__item.is-active {
-  color: #FFB90F !important;
+  color: #FFB90F;
 }
 .el-tabs__item:hover{
   border-color:#FFB90F !important;
@@ -399,6 +399,9 @@ export default {
 }
 .el-tabs__header{
   margin-bottom: 0 ;
+}
+.el-tabs__nav.is-top{
+  padding-left: 0;
 }
 .el-pager li.active {
     color: #FFB90F;

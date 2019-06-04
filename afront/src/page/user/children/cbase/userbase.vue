@@ -6,6 +6,9 @@
           <el-form-item label="用户名" prop="username" >
             <el-input v-model="msg.username"></el-input>
           </el-form-item>      
+          <el-form-item label="真名" prop="username" >
+            <el-input v-model="msg.realname"></el-input>
+          </el-form-item>
           <el-form-item label="性别" prop="sex" >
               <el-radio v-model="msg.sex" label="0">男</el-radio>
               <el-radio v-model="msg.sex" label="1">女</el-radio>
@@ -13,8 +16,13 @@
           <el-form-item label="手机号码" prop="phone">
             <el-input v-model="msg.phone"></el-input>
           </el-form-item> 
-          <el-form-item label="年龄" prop="age">
-            <el-input v-model="msg.age"></el-input>
+          <el-form-item label="爱好" prop="hobby">
+            <el-input
+              type="textarea"
+              :rows="2"
+              placeholder="请输入内容"
+              v-model="msg.hobby">
+            </el-input>          
           </el-form-item> 
           <el-form-item label="用户头像" prop="userImg">
               <el-upload
@@ -48,10 +56,15 @@ export default {
     return {
       msg:{
         username:'',
+        realname:'',
         sex: '0',
-        phone:'',
-        age:'',
+        hobby:'',
         userImg:null,
+        /* 医生用户可见 */
+        address:'',
+        phone:'',
+        special:'',
+        intro:''
       },
       userId:'',
       rules: {
@@ -85,25 +98,30 @@ export default {
     _userInfo () {
       userInfo({userId: this.userId}).then(res => {
         if(res.data.code == 1 ){
-          if(res.data.username && res.data.sex && res.data.phone && res.data.userImg){
+          // if(res.data.username && res.data.sex && res.data.phone && res.data.userImg){
             this.msg = {
               username: res.data.username,
+              realname:res.data.realname,
               sex: res.data.sex,
+              hobby:res.data.hobby,
+              userImg: res.data.coverUrl,
+
               phone: res.data.phone,
-              age: res.data.age,
-              userImg: res.data.userImg,
+              address:res.data.address,
+              special:res.data.special,
+              intro:res.data.intro,
             }
-          }else{
-            this.msg = {
-              username: '',
-              sex: '',
-              phone: '',
-              age: null,
-              userImg:'',
-            }
-          }
+          // }else{
+          //   this.msg = {
+          //     username: '',
+          //     sex: '',
+          //     phone: '',
+          //     age: null,
+          //     userImg:'',
+          //   }
+          // }
         }else{
-          this.$message.error(res.data.msg)
+          this.$message.error(res.data.message)
         }
       })
     },
@@ -113,11 +131,17 @@ export default {
         if(valid){
           let obj = {
             userId:this.userId,
-            name:this.msg.username,
-            sex:this.msg.sex,
+            username:this.msg.username,
+            realname:this.msg.realname,
+            sex:parseInt(this.msg.sex) ,
+            hobby:this.msg.hobby,
+            coverUrl:this.msg.userImg,
+
             phone:this.msg.phone,
-            age:this.msg.age,
-            userImg:this.msg.userImg
+            address:this.msg.address,
+            special:this.msg.special,
+            intro:this.msg.intro,
+           
           }
           this._userInfoUpdate(obj)
         }

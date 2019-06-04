@@ -43,7 +43,7 @@ export const userInfo = (params) => {
 }
 // 用户信息修改
 export const userInfoUpdata = (params) => {
-  return axios.post(baseUrl + '/users/userInfoUpdata', JSON.stringify(params))
+  return axios.post(baseUrl + '/users/userInfoUpdate', JSON.stringify(params))
 }
 // 修改密码
 export const changePass = (params) => {
