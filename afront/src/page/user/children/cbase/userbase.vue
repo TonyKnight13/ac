@@ -26,7 +26,7 @@
             <el-input v-model="msg.phone"></el-input>
           </el-form-item> 
           <el-form-item label="地址">
-            <el-input v-model="msg.phone"></el-input>
+            <el-input v-model="msg.address"></el-input>
           </el-form-item> 
           <el-form-item label="专业" prop="major">
               <el-select v-model="msg.special" placeholder="专业">
@@ -66,7 +66,7 @@
   <!-- </div> -->
 </template>
 <script>
-import { userInfo, userInfoUpdata} from '@/api/index'
+import { userInfo, userInfoUpdate} from '@/api/index'
 import { getStore } from '@/utils/storage'
 import YShelf from '@/components/shelf';
 var op2 = [{

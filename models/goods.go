@@ -24,8 +24,8 @@ type GoodsInfo struct {
 
 type GoodsImg struct {
 	Id        int
-	Cover     byte `orm:"default(0)"`
-	ImgUrl    string
+	Cover     byte       `orm:"default(0)"`
+	ImgUrl    string     ` type(text) `
 	GoodsInfo *GoodsInfo `orm:"rel(fk)"`
 }
 

@@ -209,7 +209,7 @@ func init() {
         beego.ControllerComments{
             Method: "Logout",
             Router: `/users/logout`,
-            AllowHTTPMethods: []string{"get"},
+            AllowHTTPMethods: []string{"post"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})
@@ -236,7 +236,7 @@ func init() {
         beego.ControllerComments{
             Method: "UserInfo",
             Router: `/users/userInfo`,
-            AllowHTTPMethods: []string{"get"},
+            AllowHTTPMethods: []string{"post"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})
