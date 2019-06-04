@@ -14,6 +14,7 @@ type ShopController struct {
 func (c *ShopController) URLMapping() {
 	c.Mapping("ShopList", c.ShopList)
 	c.Mapping("GoodsDetail", c.GoodsDetail)
+	c.Mapping("GoodsListSelect", c.GoodsListSelect)
 	c.Mapping("OrderAdd", c.OrderAdd)
 	c.Mapping("OrderList", c.OrderList)
 	c.Mapping("OrderDel", c.OrderDel)

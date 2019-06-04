@@ -12,7 +12,9 @@ type HospitalController struct {
 }
 
 func (c *HospitalController) URLMapping() {
-
+	c.Mapping("HospitalList", c.HospitalList)
+	c.Mapping("DoctorList", c.DoctorList)
+	c.Mapping("DoctorSelect", c.DoctorSelect)
 }
 
 // @router /hospital/hospitalNavList [get]

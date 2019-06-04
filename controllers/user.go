@@ -21,6 +21,10 @@ func (c *UserController) URLMapping() {
 	c.Mapping("GoodsList", c.GoodsList)
 	c.Mapping("GoodsUpd", c.GoodsUpdate)
 	c.Mapping("GoodsAdd", c.GoodsAdd)
+	c.Mapping("AddressList", c.AddressList)
+	c.Mapping("UpdateAddress", c.UpdateAddress)
+	c.Mapping("AddAddress", c.AddAddress)
+	c.Mapping("DelAddress", c.DelAddress)
 }
 
 // @router /users/login [post]
@@ -164,6 +168,57 @@ func (c *UserController) GoodsAdd() {
 	if err != nil {
 		c.Data["json"] = map[string]interface{}{"code": 0, "message": "添加商品失败"}
 		beego.Info((err))
+	}
+	c.Data["json"] = map[string]interface{}{"code": 1}
+	c.ServeJSON()
+}
+
+// @router /users/addressList [post]
+func (c *UserController) AddressList() {
+	uid := c.GetSession("userId")
+	err, addresses := GetAddressListByUid(uid)
+	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "地址列表获取失败"}
+		beego.Info(err)
+	}
+	c.Data["json"] = map[string]interface{}{"code": 1, "data": addresses}
+	c.ServeJSON()
+}
+
+// @router /users/updateAddress [post]
+func (c *UserController) UpdateAddress() {
+	var addressRecv AddressRecv
+	json.Unmarshal(c.Ctx.Input.RequestBody, &addressRecv)
+	err := UpdateAddress(addressRecv)
+	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "地址更新失败"}
+		beego.Info(err)
+	}
+	c.Data["json"] = map[string]interface{}{"code": 1}
+	c.ServeJSON()
+}
+
+// @router /users/addAddress [post]
+func (c *UserController) AddAddress() {
+	uid := c.GetSession("userId")
+	var addressRecv AddressRecv
+	json.Unmarshal(c.Ctx.Input.RequestBody, &addressRecv)
+	err := AddAddress(uid.(int), addressRecv)
+	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "地址添加失败"}
+		beego.Info(err)
+	}
+	c.Data["json"] = map[string]interface{}{"code": 1}
+	c.ServeJSON()
+}
+
+// @router /users/delAddress [post]
+func (c *UserController) DelAddress() {
+	var AddressId int
+	err := RemoveAddress(AddressId)
+	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "地址删除失败"}
+		beego.Info(err)
 	}
 	c.Data["json"] = map[string]interface{}{"code": 1}
 	c.ServeJSON()

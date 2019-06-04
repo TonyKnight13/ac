@@ -19,25 +19,25 @@ type User struct {
 }
 
 type UserProfile struct {
-	Id       int
-	Realname string `orm:"null"`
-	Username string
-	Sex      byte `orm:"null"`
-	Phone    string
-	Email    string
-	Address  string
-	Hobby    string    `orm:"null"`
-	Birth    time.Time `orm:"null;type(date)"`
-	Intro    string    `orm:"null"`
-	Province string
-	City     string
-	CoverUrl string
-	Special  string
-	Articles []*Article   `orm:"null;reverse(many)"`
-	Orders   []*Order     `orm:"null;reverse(many)"`
-	Goods    []*GoodsInfo `orm:"null;reverse(many)"`
-	Pet      []*Pet       `orm:"null;reverse(many)"`
-	User     *User        `orm:"reverse(one)"`
+	Id        int
+	Realname  string `orm:"null"`
+	Username  string
+	Sex       byte `orm:"null"`
+	Phone     string
+	Email     string
+	Hobby     string    `orm:"null"`
+	Birth     time.Time `orm:"null;type(date)"`
+	Intro     string    `orm:"null"`
+	Province  string
+	City      string
+	CoverUrl  string
+	Special   string
+	Addresses []*Address   `orm:"null;reverse(many)"`
+	Articles  []*Article   `orm:"null;reverse(many)"`
+	Orders    []*Order     `orm:"null;reverse(many)"`
+	Goods     []*GoodsInfo `orm:"null;reverse(many)"`
+	Pet       []*Pet       `orm:"null;reverse(many)"`
+	User      *User        `orm:"reverse(one)"`
 }
 
 func init() {
@@ -112,7 +112,6 @@ func UpdatePro(id int, updPro UserInfoRecv) error {
 	}
 
 	pro.CoverUrl = updPro.CoverUrl
-	pro.Address = updPro.Address
 	pro.Realname = updPro.Realname
 	pro.Username = updPro.Username
 	pro.Province = updPro.Province

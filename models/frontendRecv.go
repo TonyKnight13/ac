@@ -64,3 +64,10 @@ type DocsSelectRecv struct {
 	special []string
 	area    []string
 }
+
+type AddressRecv struct {
+	Id            int
+	Realname      string
+	Phone         string
+	AddressForLoc string
+}
