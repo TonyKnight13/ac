@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { deathRegist, deathRegistUpdate} from '@/api/index'
+import { userInfo, userInfoUpdate} from '@/api/index'
 import { getStore } from '@/utils/storage'
 import YShelf from '@/components/shelf';
 export default {
@@ -82,8 +82,8 @@ export default {
     },
 
     //初始化殡葬馆信息
-    _deathRegist () {
-      deathRegist({userId: this.userId}).then(res => {
+    _userInfo () {
+      userInfo({userId: this.userId}).then(res => {
         if(res.data.code == 1 ){
           if(res.data.name && res.data.address && res.data.phone){
             this.msg = {
@@ -115,21 +115,21 @@ export default {
             phone:this.msg.phone,
             address:this.msg.address
             }
-            this._deathRegistUpdate(obj)
+            this._userInfoUpdate(obj)
           }
         })
     },
 
     //修改信息
-    _deathRegistUpdate (params) {
-      deathRegistUpdate(params).then(res => {  
-        this._deathRegist() //修改完成后重新获取信息
+    _userInfoUpdate (params) {
+      userInfoUpdate(params).then(res => {  
+        this._userInfo() //修改完成后重新获取信息
       })
     },
   },
   created () {
     this.userId = getStore('userId')
-    this._deathRegist()
+    this._userInfo()
   },
 };
 </script>

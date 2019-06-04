@@ -3,7 +3,7 @@
     <YShelf title="个人资料">
       <div slot="content" class="content">
         <el-form :model="msg" :rules="rules" status-icon label-width="100px" style="width:80%;" ref="msg">
-          <el-form-item label="用户名" prop="username" >
+          <el-form-item label="用户名" prop="username">
             <el-input v-model="msg.username"></el-input>
           </el-form-item>      
           <el-form-item label="真名" prop="username" >
@@ -13,9 +13,6 @@
               <el-radio v-model="msg.sex" label="0">男</el-radio>
               <el-radio v-model="msg.sex" label="1">女</el-radio>
           </el-form-item>     
-          <el-form-item label="手机号码" prop="phone">
-            <el-input v-model="msg.phone"></el-input>
-          </el-form-item> 
           <el-form-item label="爱好" prop="hobby">
             <el-input
               type="textarea"
@@ -23,6 +20,31 @@
               placeholder="请输入内容"
               v-model="msg.hobby">
             </el-input>          
+          </el-form-item> 
+
+          <el-form-item label="手机号码" prop="phone">
+            <el-input v-model="msg.phone"></el-input>
+          </el-form-item> 
+          <el-form-item label="地址">
+            <el-input v-model="msg.phone"></el-input>
+          </el-form-item> 
+          <el-form-item label="专业" prop="major">
+              <el-select v-model="msg.special" placeholder="专业">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+          </el-form-item>  
+          <el-form-item label="用户简介" >
+            <el-input
+              type="textarea"
+              :rows="2"
+              placeholder="请输入内容"
+              v-model="msg.intro">
+            </el-input>  
           </el-form-item> 
           <el-form-item label="用户头像" prop="userImg">
               <el-upload
@@ -47,6 +69,31 @@
 import { userInfo, userInfoUpdata} from '@/api/index'
 import { getStore } from '@/utils/storage'
 import YShelf from '@/components/shelf';
+var op2 = [{
+          value: '狗',
+          label: '狗'
+        }, {
+          value: '猫',
+          label: '猫'
+        }, {
+          value: '兔',
+          label: '兔'
+        }, {
+          value: '鸟',
+          label: '鸟'
+        }, {
+          value: '小型',
+          label: '小型'
+        }, {
+          value: '水生',
+          label: '水生'
+        }, {
+          value: '两栖',
+          label: '两栖'
+        }, {
+          value: '其他宠物',
+          label: '其他宠物'
+        }];
 export default {
   name: 'userbase',
   components:{
@@ -54,6 +101,8 @@ export default {
   },
   data () {
     return {
+      options:op2,
+      identity:null,
       msg:{
         username:'',
         realname:'',
@@ -71,13 +120,10 @@ export default {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
-        sex:[
-          { required: true, trigger: 'blur' }
-        ],
-        phone: [
-          { required: true, message: '手机号不能为空', trigger: 'blur' },
-          { type: 'string', pattern: /^1[3|4|5|7|8][0-9]{9}$/, message: '手机号格式出错', trigger: 'blur' }
-        ],
+        // phone: [
+        //   { required: true, message: '手机号不能为空', trigger: 'blur' },
+        //   { type: 'string', pattern: /^1[3|4|5|7|8][0-9]{9}$/, message: '手机号格式出错', trigger: 'blur' }
+        // ],
         userImg:[
           {required: true, message: '头像不能为空', trigger: 'blur' }
         ]
@@ -158,6 +204,7 @@ export default {
   created () {
     this.userId = getStore('userId')
     this._userInfo()
+    this.identity =getStore("identity")
   },
 }
 </script>
