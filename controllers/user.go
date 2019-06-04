@@ -57,8 +57,10 @@ func (c *UserController) Regist() {
 	err1 := Register(registRecv.Account, registRecv.Password1, registRecv.Identity)
 
 	if err1 != nil {
-		beego.Info(err1)
+		c.Data["json"] = map[string]interface{}{"code": 0, "message": "注册失败"}
 	}
+	c.Data["json"] = map[string]interface{}{"code": 1, "message": "注册成功"}
+	c.ServeJSON()
 }
 
 // @router /users/logout [get]

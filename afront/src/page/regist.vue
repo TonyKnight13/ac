@@ -119,7 +119,7 @@ export default {
           }).then(res=>{
             console.log(res)
             if(res.data.code === 1){  //后台返回信息中code==1 注册成功
-              this.$message.success(res.data.message);
+              this.$message.success("恭喜你，注册成功！");
               this.$router.replace({path:'/login'})
             }else{
               this.$message.error(res.data.message);

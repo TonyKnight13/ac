@@ -6,18 +6,18 @@
 
       <el-table :data="goodsList" v-if="goodsList.length > 0" style="width: 100%" ref="multipleTable"
       :header-cell-style="{background:'#F3F4F7',color:'#555'}">
-        <el-table-column prop="goodImg" label="商品图片" width="120" align="center">
+        <el-table-column prop="imgUrl" label="商品图片" width="120" align="center">
           <template slot-scope="scope">            
             <el-image :src="scope.row.goodImg" fit="contain" @click="goodsDetails(scope.row.goodId)"></el-image>
           </template>
         </el-table-column>
-        <el-table-column prop="goodName" label="商品名称" width="120" align="center">
+        <el-table-column prop="name" label="商品名称" width="120" align="center">
         </el-table-column>
-        <el-table-column prop="goodPrice" label="商品单价(￥)" width="120" align="center">
+        <el-table-column prop="price" label="商品单价(￥)" width="120" align="center">
         </el-table-column>
-        <el-table-column prop="goodKind" label="商品种类" width="200" align="center">
+        <el-table-column prop="kind" label="商品种类" width="200" align="center">
         </el-table-column>
-        <el-table-column prop="goodUserKind" label="适用商品的宠物种类" width="200" align="center">
+        <el-table-column prop="forpet" label="适用商品的宠物种类" width="200" align="center">
           <template slot-scope="scope">
             <span>{{scope.row.goodUserKind.join(" ")}}</span>
           </template>
@@ -48,7 +48,7 @@
           <el-form-item prop="goodName">
             <el-input placeholder="商品名称" v-model="msg.goodName"></el-input>
           </el-form-item>
-          <el-form-item prop="detail">
+          <el-form-item>
             <el-input type="textarea" placeholder="商品描述" :rows="2" v-model="msg.detail"></el-input>
           </el-form-item>
           <el-form-item prop="goodPrice">
@@ -65,7 +65,7 @@
             </el-select>
           </el-form-item>
           <el-form-item prop="goodUserKind">
-              <el-select v-model="msg.goodUserKind" multiple collapse-tags placeholder="适用商品的宠物种类">
+              <el-select v-model="msg.goodUserKind" placeholder="适用商品的宠物种类">
                 <el-option
                   v-for="item in options2"
                   :key="item.value"
@@ -74,10 +74,21 @@
                 </el-option>
               </el-select>
           </el-form-item>
-          <!-- <el-form-item prop="isPut">
-              <el-radio v-model="msg.isPut" label="0">下架</el-radio>
-              <el-radio v-model="msg.isPut" label="1">上架</el-radio>
-          </el-form-item> -->
+          <el-form-item>
+              <el-radio v-model="msg.isPut" label='0'>下架</el-radio>
+              <el-radio v-model="msg.isPut" label='1'>上架</el-radio>
+          </el-form-item>
+          <el-form-item>
+            <el-select v-model="msg.madein" placeholder="请选择产地">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>            
+          </el-form-item>
+
           <el-form-item prop="goodImg">
             <el-upload
               class="avatar-uploader"
@@ -88,12 +99,13 @@
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
+
+          <el-form-item>
+            <el-button class="btn" :disabled=trueORfalse @click="save()">
+            保存</el-button>
+          </el-form-item>
         </el-form>
-        <el-button 
-        class="btn"
-        :disabled=trueORfalse
-        @click="save()">
-        保存</el-button>
+
 
       <!-- </div> -->
       <!-- <span>这是一段信息</span> -->
@@ -112,6 +124,13 @@ export default {
   },
   data () {
     return {
+      options:[{
+          value: 0,
+          label: '国内'
+        }, {
+          value: 1,
+          label: '国外'
+        }],
       goodsList:[],
       dialogTitle:"修改商品信息",
       dialogVisible:false,
@@ -175,11 +194,12 @@ export default {
         goodId:null,
         goodName:'',
         detail:'',
-        goodPrice:'',
+        madein:null,
+        goodPrice:null,
         goodImg:'',
-        // isPut:'1',
+        isPut:'1',
         goodKind:'',//商品种类
-        goodUserKind:[]//使用商品的宠物种类
+        goodUserKind:'',//使用商品的宠物种类
       },
 
 
@@ -206,6 +226,7 @@ export default {
   computed: {
     trueORfalse () {
       let msg = this.msg
+      return false
       return !Boolean(msg.goodName && msg.goodPrice && msg.goodImg && msg.goodKind && msg.goodUserKind)
     }
   },
@@ -256,17 +277,19 @@ export default {
     // 保存
     save () {
       this.dialogVisible = false
+      
       let obj = {
         userId:this.userId,
-        goodId:this.msg.goodId,
-        goodImg:this.msg.goodImg,
-        goodName:this.msg.goodName,
-        goodPrice:this.msg.goodPrice,
-        // isPut:this.msg.isPut,
-        detail:this.msg.detail,
-        goodKind:this.msg.goodKind,//商品种类
-        goodUserKind:this.msg.goodUserKind//使用商品的宠物种类
+        id:this.msg.goodId,
+        imgUrl:this.msg.goodImg,
+        name:this.msg.goodName,
+        price:this.msg.goodPrice,
+        available: parseInt( this.msg.isPut),
+        intro:this.msg.detail,
+        Kind:this.msg.goodKind,//商品种类
+        forpet:this.msg.goodUserKind//使用商品的宠物种类
       }
+      console.log(typeof obj.available, typeof this.msg.goodKind,)
       if (obj.goodId) {
         this._goodsUpdate(obj)
       } else {
@@ -300,15 +323,18 @@ export default {
         this.msg.detail = item.detail
         this.msg.goodPrice = item.goodPrice
         this.msg.goodImg = item.goodImg
-        // this.msg.isPut = item.isPut
+        this.msg.isPut = item.isPut
         this.msg.goodKind = item.goodKind
         this.msg.goodUserKind = item.goodUserKind
       }else {
         this.dialogTitle = '添加商品'
-        this.msg.realName = ''
-        this.msg.phone = ''
-        this.msg.address = ''
-        this.msg.goodId = ''
+        this.msg.goodName = null
+        this.msg.detail = null
+        this.msg.goodPrice = null
+        this.msg.goodImg = null
+        this.msg.isPut = '1'
+        this.msg.goodKind = null
+        this.msg.goodUserKind = null
       }
     }
   },
