@@ -31,13 +31,13 @@ func AddAddress(adduserid int, addAddress AddressRecv) error {
 	address.UserProfile = &userpro
 
 	_, err1 := o.Insert(address)
-	_, err2 := o.Update(&userpro)
+	// _, err2 := o.Update(&userpro)
 	if err1 != nil {
 		return err1
 	}
-	if err2 != nil {
-		return err2
-	}
+	// if err2 != nil {
+	// 	return err2
+	// }
 	return nil
 
 }

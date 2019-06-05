@@ -122,9 +122,17 @@ func UpdatePro(id int, updPro UserInfoRecv) error {
 	// pro.Email = updPro.Email
 	pro.Phone = updPro.Phone
 
-	pro.User.Changed = time.Now()
-	_, err := o.Update(&pro)
-	return err
+	user.Changed = time.Now()
+	_, err1 := o.Update(&pro)
+	_, err2 := o.Update(&user)
+	if err1 != nil {
+		return err1
+	}
+	if err2 != nil {
+		return err2
+	}
+
+	return nil
 }
 
 func CheckLog(Account string, Password string) (err error, user *User) {

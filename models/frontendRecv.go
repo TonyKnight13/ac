@@ -15,9 +15,9 @@ type LoginRecv struct {
 
 type GoodsInfoRecv struct {
 	UserId    int
-	Id        int
+	Id        int `json:"goodId"`
 	Name      string
-	Kind      string
+	Kind      string `json:"special"`
 	Price     float32
 	Available int
 	Madein    int
@@ -66,8 +66,8 @@ type DocsSelectRecv struct {
 }
 
 type AddressRecv struct {
-	Id            int
+	Id            int `json:"addressId"`
 	Realname      string
 	Phone         string
-	AddressForLoc string
+	AddressForLoc string `json:"address"`
 }

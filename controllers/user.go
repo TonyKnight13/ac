@@ -214,8 +214,9 @@ func (c *UserController) AddAddress() {
 
 // @router /users/delAddress [post]
 func (c *UserController) DelAddress() {
-	var AddressId int
-	err := RemoveAddress(AddressId)
+	var addressRecv AddressRecv
+	json.Unmarshal(c.Ctx.Input.RequestBody, &addressRecv)
+	err := RemoveAddress(addressRecv.Id)
 	if err != nil {
 		c.Data["json"] = map[string]interface{}{"code": 0, "message": "地址删除失败"}
 		beego.Info(err)

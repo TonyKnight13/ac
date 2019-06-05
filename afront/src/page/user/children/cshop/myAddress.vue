@@ -108,8 +108,14 @@ export default {
     },
     //获取地址列表
     _addressList () {
+      console.log(this.addressList)
       addressList({userId: this.userId}).then(res => {
         let data = res.data.data
+        let data2 =JSON.parse(res.data.data)
+        console.log(data)
+        console.log(data2)
+        console.log(data[0].id)
+        console.log(data2[0].id)
         if (data.length) {
           this.addressList = data
           // console.log(this.addressList)
@@ -117,6 +123,8 @@ export default {
         } else {
           this.addressList = []
         }
+        setStore("sss", this.addressList)
+    getStore("sss")
       })
     },
     _addressUpdate (params) {
@@ -188,6 +196,7 @@ export default {
   created () {
     this.userId = getStore('userId')
     this._addressList()
+    
   },
 };
 </script>
