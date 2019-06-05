@@ -1,5 +1,6 @@
 import Mock from 'mockjs'
 import qs from 'querystring'
+import { getStore,setStore } from '@/utils/storage'
 var Random = require('mockjs').Random;
 const fs = require('fs')
 // 设置全局延时 没有延时的话有时候会检测不到数据变化 建议保留
@@ -193,6 +194,8 @@ Mock.mock('http://localhost:8080/users/logout', 'post', function (msg) {
 //用户信息
 Mock.mock('http://localhost:8080/users/userInfo', 'post', function (msg) {
   console.log(JSON.parse(msg.body))
+  let obj = JSON.parse(msg.body)
+  for(let i=0; i<)
   return {
     code:1
   }
@@ -324,6 +327,7 @@ Mock.mock('http://localhost:8080/users/goodsUpdate', 'post', function (msg) {
           goodsDate[k]=obj
         }
       })
+      console.log(goodsDate, '')
       return{
             code:1
           }
@@ -346,16 +350,7 @@ Mock.mock('http://localhost:8080/users/goodsAdd', 'post', function (msg) {
     }
   }
 })
-// // 删除商品管理页面的商品列表
-// Mock.mock(RegExp('http://localhost:8080/users/goodsPut'), 'post', function (msg) {
-//   console.log(JSON.parse(msg.body))
-//   // console.log(msg)
-//   let arr = JSON.parse(msg.body)
-//   arr.addressId = randomNum
-//   return {
-//     success: true
-//   }
-// })
+
 
 // 商品列表
 Mock.mock(RegExp('http://localhost:8080/shop/navList' + '.*'), 'get', function (msg) {
@@ -363,89 +358,17 @@ Mock.mock(RegExp('http://localhost:8080/shop/navList' + '.*'), 'get', function (
   // let option = msg.url.split('?')[1]
   // console.log(msg, option)
   return {
-    success: true,
-    data: [
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100000
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100001
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100002
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100003
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100000
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100001
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100002
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100003
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100000
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100001
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100002
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100003
-      }
-
-    ]
+    code: 1,
+    data: goodsDate
   }
 })
+
 // 商品详情页
-Mock.mock(RegExp('http://localhost:8080/shop/goodsDetail' + '.*'), 'get', function (msg) {
+Mock.mock(RegExp('http://localhost:8080/shop/goodsDetail'), 'post', function (msg) {
   console.log(JSON.parse(msg.body))
   // let option = msg.url.split('?')[1]
   // console.log(msg, option)
+
   return {
     goodImg: require('@/assets/images/shop/1.jpg'),
     goodName: '宠物狗食品',

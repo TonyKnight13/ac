@@ -8,17 +8,17 @@
       :header-cell-style="{background:'#F3F4F7',color:'#555'}">
         <el-table-column label="商品图片" width="120" align="center">
           <template slot-scope="scope">            
-            <img :src="scope.row.imgUrl" @click="goodsintros(scope.row.goodId)" />
+            <el-image :src="scope.row.imgUrl" fit="contain" @click="goodsintros(scope.row.goodId)"></el-image>
           </template>
         </el-table-column>
-        <el-table-column prop="goodName" label="商品名称" width="120" align="center">
+        <el-table-column prop="name" label="商品名称" width="120" align="center">
         </el-table-column>
         <el-table-column prop="price" label="商品单价(￥)" width="120" align="center">
         </el-table-column>
-        <el-table-column prop="kind" label="商品种类" width="200" align="center">
-          <!-- <template slot-scope="scope">
-            <span>{{scope.row.kind}}</span>
-          </template> -->
+        <el-table-column prop="speci" label="商品种类" width="200" align="center">
+          <template slot-scope="scope">
+            <span>{{scope.row.speci}}</span>
+          </template>
         </el-table-column>
         <el-table-column prop="forpet" label="适用商品的宠物种类" width="200" align="center">
           <template slot-scope="scope">
@@ -48,8 +48,8 @@
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" center @close="closeDilog('msg')">
       <!-- <div slot="content" class="md" :data-goodId="msg.goodId"> -->
         <el-form :model="msg" ref="msg" :rules="rules">
-          <el-form-item prop="goodName">
-            <el-input placeholder="商品名称" v-model="msg.goodName"></el-input>
+          <el-form-item prop="name">
+            <el-input placeholder="商品名称" v-model="msg.name"></el-input>
           </el-form-item>
           <el-form-item>
             <el-input type="textarea" placeholder="商品描述" :rows="2" v-model="msg.intro"></el-input>
@@ -57,8 +57,8 @@
           <el-form-item prop="price">
             <el-input placeholder="商品单价(￥)" v-model="msg.price"></el-input>
           </el-form-item>
-          <el-form-item prop="Kind">
-            <el-select v-model="msg.Kind" placeholder="商品种类">
+          <el-form-item prop="speci">
+            <el-select v-model="msg.speci" placeholder="商品种类">
               <el-option
                 v-for="item in options1"
                 :key="item.value"
@@ -113,16 +113,15 @@
 
 <script>
 import { goodsList, goodsUpdate, goodsAdd, goodsPut } from '@/api/index'
-import { getStore } from '@/utils/storage'
+import { getStore,setStore } from '@/utils/storage'
 import YShelf from '@/components/shelf';
 export default {
-  goodName: 'MyAddress',
+  name: 'MyAddress',
   components:{
     YShelf
   },
   data () {
     return {
-      
       options:[{
           value: 0,
           label: '国内'
@@ -191,20 +190,20 @@ export default {
         }],
       msg: {
         goodId:'',
-        goodName:'',
+        name:'',
         intro:'',
         madein:null,
         price:null,
         imgUrl:null,
         available:'1',
-        Kind:'',//商品种类
+        speci:null,//商品种类
         forpet:'',//使用商品的宠物种类
       },
 
 
       userId: '',
       rules: {
-        goodName: [
+        name: [
           { required: true, message: '商品名称', trigger: 'blur' }
         ],
         price: [
@@ -213,7 +212,7 @@ export default {
         imgUrl: [
           { required: true, message: '请输入商品图片', trigger: 'blur' }
         ],
-        Kind: [
+        speci: [
           { required: true, message: '请输入商品种类', trigger: 'blur' }
         ],
         forpet: [
@@ -226,7 +225,7 @@ export default {
     trueORfalse () {
       let msg = this.msg
       return false
-      return !Boolean(msg.goodName && msg.price && msg.imgUrl && msg.Kind && msg.forpet)
+      return !Boolean(msg.name && msg.price && msg.imgUrl && msg.speci && msg.forpet)
     }
   },
   methods: {
@@ -234,7 +233,7 @@ export default {
         // 利用fileReader对象获取file
         var file = e.target.files[0];
         var filesize = file.size;
-        var filegoodName = file.goodName;
+        var filename = file.name;
         // 2,621,440   2M
         if (filesize > 2101440) {
             // 图片大于2MB
@@ -246,8 +245,8 @@ export default {
         reader.onload = (e) => {
             // 读取到的图片base64 数据编码 将此编码字符串传给后台即可
             var imgcode = e.target.result;
-            this.msg.userImg=imgcode
-            console.log(this.msg.userImg);
+            this.msg.imgUrl=imgcode
+            console.log(this.msg.imgUrl );
         }
     },
     closeDilog:function(form){
@@ -266,7 +265,7 @@ export default {
         console.log( res.data.data, data.length)
         if (data.length>0) {
           this.goodsList = data
-          console.log(this.goodsList)
+          console.log(this.goodsList[0],this.goodsList[0].speci )
           // this.goodId = res.result[0].goodId || '1'
         } else {
           this.goodsList = []
@@ -293,19 +292,18 @@ export default {
     // 保存
     save () {
       this.dialogVisible = false
-      
+      console.log(this.msg.speci)
       let obj = {
         userId:this.userId,
         goodId:this.msg.goodId,
         imgUrl:this.msg.imgUrl,
-        goodName:this.msg.goodName,
+        name:this.msg.name,
         price:this.msg.price,
         available: this.msg.available,
         intro:this.msg.intro,
-        Kind:this.msg.Kind,//商品种类
+        speci:this.msg.speci,//商品种类
         forpet:this.msg.forpet//使用商品的宠物种类
       }
-      console.log(typeof obj.available, typeof this.msg.Kind,)
       if (obj.goodId) {
         this._goodsUpdate(obj)
       } else {
@@ -314,21 +312,6 @@ export default {
       }
     },
 
-    // 删除
-    // del (goodId,i) {
-    //   goodsPut({goodId: goodId}).then(res => {
-    //     if (res.data.success === true) {
-    //       this.goodsList.forEach((item,i) => {
-    //         if(item.goodId == goodId){
-    //           this.goodsList.splice(i, 1)
-    //         }
-    //       });
-    //     } else {
-    //       this.message('删除失败')
-    //     }
-    //   })
-    // },
-
     // 修改
     update(item){
       // console.log(item)
@@ -336,22 +319,24 @@ export default {
       if(item){
         this.dialogTitle = '修改商品'
         this.userId =this.userId
-        this.msg.goodName = item.goodName
+        this.msg.goodId = item.goodId
+        this.msg.name = item.name
         this.msg.intro = item.intro
         this.msg.price = item.price
         this.msg.imgUrl = item.imgUrl
         this.msg.available = item.available
-        this.msg.Kind = item.Kind
+        this.msg.speci = item.speci
         this.msg.forpet = item.forpet
       }else {
         this.dialogTitle = '添加商品'
         this.userId =this.userId
-        this.msg.goodName = null
+        this.msg.goodId = null
+        this.msg.name = null
         this.msg.intro = null
         this.msg.price = null
         this.msg.imgUrl = null
         this.msg.available = '1'
-        this.msg.Kind = null
+        this.msg.speci = null
         this.msg.forpet = null
       }
     }

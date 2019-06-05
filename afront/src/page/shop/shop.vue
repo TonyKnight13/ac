@@ -16,7 +16,7 @@
           <div class="screen-item">
             <span>商品种类：</span>
             <div class="item-check">
-              <el-checkbox-group  @change="onChange1" v-model="goodKindcheked" :max='2'>
+              <el-checkbox-group  @change="onChange1" v-model="speci" :max='2'>
                 <el-checkbox v-for="speci in goodKind" :label="speci" :key="speci" >{{speci}}</el-checkbox>
               </el-checkbox-group>
             </div>
@@ -25,7 +25,7 @@
           <div class="screen-item">
             <span>宠物种类：</span>
             <div class="item-check">
-              <el-checkbox-group @change="onChange2" v-model="goodUserKindchecked">
+              <el-checkbox-group @change="onChange2" v-model="province">
                 <el-checkbox v-for="province in goodUserKind" :label="province" :key="province">{{province}}</el-checkbox>
               </el-checkbox-group>
             </div>
@@ -34,8 +34,8 @@
           <div class="screen-item">
             <span>产地：</span>
             <div class="item-check">
-              <el-checkbox-group @change="onChange3" v-model="placeChecked">
-                <el-checkbox v-for="place in places" :label="province" :key="place">{{place}}</el-checkbox>
+              <el-checkbox-group @change="onChange3" v-model="place">
+                <el-checkbox v-for="place in places" :label="place" :key="place">{{place}}</el-checkbox>
               </el-checkbox-group>
             </div>
           </div>
@@ -64,12 +64,14 @@
               style="margin-top:0.5rem"
               v-for="(item,index) in resultGood.slice((currentPage-1)*6,currentPage*6)" :key="index">
                 <el-card :body-style="{ padding: '0px' }" shadow="hover">
-                      <el-image fit="contain"  :src="item.goodImg"></el-image>
+                      <el-image fit="container"  :src="item.imgUrl"></el-image>
                       <div style="padding: 10px;text-align:left">
-                        <span class="good-name">{{item.goodName}}</span>
-                        <span class="price">¥{{item.goodPrice}}</span>
+                        <span class="good-name">{{item.name}}</span>
+                        <span class="price">¥{{item.price}}</span>
+                      </div>
+                      <div style="padding: 10px;text-align:left">
                         <el-button type="danger" size="mini" @click.native="toDescript(item.goodId)">查看详情</el-button>
-                        <el-button type="danger" size="mini" style="float:right" @click.native="_addCart(item.goodId, item.goodName, item.goodPrice, item.goodImg)">加入购物车</el-button>
+                        <el-button type="danger" size="mini" style="float:right" @click.native="_addCart(item.goodId, item.name, item.price, item.imgUrl)">加入购物车</el-button>
                       </div>
                 </el-card>
               </el-col>
@@ -126,9 +128,9 @@ export default {
       goodUserKind,
       places:['国内','进口'], //产地
       num:1,
-      goodKindcheked:[],  //选中的商品种类
-      goodUserKindchecked:[],  //选中的宠物种类
-      placeChecked:[],
+      speci:'',  //选中的商品种类
+      province:'',  //选中的宠物种类
+      place:'',
       currentPage:1,
       total:0,
       userId:'',
@@ -155,11 +157,11 @@ export default {
       if(value.length>1){
         value.splice(0,1);
       }console.log(value)
-      this.selectObj.goodKindcheked=value
+      this.selectObj.speci=value
     },
     onChange2(value){
       console.log(value)
-      this.selectObj.goodUserKindchecked=value
+      this.selectObj.province=value
     },
     onChange3(value){
       if(value[0] == '国内'){
@@ -192,9 +194,9 @@ export default {
           // 并不重新请求数据
           this.ADD_CART({
             goodId: id,
-            goodPrice: price,
-            goodName: name,
-            goodImg: img,
+            price: price,
+            name: name,
+            imgUrl: img,
             goodNum: this.num
           })
         })
@@ -202,7 +204,7 @@ export default {
     //获取商品列表
     _navList(){
       navList().then(res => {
-        if(res.data.success == true){
+        if(res.data.code == 1){
           this.resultGood = res.data.data
           this.resultnum = this.total =res.data.data.length
           console.log(this.resultGood, '')
