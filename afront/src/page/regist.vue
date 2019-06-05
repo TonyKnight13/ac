@@ -43,6 +43,7 @@
 <script>
 import { mapActions,mapState } from 'vuex'
 import { register} from '@/api/index.js'
+import { getStore,setStore } from '@/utils/storage'
 export default {
   name:"regist",
   components:{
@@ -134,6 +135,9 @@ export default {
       })
        
     }
+  },
+  created() {
+    
   },
 }
 </script>
