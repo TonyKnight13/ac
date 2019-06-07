@@ -34,15 +34,15 @@
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" center @close="closeDilog('msg')">
       <!-- <div slot="content" class="md" :data-id="msg.addressId"> -->
         <el-form :model="msg" ref="msg" :rules="rules" :data-id="msg.addressId">
-          <el-form-item prop="realName">
-            <el-input placeholder="收货人姓名" v-model="msg.realName"></el-input>
-          </el-form-item>
-          <el-form-item prop="phone">
-            <el-input placeholder="手机号码" v-model="msg.phone"></el-input>
-          </el-form-item>
-          <el-form-item prop="address">
-            <el-input placeholder="收货地址" v-model="msg.address"></el-input>
-          </el-form-item>
+            <el-form-item prop="realName">
+              <el-input placeholder="收货人姓名" v-model="msg.realName"></el-input>
+            </el-form-item>
+            <el-form-item prop="phone">
+              <el-input placeholder="手机号码" v-model="msg.phone"></el-input>
+            </el-form-item>
+            <el-form-item prop="address">
+              <el-input placeholder="收货地址" v-model="msg.address"></el-input>
+            </el-form-item>
         </el-form>
         <el-button 
         :disabled=trueORfalse

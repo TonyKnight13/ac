@@ -59,7 +59,7 @@ export default {
       this.$router.push({path:'/login'})
     },
     toUser(){
-      this.$router.push({path:'/userbase'})
+      this.$router.push({path:'/changepwd'})
     },
     loginout(){
       this.$store.dispatch("logout");

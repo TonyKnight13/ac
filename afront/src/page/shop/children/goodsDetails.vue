@@ -4,13 +4,13 @@
 
     <div class="content">
       <div class="img-content">
-        <el-image :src="goodImg" fit="contain"></el-image>
+        <el-image :src="imgUrl" fit="contain"></el-image>
       </div>
       <div class="text-content">
-        <p style="font-size:0.4rem;font-weight:bold">{{goodName}}</p>
+        <p style="font-size:0.4rem;font-weight:bold">{{name}}</p>
         <p style="margin-top:0.2rem;">
-          <span style="margin-right:0.3rem;font-size:0.16rem">{{detail}}</span>
-          <span style="color:rgba(245,108,108,1);font-weight:bold;font-size:0.24rem">¥{{goodPrice.split(".")[0]}}.{{goodPrice.split(".")[1]}}</span>
+          <span style="margin-right:0.3rem;font-size:0.16rem">{{intro}}</span>
+          <span style="color:rgba(245,108,108,1);font-weight:bold;font-size:0.24rem">¥{{price.split(".")[0]}}.{{price.split(".")[1]}}</span>
         </p>
         <el-divider></el-divider>
         <p>
@@ -19,7 +19,7 @@
         </p>
         <el-divider></el-divider>
         <el-button
-        @click="_addCart(goodId,goodImg, goodName, goodPrice)">加入购物车</el-button>
+        @click="_addCart(goodId,imgUrl, name, price)">加入购物车</el-button>
         <el-button
         style="background:#ffffff"
         @click="payCheck(goodId,num)">现在购买</el-button>
@@ -43,10 +43,10 @@ export default {
   data() {
     return {
       // good:{
-      goodImg:'',
-      detail:'',
-      goodName:'',
-      goodPrice: '',
+      imgUrl:'',
+      intro:'',
+      name:'',
+      price: '',
       goodId:'',
       // },
       num:1,
@@ -60,13 +60,13 @@ export default {
     ...mapMutations(['ADD_CART']),
     _productDet (goodId) { 
       productDet({goodId:goodId}).then(res => {  
-        console.log(res.data.goodName)
+        console.log(res)
         let result = res.data
-        this.goodName = result.goodName
-        this.detail = result.detail || ''
+        this.name = result.name
+        this.intro = result.intro || ''
         this.goodId = result.goodId
-        this.goodPrice = result.goodPrice
-        this.goodImg = result.goodImg
+        this.price = result.price
+        this.imgUrl = result.imgUrl
       })
     },
     _addCart(id,img, name,price){
@@ -75,9 +75,9 @@ export default {
           // 并不重新请求数据
           this.ADD_CART({
             goodId: id,
-            goodPrice: price,
-            goodImg: name,
-            goodImg: img,
+            price: price,
+            imgUrl: name,
+            imgUrl: img,
             goodNum: this.num
           })
         })
