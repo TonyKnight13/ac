@@ -101,11 +101,11 @@ const router = new Router({
       name:'usercenter',  
       component:usercenter,
       children:[
-        // {
-        //   path:'/userbase',
-        //   name:'userbase',
-        //   component:resolve => require(['../page/user/children/cbase/userbase.vue'], resolve)
-        // },
+        {
+          path:'/userbase',
+          name:'userbase',
+          component:resolve => require(['../page/user/children/cbase/userbase.vue'], resolve)
+        },
         {
           path:'/changepwd',
           name:'changepwd',
