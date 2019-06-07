@@ -53,7 +53,7 @@ type UserInfoRecv struct {
 	Username string
 	Sex      int
 	Phone    string
-	Address  string
+	Address  string //医院殡葬
 	Province string
 	Hobby    string
 	Intro    string
