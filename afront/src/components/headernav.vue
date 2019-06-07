@@ -40,11 +40,14 @@
 </template>
 <script>
 import { loginOut } from '@/api/index.js';
+import {getStore, removeStore} from "@/utils/storage"
+
 export default {
   name:'headernav',
   data(){
     return{
-      
+      userId:null,
+      identity:null,
     }
   },
   computed: {
@@ -63,17 +66,19 @@ export default {
     },
     loginout(){
       this.$store.dispatch("logout");
-      loginOut({userId: sessionStorage.getItem("userId")}).then(res => {
-        if(res.data.code == 1){
-          this.$router.replace({path:'/'})
-        }
+      this.$router.replace({path:'/'})
+      loginOut({userId: this.userId}).then(res => {
       })
     },
 
     toCart(){
       this.$router.push({path:'/cart'})
     }
-  }
+  },
+  created() {
+    this.userId=getStore('userId')
+    this.identity=getStore("identity")
+  },
 }
 </script>
 <style scoped>
