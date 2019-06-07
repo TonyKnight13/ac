@@ -126,8 +126,8 @@ import {getStore} from "@/utils/storage"
 import { mapMutations } from 'vuex'
 import BMap from 'BMap'
 
-const specials=['不限', '狗', '猫', '兔子', '水生', '鸟', '两栖']
-const areas=['不限', '浙江', '上海', '江苏', '北京', '四川', '台湾', '云南', '西藏', '黑龙江']
+const specials=['狗', '猫', '兔子', '水生', '鸟', '两栖']
+const areas=['浙江', '上海', '江苏', '北京', '四川', '台湾', '云南', '西藏', '黑龙江']
 export default {
   name:"shop",
   components:{
@@ -156,8 +156,8 @@ export default {
       activeName:'doctor',  //当前选中的tab标签
       selectObj:{      //筛选用的数据体
         // physicTag:'',//physicTag  选中的是医生还是医院标签
-        specialcheked:['不限'], //选中的宠物种类
-        areachecked:['不限'] //选中的地区
+        specialcheked:[], //选中的宠物种类
+        areachecked:[] //选中的地区
       },    
       specials,
       areas,
@@ -230,25 +230,15 @@ export default {
     onChange1(value){
       if(value.length>1){
         value.splice(0,1);
-      }   
-      // console.log(value)
+      }console.log(value)
       this.selectObj.specialcheked=value
     },
     onChange2(value){
-      // 当前不限未选中，选中不限后的结果
-      let len=value.length-1
-      if(value[len]=="不限"){
-        value.splice(0,len);
-        value.push("不限")
-      }//当前不限选中
-      if(value[len]!="不限"){
-        if(value[0]=="不限"){
-          value.splice(0,1);
-        }
-      }
-      // console.log(value)
+      console.log(value)
       this.selectObj.areachecked=value
     },
+
+
     //搜索
     search(){
       // this.selectObj.physicTag=this.activeName  
@@ -289,7 +279,9 @@ export default {
     //医生筛选时返回的数据
     _search(){  
       docSelect(this.selectObj).then(res =>{
-        this._docNavList()
+        if(res.data.code == 1){
+          this.docList=res.data.data
+        }
       })
     }
   },

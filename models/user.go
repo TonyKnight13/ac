@@ -3,6 +3,8 @@ package models
 import (
 	"time"
 
+	"github.com/astaxie/beego"
+
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/validation"
 	"github.com/gogather/com"
@@ -122,9 +124,17 @@ func UpdatePro(id int, updPro UserInfoRecv) error {
 	// pro.Email = updPro.Email
 	pro.Phone = updPro.Phone
 
-	pro.User.Changed = time.Now()
-	_, err := o.Update(&pro)
-	return err
+	user.Changed = time.Now()
+	_, err1 := o.Update(&pro)
+	_, err2 := o.Update(&user)
+	if err1 != nil {
+		return err1
+	}
+	if err2 != nil {
+		return err2
+	}
+
+	return nil
 }
 
 func CheckLog(Account string, Password string) (err error, user *User) {
@@ -159,9 +169,16 @@ func ChangePwd(userid interface{}, pwd string) error {
 
 func GetUserListByIdentity(Identity int) (error, []*UserProfile) {
 	var userPros []*UserProfile
+	var users []*User
 	o := orm.NewOrm()
-	_, err := o.QueryTable("user_profile").Filter("identity", Identity).All(&userPros)
-	return err, userPros
+	_, err1 := o.QueryTable("user").Filter("identity", Identity).All(&users)
+	if err1 != nil {
+	}
+	for _, user := range users {
+		userPros = append(userPros, user.UserProfile)
+	}
+	beego.Info(userPros)
+	return err1, userPros
 }
 
 func SelecrDoc(docSelectRecv DocsSelectRecv) (error, []*UserInfoRecv) {

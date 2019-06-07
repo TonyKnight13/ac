@@ -8,6 +8,56 @@ Mock.setup({
   timeout: '300-600'
 })
 
+let docData=[
+  {
+    img:require('@/assets/images/doc/1.jpg'),
+    realName: '王大刚',
+    special:'狗',
+    area:'浙江'
+  },
+  {
+    img:require('@/assets/images/doc/2.jpg'),
+    realName: '李莉',
+    special:'猫',
+    area:'浙江'
+  },
+  {
+    img:require('@/assets/images/doc/3.jpg'),
+    realName: '邱雪',
+    special:'水生',
+    area:'浙江'
+  },
+  {
+    img:require('@/assets/images/doc/4.jpg'),
+    realName: '赵思思',
+    special:'兔子',
+    area:'南京'
+  },
+  {
+    img:require('@/assets/images/doc/5.jpg'),
+    realName: '王晓梦',
+    special:'狗',
+    area:'北京'
+  },
+  {
+    img:require('@/assets/images/doc/6.jpg'),
+    realName: '吴小兰',
+    special:'狗',
+    area:'上海'
+  }
+]
+let HospitalData=[
+  {
+    img:require('@/assets/images/hospital/1.jpg'),
+    name: '爱宠医院001',
+    address:'杭州电子科技大学东边'
+  },
+  {
+    img:require('@/assets/images/hospital/2.jpg'),
+    name: '爱宠医院002',
+    address:'杭州电子科技大学西边'
+  }
+]
 // 用户
 let userDate=[
   // {  //内容
@@ -582,85 +632,33 @@ Mock.mock(RegExp('http://localhost:8080/hospital/hospitalNavList' + '.*'), 'get'
 // 医生列表
 Mock.mock(RegExp('http://localhost:8080/hospital/docNavList' + '.*'), 'get', function (msg) {
   console.log(JSON.parse(msg.body))
-  // let option = msg.url.split('?')[1]
-  // console.log(msg, option)
-  return {
-    success: true,
-    code: 1,
-    data: [
-      {
-        image: require('@/assets/images/shop/1.jpg'),
-        name: '李珊珊',
-        speciality: ['猫', '狗'],
-        physicId: 100000 // 医生或医院的id
-      },
-      {
-        image: require('@/assets/images/shop/1.jpg'),
-        name: '童晓红',
-        speciality: ['两栖类'],
-        physicId: 100010 // 医生或医院的id
-      },
-      {
-        image: require('@/assets/images/shop/1.jpg'),
-        name: '李莉',
-        speciality: ['水生']
-      },
-      {
-        image: require('@/assets/images/shop/1.jpg'),
-        name: '李珊珊',
-        speciality: ['猫', '狗'],
-        physicId: 100110 // 医生或医院的id
 
-      },
-      {
-        image: require('@/assets/images/shop/1.jpg'),
-        name: '童晓红',
-        speciality: ['两栖类']
-      },
-      {
-        image: require('@/assets/images/shop/1.jpg'),
-        name: '李莉',
-        speciality: ['水生']
-      },
-      {
-        image: require('@/assets/images/shop/1.jpg'),
-        name: '李珊珊',
-        speciality: ['猫', '狗']
-      },
-      {
-        image: require('@/assets/images/shop/1.jpg'),
-        name: '童晓红',
-        speciality: ['两栖类']
-      },
-      {
-        image: require('@/assets/images/shop/1.jpg'),
-        name: '李莉',
-        speciality: ['水生']
-      },
-      {
-        image: require('@/assets/images/shop/1.jpg'),
-        name: '李珊珊',
-        speciality: ['猫', '狗']
-      },
-      {
-        image: require('@/assets/images/shop/1.jpg'),
-        name: '童晓红',
-        speciality: ['两栖类']
-      },
-      {
-        image: require('@/assets/images/shop/1.jpg'),
-        name: '李莉',
-        speciality: ['水生']
-      },
-    ]
+  return {
+    code:1,
+    data:docData,
   }
 })
 // 医生筛选
 Mock.mock(RegExp('http://localhost:8080/hospital/docSelect'), 'post', function (msg) {
   console.log(JSON.parse(msg.body))
+  let obj=JSON.parse(msg.body)
+  let arr=[]
   // let option = msg.url.split('?')[1]
   // console.log(msg, option)
+  docData.forEach((item,i)=>{
+    if(obj.specialcheked.length==0){
+      if(obj.areachecked.length ==0){
+        arr=docData
+      }
+    }
+    if(item.special == obj.specialcheked[0] && item.area ==  obj.areachecked[0]){
+      arr.push(item)
+    }
+
+  })
   return {
+    code:1,
+    data:arr,
   }
 })
 //殡葬管理
