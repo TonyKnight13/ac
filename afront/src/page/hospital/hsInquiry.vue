@@ -54,13 +54,13 @@
           style="width: 100%" :header-cell-style="{background:'#F3F4F7',color:'#555'}">
             <el-table-column  width="200">
               <template slot-scope="scope">
-                <el-image :src="scope.row.image" fit="contain"></el-image>
+                <el-image :src="scope.row.img" fit="contain"></el-image>
               </template>
             </el-table-column>
             <el-table-column  width="">
               <template slot-scope="scope">
-                <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.name}}</span><br>
-                <span style="font-weight:600;font-size:0.26rem;">专业：{{scope.row.speciality.join('/')}}</span>
+                <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.realName}}</span><br>
+                <span style="font-weight:600;font-size:0.26rem;">专业：{{scope.row.special}}</span>
               </template>
             </el-table-column>
             <el-table-column align="right">
@@ -159,6 +159,8 @@ export default {
         specialcheked:[], //选中的宠物种类
         areachecked:[] //选中的地区
       },    
+      specialcheked:[], //选中的宠物种类
+        areachecked:[], //选中的地区
       specials,
       areas,
       num:1,

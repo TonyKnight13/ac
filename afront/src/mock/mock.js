@@ -245,7 +245,7 @@ Mock.mock('http://localhost:8080/users/logout', 'post', function (msg) {
 Mock.mock('http://localhost:8080/users/userInfo', 'post', function (msg) {
   console.log(JSON.parse(msg.body))
   let obj = JSON.parse(msg.body)
-  for(let i=0; i<)
+  // for(let i=0; i<)
   return {
     code:1
   }
@@ -664,7 +664,7 @@ Mock.mock(RegExp('http://localhost:8080/hospital/hospitalNavList' + '.*'), 'get'
   }
 })
 // 医生列表
-Mock.mock(RegExp('http://localhost:8080/hospital/docNavList' + '.*'), 'get', function (msg) {
+Mock.mock(RegExp('http://localhost:8080/hospital/docNavList' ), 'get', function (msg) {
   console.log(JSON.parse(msg.body))
 
   return {
