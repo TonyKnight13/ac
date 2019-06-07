@@ -235,7 +235,7 @@ export default {
 
   },
   created() {
-    this.userId=getStore('user')
+    this.userId=getStore('userId')
     this._getCartList()
   },
 }

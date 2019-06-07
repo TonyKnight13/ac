@@ -63,7 +63,6 @@
 import { userInfo, userInfoUpdate} from '@/api/index'
 import { getStore, setStore } from '@/utils/storage'
 import YShelf from '@/components/shelf';
-
 var op2 = [{
           value: '狗',
           label: '狗'
@@ -132,7 +131,6 @@ export default {
           {required: true, message: '头像不能为空', trigger: 'blur' }
         ]
       }
-
     };
   },
   methods:{
@@ -160,7 +158,6 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-
     //初始化用户信息
     _userInfo () {
       userInfo({userId: this.userId}).then(res => {
@@ -205,7 +202,6 @@ export default {
             sex:parseInt(this.msg.sex) ,
             hobby:this.msg.hobby,
             img:this.msg.userImg,
-
             phone:this.msg.phone,
             address:this.msg.address,
             special:this.msg.special,
@@ -216,7 +212,6 @@ export default {
         }
       })
     },
-
     //修改信息
     _userInfoUpdate (params) {
       setStore("userInfo",params)
@@ -271,4 +266,3 @@ export default {
   background: #ebebeb !important
 }
 </style>
-

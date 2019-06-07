@@ -22,7 +22,7 @@ Vue.use(VueCookie)
 // import Distpicker from 'v-distpicker';
 // Vue.component('v-distpicker', Distpicker);
 
-require('./mock/mock')
+// require('./mock/mock')
 
 Vue.config.debug = true // 开启错误提示
 new Vue({

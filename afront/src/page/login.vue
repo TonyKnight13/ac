@@ -112,8 +112,8 @@ export default {
               //登录成功后跳转到指定页面
               this.$router.replace("/");
               if(res.data.identity == '1'){ //如果是商家用户，则新开一个窗口并跳转到聊天室页面
-                let route =this.$router.resolve({path: '/chart'});
-                window.open(route.href,'_blank')
+              //   let route =this.$router.resolve({path: '/chart'});
+              //   window.open(route.href,'_blank')
               }
             }
           })

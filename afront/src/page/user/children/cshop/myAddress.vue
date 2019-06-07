@@ -6,11 +6,11 @@
 
       <el-table :data="addressList" v-if="addressList.length" style="width: 100%" ref="multipleTable"
       :header-cell-style="{background:'#F3F4F7',color:'#555'}">
-        <el-table-column prop="realName" label="姓名" width="120" align="center">
+        <el-table-column prop="Realname" label="姓名" width="120" align="center">
         </el-table-column>
-        <el-table-column prop="phone" label="电话" width="120" align="center">
+        <el-table-column prop="Phone" label="电话" width="120" align="center">
         </el-table-column>
-        <el-table-column prop="address" label="地址" width="200" align="center">
+        <el-table-column prop="AddressForLoc" label="地址" width="200" align="center">
         </el-table-column>
         <el-table-column label="操作" align="center" >
             <template slot-scope="scope">
@@ -34,15 +34,15 @@
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" center @close="closeDilog('msg')">
       <!-- <div slot="content" class="md" :data-id="msg.addressId"> -->
         <el-form :model="msg" ref="msg" :rules="rules" :data-id="msg.addressId">
-          <el-form-item prop="realName">
-            <el-input placeholder="收货人姓名" v-model="msg.realName"></el-input>
-          </el-form-item>
-          <el-form-item prop="phone">
-            <el-input placeholder="手机号码" v-model="msg.phone"></el-input>
-          </el-form-item>
-          <el-form-item prop="address">
-            <el-input placeholder="收货地址" v-model="msg.address"></el-input>
-          </el-form-item>
+            <el-form-item prop="Realname">
+              <el-input placeholder="收货人姓名" v-model="msg.Realname"></el-input>
+            </el-form-item>
+            <el-form-item prop="Phone">
+              <el-input placeholder="手机号码" v-model="msg.Phone"></el-input>
+            </el-form-item>
+            <el-form-item prop="AddressForLoc">
+              <el-input placeholder="收货地址" v-model="msg.AddressForLoc"></el-input>
+            </el-form-item>
         </el-form>
         <el-button 
         :disabled=trueORfalse
@@ -71,19 +71,19 @@ export default {
       dialogVisible:false,
       msg: {
         addressId: '',
-        realName: '',
-        address: '',
-        phone: '',
+        Realname: '',
+        AddressForLoc: '',
+        Phone: '',
       },
       userId: '',
       rules: {
-        realName: [
+        Realname: [
           { required: true, message: '请输入姓名', trigger: 'blur' }
         ],
-        address: [
+        AddressForLoc: [
           { required: true, message: '请输入地址', trigger: 'blur' }
         ],
-        phone: [
+        Phone: [
           { required: true, message: '手机号不能为空', trigger: 'blur' },
           { type: 'string', pattern: /^1[3|4|5|7|8][0-9]{9}$/, message: '手机号格式出错', trigger: 'blur' }
         ]
@@ -93,7 +93,7 @@ export default {
   computed: {
     trueORfalse () {
       let msg = this.msg
-      return !Boolean(msg.realName && msg.phone && msg.address)
+      return !Boolean(msg.Realname && msg.Phone && msg.AddressForLoc)
     }
   },
   methods: {
@@ -111,11 +111,6 @@ export default {
       console.log(this.addressList)
       addressList({userId: this.userId}).then(res => {
         let data = res.data.data
-        let data2 =JSON.parse(res.data.data)
-        console.log(data)
-        console.log(data2)
-        console.log(data[0].id)
-        console.log(data2[0].id)
         if (data.length) {
           this.addressList = data
           // console.log(this.addressList)
@@ -148,9 +143,9 @@ export default {
       let obj = {
         userId:this.userId,
         addressId:this.msg.addressId,
-        realName:this.msg.realName,
-        phone:this.msg.phone,
-        address:this.msg.address
+        Realname:this.msg.Realname,
+        Phone:this.msg.Phone,
+        AddressForLoc:this.msg.AddressForLoc
       }
       
       if (obj.addressId) {
@@ -180,15 +175,15 @@ export default {
       this.dialogVisible=true;
       if(item){
         this.dialogTitle = '修改收货地址'
-        this.msg.realName = item.realName
-        this.msg.phone = item.phone
-        this.msg.address = item.address
+        this.msg.Realname = item.Realname
+        this.msg.Phone = item.Phone
+        this.msg.AddressForLoc = item.AddressForLoc
         this.msg.addressId = item.addressId
       }else {
         this.dialogTitle = '新增收货地址'
-        this.msg.realName = ''
-        this.msg.phone = ''
-        this.msg.address = ''
+        this.msg.Realname = ''
+        this.msg.Phone = ''
+        this.msg.AddressForLoc = ''
         this.msg.addressId = ''
       }
     }

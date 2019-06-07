@@ -224,7 +224,7 @@ export default {
 
   },
   created(){
-    this.userId = getStore('user')
+    this.userId = getStore('userId')
     let query=this.$route.query
     if (query.goodId && query.goodNum) {
       this.goodId = query.goodId
@@ -286,7 +286,7 @@ export default {
     width:10rem;
     cursor:pointer;
   }
-  .rg{
+  .rg{  
     width: 2.5rem;
     text-align: center;
   }

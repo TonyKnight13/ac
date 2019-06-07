@@ -194,6 +194,7 @@ Mock.mock('http://localhost:8080/users/register', 'post', function (msg) {
       password: user.password1,
       identity: user.identity,
       addressList:[],
+      cartList:[],
       orderList:[],
       userInfo:{},
       goodsList:[],
@@ -245,7 +246,6 @@ Mock.mock('http://localhost:8080/users/logout', 'post', function (msg) {
 Mock.mock('http://localhost:8080/users/userInfo', 'post', function (msg) {
   console.log(JSON.parse(msg.body))
   let obj = JSON.parse(msg.body)
-  // for(let i=0; i<)
   return {
     code:1
   }
@@ -418,48 +418,33 @@ Mock.mock(RegExp('http://localhost:8080/shop/goodsDetail'), 'post', function (ms
   console.log(JSON.parse(msg.body))
   // let option = msg.url.split('?')[1]
   // console.log(msg, option)
+  let obj =JSON.parse(msg.body)
+  let arr= {}
+  goodsDate.forEach((item,i)=>{
+    if(item.goodId == obj.goodId){
+      console.log(item, '')
+      arr = item
+    }
 
-  return {
-    goodImg: require('@/assets/images/shop/1.jpg'),
-    goodName: '宠物狗食品',
-    goodPrice: '100.00',
-    detail: '这是适合小型犬的食物，营养丰富...',
-    goodId: '200000'
-  }
+  })
+  return arr
+  
 })
 // 商品筛选
 Mock.mock(RegExp('http://localhost:8080/shop/goodsListSelect'), 'post', function (msg) {
   console.log(JSON.parse(msg.body))
+  let obj=JSON.parse(msg.body)
+  let arr=[]
+  goodsDate.forEach((item,i)=>{
+    if(item.speci == obj.speci && item.forpet==obj.province ){
+      arr.push(item)
+    }
+  })
   // let option = msg.url.split('?')[1]
   // console.log(msg, option)
   return {
-    success: true,
-    data: [
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100000
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100001
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100002
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: 100003
-      }
-    ]
+    code: 1,
+    data :arr
   }
 })
 
@@ -467,6 +452,12 @@ Mock.mock(RegExp('http://localhost:8080/shop/goodsListSelect'), 'post', function
 Mock.mock(RegExp('http://localhost:8080/shop/cartAdd'), 'post', function (msg) {
   console.log(JSON.parse(msg.body))
   // console.log(msg)
+  let obj= JSON.parse(msg.body)
+  userDate.forEach((item,i)=>{
+    if(item.userId == obj.userId){
+      item.cartList.push(obj)
+    }
+  })
   return {
   }
 })
@@ -475,31 +466,6 @@ Mock.mock(RegExp('http://localhost:8080/shop/cartList'), 'post', function (msg) 
   console.log(JSON.parse(msg.body))
   // console.log(msg)
   return {
-    msg: 'success',
-    goods: [
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '100.00',
-        goodId: '200000',
-        goodNum: 3,
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '150.00',
-        goodId: '200001',
-        goodNum: 2,
-
-      },
-      {
-        goodImg: require('@/assets/images/shop/1.jpg'),
-        goodName: '宠物狗食品',
-        goodPrice: '200.00',
-        goodId: '200002',
-        goodNum: 2,
-      }
-    ]
   }
 })
 
@@ -519,7 +485,7 @@ Mock.mock(RegExp('http://localhost:8080/shop/cartEdit'), 'post', function (msg) 
   // console.log(msg)
   return {
     msg: 'success',
-    orderId: '300000'
+    
   }
 })
 // 删除一条购物车记录
@@ -528,7 +494,7 @@ Mock.mock(RegExp('http://localhost:8080/shop/cartDel'), 'post', function (msg) {
   // console.log(msg)
   return {
     msg: 'success',
-    orderId: '300000'
+
   }
 })
 // 获取订单列表

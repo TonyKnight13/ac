@@ -1,9 +1,12 @@
 package models
 
-import "github.com/astaxie/beego/orm"
+import (
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
+)
 
 type Address struct {
-	Id            int `orm:"auto"`
+	Id            int `orm:"auto" json:"addressId"`
 	Realname      string
 	Phone         string
 	AddressForLoc string
@@ -45,6 +48,11 @@ func AddAddress(adduserid int, addAddress AddressRecv) error {
 func UpdateAddress(addAddress AddressRecv) error {
 	o := orm.NewOrm()
 	address := &Address{Id: addAddress.Id}
+	errRead := o.Read(address)
+	if errRead != nil {
+		return errRead
+	}
+	beego.Info(addAddress)
 
 	address.Phone = addAddress.Phone
 	address.Realname = addAddress.Realname

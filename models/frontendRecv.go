@@ -69,5 +69,5 @@ type AddressRecv struct {
 	Id            int `json:"addressId"`
 	Realname      string
 	Phone         string
-	AddressForLoc string `json:"address"`
+	AddressForLoc string
 }

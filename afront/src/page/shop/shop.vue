@@ -17,7 +17,7 @@
             <span>商品种类：</span>
             <div class="item-check">
               <el-checkbox-group  @change="onChange1" v-model="speci" :max='2'>
-                <el-checkbox v-for="speci in goodKind" :label="speci" :key="speci" >{{speci}}</el-checkbox>
+                <el-checkbox v-for="spe in goodKind" :key="spe" >{{spe}}</el-checkbox>
               </el-checkbox-group>
             </div>
           </div>
@@ -26,19 +26,19 @@
             <span>宠物种类：</span>
             <div class="item-check">
               <el-checkbox-group @change="onChange2" v-model="province">
-                <el-checkbox v-for="province in goodUserKind" :label="province" :key="province">{{province}}</el-checkbox>
+                <el-checkbox v-for="provin in goodUserKind" :key="provin">{{provin}}</el-checkbox>
               </el-checkbox-group>
             </div>
           </div>
 
-          <div class="screen-item">
+          <!-- <div class="screen-item">
             <span>产地：</span>
             <div class="item-check">
               <el-checkbox-group @change="onChange3" v-model="place">
                 <el-checkbox v-for="place in places" :label="place" :key="place">{{place}}</el-checkbox>
               </el-checkbox-group>
             </div>
-          </div>
+          </div> -->
           <el-button type="primary" @click="search" style="float:right;" size="small">搜索</el-button>
         </div>
 
@@ -126,10 +126,10 @@ export default {
       resultnum:0,
       goodKind,
       goodUserKind,
-      places:['国内','进口'], //产地
+      // places:['国内','进口'], //产地
       num:1,
-      speci:'',  //选中的商品种类
-      province:'',  //选中的宠物种类
+      speci:[],  //选中的商品种类
+      province:[],  //选中的宠物种类
       place:'',
       currentPage:1,
       total:0,
@@ -152,7 +152,7 @@ export default {
     // this.total=this.resultGood.length
   },
   methods: {
-    ...mapMutations(['INIT_BUYCART']),
+    ...mapMutations(['INIT_BUYCART','ADD_CART']),
     onChange1(value){
       if(value.length>1){
         value.splice(0,1);
@@ -239,7 +239,7 @@ export default {
     }
   },
   created() {
-    this.userId= getStore('user')
+    this.userId= getStore('userId')
     this._getCartList()
     this._navList()
   },
