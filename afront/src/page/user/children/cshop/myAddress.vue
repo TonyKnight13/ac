@@ -118,8 +118,6 @@ export default {
         } else {
           this.addressList = []
         }
-        setStore("sss", this.addressList)
-    getStore("sss")
       })
     },
     _addressUpdate (params) {
