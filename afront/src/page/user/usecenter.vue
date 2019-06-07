@@ -15,21 +15,14 @@
                 <span slot="title">商城管理</span>
                 <el-menu-item index="/myAddress">收货地址</el-menu-item>
                 <el-menu-item index="/order">商城订单</el-menu-item>
-                <el-menu-item index="/goodsManage" v-if="userId">商品管理</el-menu-item>
+                <el-menu-item index="/goodsManage" v-if="userId == 1">商品管理</el-menu-item>
             </el-submenu>
-            <el-submenu index="3" style="overflow:hidden" v-if="userId">
+            <!-- <el-submenu index="3" style="overflow:hidden">
                 <span slot="title">医院管理</span>
                 <el-menu-item index="/deathRegist">殡葬馆</el-menu-item>
                 <el-menu-item index="/docRegister">医生信息</el-menu-item>
                 <el-menu-item index="/hosRegister">医院信息</el-menu-item>
-            </el-submenu>
-            <!-- <el-submenu index="3" style="overflow:hidden">
-                <span slot="title">收货地址</span>
-                <el-menu-item index="/myAddress">我的地址</el-menu-item>
-                <el-menu-item index="/addAddress">添加地址</el-menu-item>
             </el-submenu> -->
-
-            
           </el-menu>
         </div>
         <div class="content-right-wrap">
@@ -52,8 +45,10 @@
     },
     data(){
       return{
-        openeds: ['1'],
         userId:null,
+        identity:null,
+        openeds: ['1','2','3'],
+        
       }
     },
     watch:{
@@ -64,6 +59,7 @@
     },
     created() {
       this.userId=getStore('userId')
+      this.identity=getStore("identity")
     },
   }
 </script>

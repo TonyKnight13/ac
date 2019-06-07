@@ -133,21 +133,7 @@ const router = new Router({
           path: '/orderDetail',
           name: 'orderDetail',
           component:resolve => require(['../page/user/children/cshop/orderDetail.vue'], resolve)
-        },
-        {
-          path: '/deathRegist',
-          name: 'deathRegist',
-          component:resolve => require(['../page/user/children/chospital/deathRegist.vue'], resolve)
-        },
-        {
-          path: '/docRegister',
-          name: 'docRegister',
-          component:resolve => require(['../page/user/children/chospital/docRegister.vue'], resolve)
-        },{
-          path: '/hosRegister',
-          name: 'hosRegister',
-          component:resolve => require(['../page/user/children/chospital/hosRegister.vue'], resolve)
-        },
+        }
       ],
       meta: {
         isLogin: true // 添加该字段，表示进入这个路由是需要登录的
