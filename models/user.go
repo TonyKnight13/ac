@@ -1,6 +1,8 @@
 package models
 
 import (
+	"encoding/base64"
+	"io/ioutil"
 	"time"
 
 	"github.com/astaxie/beego"
@@ -26,14 +28,14 @@ type UserProfile struct {
 	Username  string
 	Sex       byte `orm:"null"`
 	Phone     string
-	Email     string
+	Email     string    `orm:"null"`
 	Hobby     string    `orm:"null"`
 	Birth     time.Time `orm:"null;type(date)"`
 	Intro     string    `orm:"null"`
 	Province  string
-	City      string
-	CoverUrl  string `type(text)`
-	Special   string
+	City      string       `orm:"null"`
+	CoverUrl  string       `type(text) json:"Img"`
+	Special   string       `orm:"null"`
 	Addresses []*Address   `orm:"null;reverse(many)"`
 	Articles  []*Article   `orm:"null;reverse(many)"`
 	Orders    []*Order     `orm:"null;reverse(many)"`
@@ -77,6 +79,11 @@ func Register(Account string, Password string, Identity int) error {
 		userpro.Email = Account
 	}
 
+	ImgString, _ := ioutil.ReadFile("./static/default.jpg")
+	ImgBase64 := base64.StdEncoding.EncodeToString(ImgString)
+
+	userpro.CoverUrl = ImgBase64
+
 	user.Created = time.Now()
 	user.Changed = time.Now()
 	user.UserProfile = userpro
@@ -109,10 +116,7 @@ func UpdatePro(id int, updPro UserInfoRecv) error {
 		return errUser
 	}
 
-	if user.Identity == 2 {
-		pro.Special = updPro.Special
-	}
-
+	pro.Special = updPro.Special
 	pro.CoverUrl = updPro.Img
 	pro.Realname = updPro.Realname
 	pro.Username = updPro.Username
