@@ -82,19 +82,19 @@ export default {
     return {
       options: [{
           value: 0,
-          label: '普通用户'
+          label: '我是宠主'
         }, {
           value: 1,
-          label: '商家用户'
+          label: '我是商家'
         }, {
           value: 2,
-          label: '医生用户'
+          label: '我是医生'
         }, {
           value: 3,
-          label: '医院用户'
+          label: '我是医院'
         }, {
           value: 4,
-          label: '殡葬用户'
+          label: '我是殡葬公司'
         }],
       form:{
         account:'',

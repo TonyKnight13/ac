@@ -13,7 +13,7 @@ import (
 )
 
 type User struct {
-	Id          int `orm:"auto"`
+	Id          int `orm:"auto" json:"userId"`
 	Account     string
 	Password    string
 	Identity    int          //0:普通用户 1:商家 2:医方
@@ -23,7 +23,7 @@ type User struct {
 }
 
 type UserProfile struct {
-	Id        int
+	Id        int    `json:"userId"`
 	Realname  string `orm:"null"`
 	Username  string
 	Sex       byte `orm:"null"`
@@ -34,7 +34,7 @@ type UserProfile struct {
 	Intro     string    `orm:"null"`
 	Province  string
 	City      string       `orm:"null"`
-	CoverUrl  string       `type(text) json:"Img"`
+	CoverUrl  string       `orm:"type(text)" json:"Img"`
 	Special   string       `orm:"null"`
 	Addresses []*Address   `orm:"null;reverse(many)"`
 	Articles  []*Article   `orm:"null;reverse(many)"`
@@ -80,9 +80,7 @@ func Register(Account string, Password string, Identity int) error {
 	}
 
 	ImgString, _ := ioutil.ReadFile("./static/default.jpg")
-	ImgBase64 := base64.StdEncoding.EncodeToString(ImgString)
-
-	userpro.CoverUrl = ImgBase64
+	userpro.CoverUrl = "data:image/jpeg;base64," + base64.StdEncoding.EncodeToString(ImgString)
 
 	user.Created = time.Now()
 	user.Changed = time.Now()
@@ -158,12 +156,24 @@ func GetUserByAccount(account interface{}) (err error, user *User) {
 	user = new(User)
 	qs := o.QueryTable(user)
 	err = qs.Filter("Account", account).One(user)
+
 	return err, user
+}
+
+func GetUserProById(uid interface{}) (error, *UserProfile) {
+	o := orm.NewOrm()
+	userPro := &UserProfile{Id: uid.(int)}
+	err := o.Read(userPro)
+	return err, userPro
 }
 
 func ChangePwd(userid interface{}, pwd string) error {
 	o := orm.NewOrm()
 	user := User{Id: userid.(int)}
+	errRead := o.Read(&user)
+	if errRead != nil {
+		return errRead
+	}
 	pwdmd5 := com.Md5(pwd)
 	user.Password = pwdmd5
 	user.Changed = time.Now()
@@ -179,9 +189,10 @@ func GetUserListByIdentity(Identity int) (error, []*UserProfile) {
 	if err1 != nil {
 	}
 	for _, user := range users {
-		userPros = append(userPros, user.UserProfile)
+		_, uid := GetUserProById(user.Id)
+		userPros = append(userPros, uid)
 	}
-	beego.Info(userPros)
+	beego.Info(userPros[0])
 	return err1, userPros
 }
 

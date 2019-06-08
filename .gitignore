@@ -698,7 +698,7 @@ MigrationBackup/
 **/node_modules/
 **/static/
 **/views/
-**/session/
+**/data/session/
 
 *.conf
 *.exe

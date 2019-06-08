@@ -274,7 +274,7 @@ export default {
       userInfo({userId: this.userId}).then(res => {
         // let obj = JSON.parse(getStore("userInfo"))
         // console.log(obj)
-        let obj = res.data
+        let obj = res.data.data
         if(res.data.code == 1 ){
           // if(res.data.Username  && res.data.Sex  && res.data.Phone  && res.data.Img){
             this.msg = {
@@ -283,7 +283,7 @@ export default {
               Sex : String(obj.Sex),
               Phone : obj.Phone,
               Hobby : obj.Hobby,
-              Img: obj.img,
+              Img: obj.Img,
               Address : obj.Address,
               Special : obj.Special, //医生专业
               Province : obj.Province, //省份
@@ -316,7 +316,7 @@ export default {
             Realname :this.msg.Realname ,
             Sex :parseInt(this.msg.Sex ) ,
             Hobby:this.msg.Hobby,
-            img:this.msg.Img,
+            Img:this.msg.Img,
             Phone :this.msg.Phone ,
             Address:this.msg.Address,
             Special:this.msg.Special,

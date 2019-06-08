@@ -77,10 +77,9 @@ func (c *UserController) Logout() {
 
 // @router /users/userInfo [post]
 func (c *UserController) UserInfo() {
-	account := c.GetSession("account")
-	_, user := GetUserByAccount(account)
-	userProfile := user.UserProfile
-	c.Data["json"] = map[string]interface{}{"code": 1, "userProfile": userProfile}
+	Id := c.GetSession("userId")
+	_, userPro := GetUserProById(Id)
+	c.Data["json"] = map[string]interface{}{"code": 1, "data": userPro}
 	c.ServeJSON()
 }
 
