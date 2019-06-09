@@ -9,21 +9,18 @@
           <el-tab-pane label="狗" name="狗">
             <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
 
-              <el-table-column  width="200">
+              <el-table-column  width="300">
                 <template slot-scope="scope">
                   <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
+
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
+                  <span style="font-weight:bolder;font-size:0.4rem;">{{scope.row.Title}}</span><br/><br/>
+                  <span class="contType" >{{scope.row.Content}}</span>
                 </template>
-              </el-table-column>
-              <el-table-column  width="">
-                <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
-                </template>
-              </el-table-column>
+              </el-table-column>   
 
             </el-table>
 
@@ -37,21 +34,17 @@
           <el-tab-pane label="猫" name="猫">
             <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
 
-              <el-table-column  width="200">
+              <el-table-column  width="300">
                 <template slot-scope="scope">
                   <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
+                  <span style="font-weight:bolder;font-size:0.4rem;">{{scope.row.Title}}</span><br/><br/>
+                  <span class="contType" >{{scope.row.Content}}</span>
                 </template>
-              </el-table-column>
-              <el-table-column  width="">
-                <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
-                </template>
-              </el-table-column>
+              </el-table-column>  
 
             </el-table>
 
@@ -65,21 +58,17 @@
           <el-tab-pane label="兔" name="兔">
             <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
 
-              <el-table-column  width="200">
+              <el-table-column  width="300">
                 <template slot-scope="scope">
                   <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
+                  <span style="font-weight:bolder;font-size:0.4rem;">{{scope.row.Title}}</span><br/><br/>
+                  <span class="contType" >{{scope.row.Content}}</span>
                 </template>
-              </el-table-column>
-              <el-table-column  width="">
-                <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
-                </template>
-              </el-table-column>
+              </el-table-column>  
 
             </el-table>
             <el-pagination
@@ -91,21 +80,17 @@
           </el-tab-pane>
           <el-tab-pane label="鸟" name="鸟">
             <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
-              <el-table-column  width="200">
+              <el-table-column  width="300">
                 <template slot-scope="scope">
                   <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
+                  <span style="font-weight:bolder;font-size:0.4rem;">{{scope.row.Title}}</span><br/><br/>
+                  <span class="contType" >{{scope.row.Content}}</span>
                 </template>
-              </el-table-column>
-              <el-table-column  width="">
-                <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
-                </template>
-              </el-table-column>
+              </el-table-column>  
 
             </el-table>
             <el-pagination
@@ -117,21 +102,17 @@
           </el-tab-pane>
           <el-tab-pane label="小型" name="小型">
             <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
-              <el-table-column  width="200">
+              <el-table-column  width="300">
                 <template slot-scope="scope">
                   <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
+                  <span style="font-weight:bolder;font-size:0.4rem;">{{scope.row.Title}}</span><br/><br/>
+                  <span class="contType" >{{scope.row.Content}}</span>
                 </template>
-              </el-table-column>
-              <el-table-column  width="">
-                <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
-                </template>
-              </el-table-column>
+              </el-table-column>  
             </el-table>
             <el-pagination
               :current-page="currentPage"
@@ -140,23 +121,21 @@
               :page-size="5" >
             </el-pagination>  
           </el-tab-pane>
+
           <el-tab-pane label="水生" name="水生">
             <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
-              <el-table-column  width="200">
+              <el-table-column  width="300">
                 <template slot-scope="scope">
                   <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
+                  <span style="font-weight:bolder;font-size:0.4rem;">{{scope.row.Title}}</span><br/><br/>
+                  <span class="contType" >{{scope.row.Content}}</span>
                 </template>
-              </el-table-column>
-              <el-table-column  width="">
-                <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
-                </template>
-              </el-table-column>
+              </el-table-column>  
+
             </el-table>
             <el-pagination
               :current-page="currentPage"
@@ -165,23 +144,20 @@
               :page-size="5" >
             </el-pagination>  
           </el-tab-pane>
+
           <el-tab-pane label="两栖" name="两栖">
             <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
-              <el-table-column  width="200">
+              <el-table-column  width="300">
                 <template slot-scope="scope">
                   <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
+                  <span style="font-weight:bolder;font-size:0.4rem;">{{scope.row.Title}}</span><br/><br/>
+                  <span class="contType" >{{scope.row.Content}}</span>
                 </template>
-              </el-table-column>
-              <el-table-column  width="">
-                <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
-                </template>
-              </el-table-column>
+              </el-table-column>  
             </el-table>
             <el-pagination
               :current-page="currentPage"
@@ -190,23 +166,20 @@
               :page-size="5" >
             </el-pagination>  
           </el-tab-pane>
+
           <el-tab-pane label="其他宠物" name="其他宠物">
            <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
-              <el-table-column  width="200">
+              <el-table-column  width="300">
                 <template slot-scope="scope">
                   <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
+                  <span style="font-weight:bolder;font-size:0.4rem;">{{scope.row.Title}}</span><br/><br/>
+                  <span class="contType" >{{scope.row.Content}}</span>
                 </template>
-              </el-table-column>
-              <el-table-column  width="">
-                <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
-                </template>
-              </el-table-column>
+              </el-table-column>  
             </el-table>
             <el-pagination
               :current-page="currentPage"
@@ -242,7 +215,11 @@
                   :value="item.value">
                 </el-option>
               </el-select>
-          </el-form-item>         
+          </el-form-item>  
+          <el-form-item label="文章封面" prop="Img">
+              <input @change="uploadPhoto($event)" type="file" class="kyc-passin">
+              <img :src="msg.Img" alt="">
+          </el-form-item>       
         <el-button @click='_addArticle()' style="width:4rem;margin-top:1rem">发表</el-button>
 
     </el-dialog>
@@ -294,6 +271,7 @@ export default {
       currentPage:1,
       total:0,
       msg:{
+        Img:null,
         Title:'',
         Content:'',
         Special:''
@@ -306,6 +284,29 @@ export default {
     this._baike()
   },
   methods: {
+     textShow(){
+
+     },
+     uploadPhoto (e) {
+        // 利用fileReader对象获取file
+        var file = e.target.files[0];
+        var filesize = file.size;
+        var filename = file.name;
+        // 2,621,440   2M
+        if (filesize > 2101440) {
+            // 图片大于2MB
+            alert("图片过大")
+            return false
+        }
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (e) => {
+            // 读取到的图片base64 数据编码 将此编码字符串传给后台即可
+            var imgcode = e.target.result;
+            this.msg.Img=imgcode
+            console.log(this.msg.Img);
+        }
+    },
     _baike(){ //初始化
       baikeData().then(res => {
         if(res.data.code == 1){
@@ -339,6 +340,7 @@ export default {
     _addArticle(){
       this.dialogVisible = false
       addArticle({
+        Img:this.msg.Img,
         Title:this.msg.Title,
         Content:this.msg.Content,
         Special:this.msg.Special
@@ -352,7 +354,14 @@ export default {
 }
 </script>
 <style scoped>
-
+.contType{
+    font-size: .32rem;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 </style>
 <style>
 .el-tabs__item.is-active {

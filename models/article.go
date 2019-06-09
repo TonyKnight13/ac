@@ -13,6 +13,7 @@ type Article struct {
 	Content     string `orm:"type(text)"`
 	ViewNum     int
 	LikeNum     int
+	Img         string       `orm:"type(text)"`
 	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
 	Changed     time.Time    `orm:"auto_now_add;type(datetime)"`
 	UserProfile *UserProfile `orm:"rel(fk)"` //author
@@ -36,6 +37,7 @@ func AddArticle(addUserid int, addArticle ArticleRecv) error {
 	article.Title = addArticle.Title
 	article.Special = addArticle.Special
 	article.Content = addArticle.Content
+	article.Img = addArticle.Img
 
 	article.Created = time.Now()
 	article.Changed = time.Now()

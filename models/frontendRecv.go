@@ -39,6 +39,7 @@ type ArticleRecv struct {
 	Title   string
 	Special string
 	Content string
+	Img     string
 }
 
 type GoodsSelectRecv struct {

@@ -126,6 +126,23 @@ import {getStore} from "@/utils/storage"
 import { mapMutations } from 'vuex'
 import BMap from 'BMap'
 
+
+const mapStyle=[
+          {
+                    "featureType": "land",
+                    "elementType": "all",
+                    "stylers": {
+                              "color": "#ffe599ff"
+                    }
+          },
+          {
+                    "featureType": "road",
+                    "elementType": "all",
+                    "stylers": {
+                              "color": "#ffffffff"
+                    }
+          }
+]
 const specials=['狗', '猫', '兔子', '水生', '鸟', '两栖']
 const areas=['浙江省', '上海市', '江苏省', '北京市', '四川省', '台湾省', '云南省', '西藏省', '黑龙江省']
 export default {
@@ -199,6 +216,9 @@ export default {
     },
     initMap(){
         let map = new BMap.Map("l-map");            // 创建Map实例
+        map.setMapStyle({
+        styleJson:mapStyle
+        });
         let point = new BMap.Point(this.center.lng, this.center.lat)
         map.centerAndZoom(point, 11);
         map.enableScrollWheelZoom(true)
