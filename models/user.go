@@ -16,7 +16,7 @@ type User struct {
 	Id          int `orm:"auto" json:"userId"`
 	Account     string
 	Password    string
-	Identity    int          //0:普通用户 1:商家 2:医方
+	Identity    int          //0:普通用户 1:商家 2:医方 3:医院 4：殡葬公司
 	UserProfile *UserProfile `orm:"null;rel(one);on_delete(set_null)"`
 	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
 	Changed     time.Time    `orm:"auto_now_add;type(datetime)"`
@@ -26,6 +26,7 @@ type UserProfile struct {
 	Id        int    `json:"userId"`
 	Realname  string `orm:"null"`
 	Username  string
+	Identity  int  //0:普通用户 1:商家 2:医方 3:医院 4：殡葬公司
 	Sex       byte `orm:"null"`
 	Phone     string
 	Email     string    `orm:"null"`
@@ -62,7 +63,7 @@ func Register(Account string, Password string, Identity int) error {
 
 	pwdmd5 := com.Md5(Password)
 
-	user := &User{Account: Account, Password: pwdmd5, Identity: Identity}
+	user := &User{Account: Account, Password: pwdmd5}
 	userpro := new(UserProfile)
 
 	// 查询是否有重复的账号
@@ -73,13 +74,15 @@ func Register(Account string, Password string, Identity int) error {
 	}
 
 	userpro.User = user
+	userpro.Identity = Identity
+	user.Identity = Identity
 	if v := vaild.Email(Account, "Email"); !v.Ok {
 		userpro.Phone = Account
 	} else {
 		userpro.Email = Account
 	}
 
-	ImgString, _ := ioutil.ReadFile("./static/default.jpg")
+	ImgString, _ := ioutil.ReadFile("./data/default/default.jpg")
 	userpro.CoverUrl = "data:image/jpeg;base64," + base64.StdEncoding.EncodeToString(ImgString)
 
 	user.Created = time.Now()
@@ -183,25 +186,18 @@ func ChangePwd(userid interface{}, pwd string) error {
 
 func GetUserListByIdentity(Identity int) (error, []*UserProfile) {
 	var userPros []*UserProfile
-	var users []*User
 	o := orm.NewOrm()
-	_, err1 := o.QueryTable("user").Filter("identity", Identity).All(&users)
-	if err1 != nil {
-	}
-	for _, user := range users {
-		_, uid := GetUserProById(user.Id)
-		userPros = append(userPros, uid)
-	}
-	beego.Info(userPros[0])
+	_, err1 := o.QueryTable("user_profile").Filter("identity", Identity).All(&userPros)
 	return err1, userPros
 }
 
-func SelecrDoc(docSelectRecv DocsSelectRecv) (error, []*UserInfoRecv) {
+func SelecrDoc(docSelectRecv DocsSelectRecv) (error, []*UserProfile) {
 	o := orm.NewOrm()
-	var userInfos []*UserInfoRecv
+	beego.Info(docSelectRecv)
+	var userInfos []*UserProfile
 	cond := orm.NewCondition()
-
-	cond1 := cond.AndCond(SetPageCond("special", docSelectRecv.special)).AndCond(SetPageCond("province", docSelectRecv.area))
+	cond = cond.And("identity", 2)
+	cond1 := cond.AndCond(SetPageCond("special", docSelectRecv.Special)).AndCond(SetPageCond("province", docSelectRecv.Area))
 	qs := o.QueryTable("user_profile")
 	qs = qs.SetCond(cond1)
 	_, err := qs.All(&userInfos)

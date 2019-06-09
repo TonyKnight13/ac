@@ -252,8 +252,17 @@ func init() {
 
     beego.GlobalControllerRouter["actest/controllers:WikiController"] = append(beego.GlobalControllerRouter["actest/controllers:WikiController"],
         beego.ControllerComments{
+            Method: "AddArticle",
+            Router: `/baike/addArticle`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["actest/controllers:WikiController"] = append(beego.GlobalControllerRouter["actest/controllers:WikiController"],
+        beego.ControllerComments{
             Method: "ArticleList",
-            Router: `/baike/experience[get]`,
+            Router: `/baike/experience`,
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,

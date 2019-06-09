@@ -10,7 +10,7 @@ type Article struct {
 	Id          int `orm:"auto"`
 	Title       string
 	Special     string
-	Content     string
+	Content     string `orm:"type(text)"`
 	ViewNum     int
 	LikeNum     int
 	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
@@ -43,7 +43,7 @@ func AddArticle(addUserid int, addArticle ArticleRecv) error {
 	article.UserProfile = userpro
 
 	_, err1 := o.Insert(article)
-	_, err2 := o.Update(&userpro)
+	_, err2 := o.Update(userpro)
 
 	if err1 != nil {
 		return err1

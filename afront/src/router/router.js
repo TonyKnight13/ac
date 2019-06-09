@@ -166,5 +166,14 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
+  if (to.fullPath == '/login') {
+    if (user) {
+      next({
+        path: from.fullPath
+      })
+    } else {
+      next()
+    }
+  }
 })
 export default router

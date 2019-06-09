@@ -35,7 +35,7 @@ type OrderRecv struct {
 }
 
 type ArticleRecv struct {
-	Id      int
+	Id      int `json:"articleId"`
 	Title   string
 	Special string
 	Content string
@@ -61,8 +61,8 @@ type UserInfoRecv struct {
 	Img      string
 }
 type DocsSelectRecv struct {
-	special []string
-	area    []string
+	Special []string `json:"specialcheked"`
+	Area    []string `json:"areachecked"`
 }
 
 type AddressRecv struct {

@@ -6,3 +6,4 @@ type DeathController struct {
 
 func (c *DeathController) URLMapping() {
 }
+

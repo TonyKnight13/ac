@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -52,7 +51,6 @@ func UpdateAddress(addAddress AddressRecv) error {
 	if errRead != nil {
 		return errRead
 	}
-	beego.Info(addAddress)
 
 	address.Phone = addAddress.Phone
 	address.Realname = addAddress.Realname

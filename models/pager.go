@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -15,8 +16,11 @@ func SetPageCond(title string, list []string) *orm.Condition {
 	listCounts := len(list)
 	if listCounts >= 1 {
 		for i := 0; i < listCounts; i++ {
-			cond.Or(title, list[i])
+			cond = cond.Or(title, list[i])
 		}
+	} else {
+		cond = cond.And(title+"__isnull", false)
+		beego.Info(cond)
 	}
 	return cond
 }

@@ -25,7 +25,7 @@
                   <div class="screen-item">
                     <span>种类：</span>
                     <div class="item-check">
-                      <el-checkbox-group  @change="onChange1" v-model="specialcheked" :max='2'>
+                      <el-checkbox-group  @change="onChange1" v-model="specialcheked">
                         <el-checkbox v-for="speci in specials" :label="speci" :key="speci" >{{speci}}</el-checkbox>
                       </el-checkbox-group>
                     </div>
@@ -54,13 +54,13 @@
           style="width: 100%" :header-cell-style="{background:'#F3F4F7',color:'#555'}">
             <el-table-column  width="200">
               <template slot-scope="scope">
-                <el-image :src="scope.row.img" fit="contain"></el-image>
+                <el-image :src="scope.row.Img" fit="contain"></el-image>
               </template>
             </el-table-column>
             <el-table-column  width="">
               <template slot-scope="scope">
-                <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.realName}}</span><br>
-                <span style="font-weight:600;font-size:0.26rem;">专业：{{scope.row.special}}</span>
+                <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Realname}}</span><br>
+                <span style="font-weight:600;font-size:0.26rem;">专业：{{scope.row.Special}}</span>
               </template>
             </el-table-column>
             <el-table-column align="right">
@@ -127,7 +127,7 @@ import { mapMutations } from 'vuex'
 import BMap from 'BMap'
 
 const specials=['狗', '猫', '兔子', '水生', '鸟', '两栖']
-const areas=['浙江', '上海', '江苏', '北京', '四川', '台湾', '云南', '西藏', '黑龙江']
+const areas=['浙江省', '上海市', '江苏省', '北京市', '四川省', '台湾省', '云南省', '西藏省', '黑龙江省']
 export default {
   name:"shop",
   components:{
@@ -164,8 +164,8 @@ export default {
       specials,
       areas,
       num:1,
-      special:['不限'],
-      area:['不限'],
+      Special:[],
+      area:[],
       currentPage:1,
       total:0,
       userId:'',
@@ -230,9 +230,10 @@ export default {
       local.searchInBounds(myKeys, map.getBounds());  
     },
     onChange1(value){
-      if(value.length>1){
-        value.splice(0,1);
-      }console.log(value)
+      // if(value.length>1){
+      //   value.splice(0,1);
+      // }
+      console.log(value)
       this.selectObj.specialcheked=value
     },
     onChange2(value){
@@ -281,6 +282,7 @@ export default {
     //医生筛选时返回的数据
     _search(){  
       docSelect(this.selectObj).then(res =>{
+        console.log(res.data)
         if(res.data.code == 1){
           this.docList=res.data.data
         }

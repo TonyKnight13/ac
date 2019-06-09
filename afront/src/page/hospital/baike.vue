@@ -11,17 +11,17 @@
 
               <el-table-column  width="200">
                 <template slot-scope="scope">
-                  <el-image :src="scope.row.image" fit="contain"></el-image>
+                  <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.name}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.article}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
                 </template>
               </el-table-column>
 
@@ -39,17 +39,17 @@
 
               <el-table-column  width="200">
                 <template slot-scope="scope">
-                  <el-image :src="scope.row.image" fit="contain"></el-image>
+                  <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.name}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.article}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
                 </template>
               </el-table-column>
 
@@ -67,17 +67,17 @@
 
               <el-table-column  width="200">
                 <template slot-scope="scope">
-                  <el-image :src="scope.row.image" fit="contain"></el-image>
+                  <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.name}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.article}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
                 </template>
               </el-table-column>
 
@@ -93,17 +93,17 @@
             <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
               <el-table-column  width="200">
                 <template slot-scope="scope">
-                  <el-image :src="scope.row.image" fit="contain"></el-image>
+                  <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.name}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.article}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
                 </template>
               </el-table-column>
 
@@ -119,17 +119,17 @@
             <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
               <el-table-column  width="200">
                 <template slot-scope="scope">
-                  <el-image :src="scope.row.image" fit="contain"></el-image>
+                  <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.name}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.article}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
                 </template>
               </el-table-column>
             </el-table>
@@ -144,17 +144,17 @@
             <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
               <el-table-column  width="200">
                 <template slot-scope="scope">
-                  <el-image :src="scope.row.image" fit="contain"></el-image>
+                  <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.name}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.article}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
                 </template>
               </el-table-column>
             </el-table>
@@ -169,17 +169,17 @@
             <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
               <el-table-column  width="200">
                 <template slot-scope="scope">
-                  <el-image :src="scope.row.image" fit="contain"></el-image>
+                  <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.name}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.article}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
                 </template>
               </el-table-column>
             </el-table>
@@ -194,17 +194,17 @@
            <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
               <el-table-column  width="200">
                 <template slot-scope="scope">
-                  <el-image :src="scope.row.image" fit="contain"></el-image>
+                  <el-image :src="scope.row.Img" fit="contain"></el-image>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.name}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Title}}</span>
                 </template>
               </el-table-column>
               <el-table-column  width="">
                 <template slot-scope="scope">
-                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.article}}</span>
+                  <span style="font-weight:bolder;font-size:0.32rem;">{{scope.row.Content}}</span>
                 </template>
               </el-table-column>
             </el-table>
@@ -219,12 +219,30 @@
     </div>
 
     <el-dialog title="发表文章" :visible.sync="dialogVisible" center @close="closeDilog()">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 10, maxRows: 20}"
-          placeholder="请输入文章内容"
-          v-model="article">
-        </el-input>
+        <el-form :model="msg" :rules="rules" status-icon label-width="100px" style="width:80%;" ref="msg">
+        <el-form-item label="标题">
+          <el-input v-model="msg.Title"> </el-input>
+        </el-form-item>
+
+        <el-form-item label="文章">
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 10, maxRows: 20}"
+            placeholder="请输入文章内容"
+            v-model="msg.Content">
+          </el-input>
+        </el-form-item>
+
+        <el-form-item label="分类" prop="Special">
+              <el-select v-model="msg.Special">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+          </el-form-item>         
         <el-button @click='_addArticle()' style="width:4rem;margin-top:1rem">发表</el-button>
 
     </el-dialog>
@@ -237,32 +255,64 @@
 import headernav from "@/components/headernav.vue";
 import foot from "@/components/foot"
 import {baikeData, addArticle} from "@/api/index"
+
+var op2 = [{
+          value: '狗',
+          label: '狗'
+        }, {
+          value: '猫',
+          label: '猫'
+        }, {
+          value: '兔',
+          label: '兔'
+        }, {
+          value: '鸟',
+          label: '鸟'
+        }, {
+          value: '小型',
+          label: '小型'
+        }, {
+          value: '水生',
+          label: '水生'
+        }, {
+          value: '两栖',
+          label: '两栖'
+        }, {
+          value: '其他宠物',
+          label: '其他宠物'
+        }];
+
 export default {
   components:{
       headernav,foot 
   },
   data() {
     return {
+      options:op2,
       activeName:'狗',
       articleList:[],
       currentPage:1,
       total:0,
-
+      msg:{
+        Title:'',
+        Content:'',
+        Special:''
+      },
       dialogVisible:false,
-      article:"",
+      
     }
   },
   created() {
     this._baike()
   },
   methods: {
-    _baike(){
+    _baike(){ //初始化
       baikeData().then(res => {
         if(res.data.code == 1){
-          for(let i=0;i<res.data.length;i++){
-            if(this.activeName == res.data[i].special){
-              this.articleList = res.data[i].data
-              this.total = res.data[i].data.length
+          for(let i=0;i<res.data.data.length;i++){
+            if(this.activeName == res.data.data[i].Special){
+              this.articleList = res.data.data[i].data
+              this.total = res.data.data[i].data.length
             }
           }
         }
@@ -284,12 +334,14 @@ export default {
 
     closeDilog(){
       this.dialogVisible = false
-      this.article= ''
+      this.Title= ''
     },
     _addArticle(){
       this.dialogVisible = false
       addArticle({
-        article:this.textarea
+        Title:this.msg.Title,
+        Content:this.msg.Content,
+        Special:this.msg.Special
       }).then(res =>{
         if(this.data.code ==1){
           this.$message.success("发表文章成功")

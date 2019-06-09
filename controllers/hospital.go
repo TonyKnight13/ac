@@ -20,7 +20,7 @@ func (c *HospitalController) URLMapping() {
 // @router /hospital/hospitalNavList [get]
 func (c *HospitalController) HospitalList() {
 	var identity int
-	identity = 2
+	identity = 3
 	err, userPros := GetUserListByIdentity(identity)
 	if err != nil {
 		c.Data["json"] = map[string]interface{}{"code": 0, "message": "医院列表查看失败"}
