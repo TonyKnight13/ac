@@ -67,12 +67,13 @@ export default new Vuex.Store({
     // 加入购物车
     ADD_CART: (state, {goodId, goodPrice, goodName, goodImg, goodNum = 1}) => {
       let cart = JSON.parse(getStore('buyCart')) // 购物车
-      let falg = true // 购物车是否由商品
+      let falg = true //购物车内是否已有同一商品
       let goods = {
-        goodId,
-        goodPrice,
-        goodName,
-        goodImg
+        goodId:goodId,
+        goodPrice:goodPrice,
+        goodName:goodName,
+        goodImg:goodImg,
+        goodNum:null,
       }
       if (cart.length) { // 有内容
         cart.forEach(item => {
@@ -86,10 +87,10 @@ export default new Vuex.Store({
       }
       if (!cart.length || falg) {
         goods.goodNum = goodNum
-        goods.checked = '0' // 购物车中默认商品不选中
+        goods.checked = false // 购物车中默认商品不选中
         cart.push(goods)
       }
-      state.cartList = cart
+      // state.cartList = cart
       // 存入localStorage
       setStore('buyCart', cart)
     },
@@ -110,14 +111,14 @@ export default new Vuex.Store({
       setStore('buyCart', cart)
     },
     // 商店网页初始化时获取购物车数据
-    INIT_BUYCART: (state, data) => {
-      setStore('buyCart', data)
-      let initCart = data
-      if (initCart) {
-        state.cartList = initCart
-      }
+    // INIT_BUYCART: (state, data) => {
+    //   setStore('buyCart', data)
+      // let initCart = data
+      // if (initCart) {
+      //   state.cartList = initCart
+      // }
       // console.log(state.cartList)
-    },
+    // },
     // 修改购物车
     EDIT_CART: (state, {goodId, goodNum}) => {
       let cart = JSON.parse(getStore('buyCart'))

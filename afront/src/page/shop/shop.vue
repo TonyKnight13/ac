@@ -190,7 +190,7 @@ export default {
     },
     //立刻购买
     _addCart(id, name, price, img){
-        addCart({userId: this.userId, goodId: id, goodNum: this.num}).then(res => {
+        // addCart({userId: this.userId, goodId: id, goodNum: this.num}).then(res => {
           // 并不重新请求数据
           this.ADD_CART({
             goodId: id,
@@ -199,7 +199,7 @@ export default {
             imgUrl: img,
             goodNum: this.num
           })
-        })
+        // })
     },
     //获取商品列表
     _navList(){
@@ -214,12 +214,12 @@ export default {
       })
     },
     //获取购物车列表
-    _getCartList () { 
-      getCartList({userId: this.userId}).then(res => {
-        let cartList = res.data.goods;
-        this.INIT_BUYCART(cartList)
-      })
-    },
+    // _getCartList () { 
+      // getCartList({userId: this.userId}).then(res => {
+        // let cartList = []; //初始购物车为空
+        // this.INIT_BUYCART(cartList) //存储购物车
+      // })
+    // },
     priceMenuChange(visible){  
       this.rateMenuArrow=!visible;
     },
@@ -240,7 +240,7 @@ export default {
   },
   created() {
     this.userId= getStore('userId')
-    this._getCartList()
+    // this._getCartList()
     this._navList()
   },
 }

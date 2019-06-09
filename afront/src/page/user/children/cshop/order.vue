@@ -40,7 +40,7 @@
      </y-shelf>
      
     <el-dialog title="收款码" :visible.sync="dialogVisible" @close="closeDilog()">
-      <img :src="pay" />
+      <el-image :src="pay" style="width:200px;" fit="contain"></el-image>
     </el-dialog>
   </div>
 </template>

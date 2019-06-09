@@ -106,6 +106,7 @@ export default {
               console.log(res.data)
               setStore('userName', res.data.account)
               setStore('identity',res.data.identity)
+              setStore('buyCart',[])
               console.log(getStore('identity'), '')
               //element的友好提示
               this.$message.success("恭喜你，登录成功！");

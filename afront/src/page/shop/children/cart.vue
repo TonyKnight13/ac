@@ -82,7 +82,7 @@
 import headernav from "@/components/headernav";
 import foot from "@/components/foot"
 import YShelf from '@/components/shelf'
-import { getCartList, cartEdit, editCheckAll, cartDel } from '@/api/index'
+import { getCartList, cartEdit, cartDel } from '@/api/index'
 import { mapMutations, mapState } from 'vuex'
 import { getStore, setStore} from '@/utils/storage';
 export default {
@@ -192,9 +192,9 @@ export default {
     },
     // 删除整条购物车
     cartdel (goodId) {
-      cartDel({userId: this.userId, goodId}).then(res => {  //修改数据库中的购物车数据
+      // cartDel({userId: this.userId, goodId}).then(res => {  //修改数据库中的购物车数据
         this.EDIT_CART({goodId})  //修改sessionStorage中的购物车数据
-      })
+      // })
       if (goodId) {  //修改本实例中的购物车数据
         this.cartList.forEach((item, i) => {
           if (item.goodId === goodId) {
@@ -222,15 +222,15 @@ export default {
 
     //获取购物车列表
     _getCartList () { 
-      getCartList({userId: this.userId}).then(res => {
-        let cartList = res.data.goods;
-        cartList.forEach(item=>{ //为每一项增加一个checked属性
-          item.checked=false;
-        })
-        this.INIT_BUYCART(cartList)  //将其存入state.carList和session中
+      // getCartList({userId: this.userId}).then(res => {
+        // let cartList = res.data.goods;
+        // cartList.forEach(item=>{ //为每一项增加一个checked属性
+        //   item.checked=false;
+        // })
+        // this.INIT_BUYCART(cartList)  //将其存入state.carList和session中
         this.isloading=false
         this.cartList=JSON.parse(getStore('buyCart'))//seesionStorage中的是字符串
-      })
+      // })
     },
 
   },

@@ -71,7 +71,7 @@ export default {
     },
     _addCart(id,img, name,price){
       if(this.userId){
-        addCart({userId: this.userId, goodId: id, goodNum: this.num}).then(res => {
+        // addCart({userId: this.userId, goodId: id, goodNum: this.num}).then(res => {
           // 并不重新请求数据
           this.ADD_CART({
             goodId: id,
@@ -80,7 +80,7 @@ export default {
             imgUrl: img,
             goodNum: this.num
           })
-        })
+        // })
       }
     },
     payCheck(goodId,goodNum){
