@@ -31,6 +31,7 @@
               :page-size="5" >
             </el-pagination>  
           </el-tab-pane>
+
           <el-tab-pane label="猫" name="猫">
             <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
 
@@ -55,6 +56,7 @@
               :page-size="5" >
             </el-pagination>  
           </el-tab-pane>
+
           <el-tab-pane label="兔" name="兔">
             <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
 
@@ -78,6 +80,7 @@
               :page-size="5" >
             </el-pagination>  
           </el-tab-pane>
+
           <el-tab-pane label="鸟" name="鸟">
             <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
               <el-table-column  width="300">
@@ -100,6 +103,7 @@
               :page-size="5" >
             </el-pagination>  
           </el-tab-pane>
+
           <el-tab-pane label="小型" name="小型">
             <el-table :data="articleList.slice((currentPage-1)*5,currentPage*5)" :header-cell-style="{background:'#fff',color:'#555'}" style="width: 100%">
               <el-table-column  width="300">
@@ -193,35 +197,37 @@
 
     <el-dialog title="发表文章" :visible.sync="dialogVisible" center @close="closeDilog()">
         <el-form :model="msg" :rules="rules" status-icon label-width="100px" style="width:80%;" ref="msg">
-        <el-form-item label="标题">
-          <el-input v-model="msg.Title"> </el-input>
-        </el-form-item>
+          <el-form-item label="标题">
+            <el-input v-model="msg.Title"> </el-input>
+          </el-form-item>
 
-        <el-form-item label="文章">
-          <el-input
-            type="textarea"
-            :autosize="{ minRows: 10, maxRows: 20}"
-            placeholder="请输入文章内容"
-            v-model="msg.Content">
-          </el-input>
-        </el-form-item>
+          <el-form-item label="文章">
+            <el-input
+              type="textarea"
+              :autosize="{ minRows: 10, maxRows: 20}"
+              placeholder="请输入文章内容"
+              v-model="msg.Content">
+            </el-input>
+          </el-form-item>
 
-        <el-form-item label="分类" prop="Special">
-              <el-select v-model="msg.Special">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-          </el-form-item>  
-          <el-form-item label="文章封面" prop="Img">
-              <input @change="uploadPhoto($event)" type="file" class="kyc-passin">
-              <img :src="msg.Img" alt="">
-          </el-form-item>       
+            <el-form-item label="分类" prop="Special">
+                <el-select v-model="msg.Special">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+            </el-form-item>  
+
+            <el-form-item label="文章封面" prop="Img">
+                <input @change="uploadPhoto($event)" type="file" class="kyc-passin">
+                <img :src="msg.Img" alt="">
+            </el-form-item>       
+        </el-form>
         <el-button @click='_addArticle()' style="width:4rem;margin-top:1rem">发表</el-button>
-
+        
     </el-dialog>
 
     <!-- 底部 -->

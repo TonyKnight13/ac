@@ -149,6 +149,10 @@ export const docSelect = (params) => {
   return axios.post(baseUrl + '/hospital/docSelect', JSON.stringify(params))
 }
 
+// 殡葬列表接口
+export const deathNavList = (params) => {
+  return axios.get(baseUrl + '/death/deathNavList', params)
+}
 /* 殡葬管理 */
 export const deathRegist = (params) => {
   return axios.post(baseUrl + '/death/deathManage', JSON.stringify(params))

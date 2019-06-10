@@ -206,7 +206,6 @@ export default {
    this.initMap()
   },
   methods: {
-    ...mapMutations(['INIT_BUYCART']),    
     currentPageChange(val){
       this.currentPage=val;
     },
@@ -217,7 +216,7 @@ export default {
     initMap(){
         let map = new BMap.Map("l-map");            // 创建Map实例
         map.setMapStyle({
-        styleJson:mapStyle
+          styleJson:mapStyle
         });
         let point = new BMap.Point(this.center.lng, this.center.lat)
         map.centerAndZoom(point, 11);
@@ -378,12 +377,12 @@ export default {
   display: flex;
   justify-content: center;
   padding: 1rem 0;
-  background:#FFB90F;
+  /* background:#FFB90F; */
   margin-bottom:0.2rem;
 }
 #l-map{
   height:7rem;
-  width:70%;
+  width:80%;
   text-align:center;
 }
 

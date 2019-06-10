@@ -3,8 +3,8 @@
     <YShelf title="个人资料">
       <div slot="content" class="content">
         <el-form :model="msg" :rules="rules" status-icon label-width="100px" style="width:80%;" ref="msg">
-          <el-form-item label="用户名(医院用户，殡葬用户请填医院名或殡葬馆名)" prop="Username">
-            <el-input v-model="msg.Username"></el-input>
+          <el-form-item label="用户名" prop="Username">
+            <el-input v-model="msg.Username" placeholder="用户名(医院用户，殡葬用户请填医院名或殡葬馆名)"></el-input>
           </el-form-item>      
           <el-form-item label="真名" prop="Realname" v-if="identity==0||identity==2">
             <el-input v-model="msg.Realname"></el-input>
